@@ -1,124 +1,126 @@
 @extends('admin_layouts.app')
 @section('content')
-<div class="row">
-    <div class="col-lg-3 col-md-6 col-sm-6 mt-sm-0 mt-4">
-        <div class="card  mb-2">
-            <div class="card-header p-3 pt-2">
-                <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary shadow text-center border-radius-xl mt-n4 position-absolute">
-                    <i class="material-icons opacity-10">leaderboard</i>
+<div class="p-4 rounded-4 shadow">
+    <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6 mt-sm-0 mt-4">
+            <div class="card  mb-2">
+                <div class="card-header p-3 pt-2">
+                    <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary shadow text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10">leaderboard</i>
+                    </div>
+                    <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize">Balance</p>
+                        <h4 class="mb-0">{{ number_format(auth()->user()->balanceFloat) }}</h4>
+                    </div>
                 </div>
-                <div class="text-end pt-1">
-                    <p class="text-sm mb-0 text-capitalize">Balance</p>
-                    <h4 class="mb-0">{{ number_format(auth()->user()->balanceFloat) }}</h4>
+                <hr class="dark horizontal my-0">
+                <div class="card-footer p-3">
+                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder"></span>latest update</p>
                 </div>
             </div>
-            <hr class="dark horizontal my-0">
-            <div class="card-footer p-3">
-                <p class="mb-0"><span class="text-success text-sm font-weight-bolder"></span>latest update</p>
+            <br>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card  mb-2">
+                <div class="card-header p-3 pt-2">
+                    <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10">weekend</i>
+                    </div>
+                    <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize">Deposit</p>
+                        <h4 class="mb-0">{{ number_format($deposit->amount/ 100, 2) }}</h4>
+                    </div>
+                </div>
+                <hr class="dark horizontal my-0">
+                <div class="card-footer p-3">
+                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder"></span>latest update</p>
+                </div>
             </div>
         </div>
-        <br>
+        <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
+            <div class="card  mb-2">
+                <div class="card-header p-3 pt-2 bg-transparent">
+                    <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10">store</i>
+                    </div>
+                    <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize ">WithDraw</p>
+                        <h4 class="mb-0 ">{{ number_format(abs($withdraw->amount)/ 100, 2) }}</h4>
+                    </div>
+                </div>
+                <hr class="horizontal my-0 dark">
+                <div class="card-footer p-3">
+                    <p class="mb-0 "><span class="text-success text-sm font-weight-bolder"></span>latest update</p>
+                </div>
+            </div>
+        </div>
+        @can('admin_access')
+        <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
+            <div class="card ">
+                <div class="card-header p-3 pt-2 bg-transparent">
+                    <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
+                       <a href="{{route('admin.agent.create')}}"> <i class="material-icons opacity-10">person_add</i></a>
+                    </div>
+                    <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize ">Agents</p>
+                        <h4 class="mb-0 ">{{$agent_count}}</h4>
+                    </div>
+                </div>
+                <hr class="horizontal my-0 dark">
+                <div class="card-footer p-3">
+                    <p class="mb-0 ">Just updated</p>
+                </div>
+            </div>
+        </div>    
+        @endcan
+        @can('agent_access')
+        <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
+            <div class="card ">
+                <div class="card-header p-3 pt-2 bg-transparent">
+                    <div class="icon icon-lg icon-shape bg-gradient-warning shadow-warning text-center border-radius-xl mt-n4 position-absolute">
+                    <a href="{{route('admin.player.create')}}"> <i class="material-icons opacity-10">person_add</i></a>
+                    </div>
+                    <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize ">Players</p>
+                        <h4 class="mb-0 ">{{$player_count}}</h4>
+                    </div>
+                </div>
+                <hr class="horizontal my-0 dark">
+                <div class="card-footer p-3">
+                    <p class="mb-0 ">Just updated</p>
+                </div>
+            </div>
+        </div>
+        @endcan
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="card  mb-2">
-            <div class="card-header p-3 pt-2">
-                <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-xl mt-n4 position-absolute">
-                    <i class="material-icons opacity-10">weekend</i>
-                </div>
-                <div class="text-end pt-1">
-                    <p class="text-sm mb-0 text-capitalize">Deposit</p>
-                    <h4 class="mb-0">{{ number_format($deposit->amount/ 100, 2) }}</h4>
-                </div>
-            </div>
-            <hr class="dark horizontal my-0">
-            <div class="card-footer p-3">
-                <p class="mb-0"><span class="text-success text-sm font-weight-bolder"></span>latest update</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
-        <div class="card  mb-2">
-            <div class="card-header p-3 pt-2 bg-transparent">
-                <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
-                    <i class="material-icons opacity-10">store</i>
-                </div>
-                <div class="text-end pt-1">
-                    <p class="text-sm mb-0 text-capitalize ">WithDraw</p>
-                    <h4 class="mb-0 ">{{ number_format(abs($withdraw->amount)/ 100, 2) }}</h4>
-                </div>
-            </div>
-            <hr class="horizontal my-0 dark">
-            <div class="card-footer p-3">
-                <p class="mb-0 "><span class="text-success text-sm font-weight-bolder"></span>latest update</p>
-            </div>
-        </div>
     </div>
     @can('admin_access')
-    <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
-        <div class="card ">
-            <div class="card-header p-3 pt-2 bg-transparent">
-                <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
-                   <a href="{{route('admin.agent.create')}}"> <i class="material-icons opacity-10">person_add</i></a>
-                </div>
-                <div class="text-end pt-1">
-                    <p class="text-sm mb-0 text-capitalize ">Agents</p>
-                    <h4 class="mb-0 ">{{$agent_count}}</h4>
-                </div>
-            </div>
-            <hr class="horizontal my-0 dark">
-            <div class="card-footer p-3">
-                <p class="mb-0 ">Just updated</p>
-            </div>
-        </div>
-    </div>    
-    @endcan
-    @can('agent_access')
-    <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
-        <div class="card ">
-            <div class="card-header p-3 pt-2 bg-transparent">
-                <div class="icon icon-lg icon-shape bg-gradient-warning shadow-warning text-center border-radius-xl mt-n4 position-absolute">
-                <a href="{{route('admin.player.create')}}"> <i class="material-icons opacity-10">person_add</i></a>
-                </div>
-                <div class="text-end pt-1">
-                    <p class="text-sm mb-0 text-capitalize ">Players</p>
-                    <h4 class="mb-0 ">{{$player_count}}</h4>
-                </div>
-            </div>
-            <hr class="horizontal my-0 dark">
-            <div class="card-footer p-3">
-                <p class="mb-0 ">Just updated</p>
-            </div>
-        </div>
-    </div>
-    @endcan
-</div>
-</div>
-@can('admin_access')
-<div class="row gx-4 mt-4">
-    <div class="col-md-6">
-        <div class="card">
-            <form action="{{ route('admin.balanceUp') }}" method="post">
-                @csrf
-                <div class="card-header p-3 pb-0">
-                    <h6 class="mb-1">Update Balance</h6>
-                    <p class="text-sm mb-0">
-                        Owner can update balance.
-                    </p>
-                </div>
-                <div class="card-body p-3">
-                    <div class="input-group input-group-static my-4">
-                        <label>Amount</label>
-                        <input type="integer" class="form-control" name="balance">
+    <div class="row gx-4 mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <form action="{{ route('admin.balanceUp') }}" method="post">
+                    @csrf
+                    <div class="card-header p-3 pb-0">
+                        <h6 class="mb-1">Update Balance</h6>
+                        <p class="text-sm mb-0">
+                            Owner can update balance.
+                        </p>
                     </div>
-
-                    <button class="btn bg-gradient-dark mb-0 float-end">Update </button>
-                </div>
-            </form>
-        </div>
+                    <div class="card-body p-3">
+                        <div class="input-group input-group-static my-4">
+                            <label>Amount</label>
+                            <input type="integer" class="form-control" name="balance">
+                        </div>
+    
+                        <button class="btn bg-gradient-dark mb-0 float-end">Update </button>
+                    </div>
+                </form>
+            </div>
     </div>
     @endcan
-    @endsection
-    @section('scripts')
+</div>
+@endsection
+@section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
     <script src="https://demos.creative-tim.com/material-dashboard-pro/assets/js/plugins/chartjs.min.js"></script>
@@ -206,4 +208,4 @@
             },
         });
     </script>
-    @endsection
+@endsection
