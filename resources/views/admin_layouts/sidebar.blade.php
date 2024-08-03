@@ -41,6 +41,14 @@
         <span class="sidenav-normal  ms-2  ps-1">Agent List</span>
       </a>
     </li>
+
+     <li class="nav-item">
+      <a class="nav-link text-white " href="{{ route('admin.random_agent_link')}}">
+        <span class="sidenav-mini-icon"> <i class="fa-solid fa-user"></i> </span>
+        <span class="sidenav-normal  ms-2  ps-1">Agent URL</span>
+      </a>
+    </li>
+
     @endcan
     @can('withdraw')
     <li class="nav-item">
