@@ -54,9 +54,7 @@ Route::group([
     Route::post('player-changepassword/{id}', [PlayerController::class, 'makeChangePassword'])->name('player.makeChangePassword');
 
     Route::get('/players-list', [PlayerController::class, 'player_with_agent'])->name('playerListForAdmin');
-
-    
-
+    Route::get('/agentlinks', [AgentController::class, 'agentLink'])->name('random_agent_link');
     Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('profile/change-password/{user}', [ProfileController::class, 'updatePassword'])
         ->name('profile.updatePassword');
