@@ -98,10 +98,10 @@ class AgentController extends Controller
         }
 
             // Generate the agent link
-        $agentLink = url('/agent/' . $agent->id);
-
+        //$agentLink = url('/agent/' . $agent->id);
+         $agentLoginLink = url('/agent/' . $agent->id . '/login');
         // Save the agent link to the database
-        $agent->update(['agent_link' => $agentLink]);
+        $agent->update(['agent_link' => $agentLoginLink]);
 
 
         return redirect()->back()
@@ -109,7 +109,7 @@ class AgentController extends Controller
             ->with('password', $request->password)
             ->with('username', $agent->user_name)
             ->with('amount', $transfer_amount)
-            ->with('agent_link', $agentLink);
+            ->with('agent_link', $agentLoginLink);
     }
 
     /**
@@ -357,5 +357,14 @@ class AgentController extends Controller
         }
 
         return $randomString;
+    }
+    
+
+    public function showAgentLogin($id)
+    {
+        $agent = User::findOrFail($id);
+
+        // You can pass the agent data to a view to display the login page for the agent
+        return view('auth.agent_login', compact('agent'));
     }
 }
