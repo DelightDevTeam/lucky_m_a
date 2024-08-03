@@ -59,7 +59,7 @@
               <td>{{$user->referral_code}}</td>
               <td>{{ $user->phone }}</td>
               <td>
-               <a href="{{ $user->agent_link }}">{{ $user->agent_link }}</a>
+                <a href="{{ $user->agent_link }}" target="_blanck" style="text-decoration: blueviolet" >{{ $user->agent_link }}</a>
               </td>
             </tr>
             @endforeach

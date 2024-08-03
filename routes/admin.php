@@ -133,4 +133,4 @@ Route::group([
     Route::resource('/product_code', App\Http\Controllers\Admin\ProductCodeController::class);
 });
 
-Route::get('/agent/{id}/login', [AgentController::class, 'showAgentLogin'])->name('agent.login');
+Route::get('/agent/{id}/{username}/login', [AgentController::class, 'showAgentLogin'])->name('agent.login');

@@ -385,4 +385,5 @@ class AgentController extends Controller
         $agent = User::findOrFail($id);
         return view('auth.agent_login', compact('agent'));
     }
+     
 }
