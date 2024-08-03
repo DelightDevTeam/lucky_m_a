@@ -1,6 +1,6 @@
 @extends('admin_layouts.app')
 @section('content')
-<div class="p-4 rounded-4 shadow">
+<div class="p-4 rounded-4 shadow border border-1 border-light">
     <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6 mt-sm-0 mt-4">
             <div class="card  mb-2">
