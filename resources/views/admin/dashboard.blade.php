@@ -6,7 +6,8 @@
             <div class="card  mb-2">
                 <div class="card-header p-3 pt-2">
                     <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary shadow text-center border-radius-xl mt-n4 position-absolute">
-                        <i class="material-icons opacity-10">leaderboard</i>
+                        {{-- <i class="material-icons opacity-10">leaderboard</i> --}}
+                        <i class="fas fa-dollar-sign"></i>
                     </div>
                     <div class="text-end pt-1">
                         <p class="text-sm mb-0 text-capitalize">Balance</p>
