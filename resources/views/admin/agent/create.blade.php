@@ -152,7 +152,7 @@
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
-            {{-- active and inactive with dropdown --}} 
+            {{-- active and inactive with dropdown --}}
             <div class="custom-form-group">
             <label for="title">Status <span class="text-danger">*</span></label>
             <div class="custom-select-wrapper">
@@ -166,7 +166,7 @@
             @enderror
           </div>
 
-           
+
             <div class="custom-form-group">
               <button class="btn btn-info" type="button" id="resetFormButton">Cancel</button>
 
@@ -229,7 +229,6 @@
   var name = @json(session('username'));
   var pw = @json(session('password'));
   var deposit_amount = @json(session('amount'));
-  var agent_link = @json(session('agent_link'))
 
   @if(session() -> has('success'))
   Swal.fire({
@@ -256,11 +255,6 @@
   <tr>
     <td>url</td>
     <td id=""> ${url}</td>
-  </tr>
-
-   <tr>
-    <td>agent url</td>
-    <td id=""> ${agent_link}</td>
   </tr>
 
   <tr>
