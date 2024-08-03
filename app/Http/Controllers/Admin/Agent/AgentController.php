@@ -47,6 +47,26 @@ class AgentController extends Controller
         return view('admin.agent.index', compact('users'));
     }
 
+    public function agentLink()
+    {
+        abort_if(
+            Gate::denies('agent_index'),
+            Response::HTTP_FORBIDDEN,
+            '403 Forbidden |You cannot  Access this page because you do not have permission'
+        );
+        //kzt
+        $users = User::with('roles')
+            ->whereHas('roles', function ($query) {
+                $query->where('role_id', self::AGENT_ROLE);
+            })
+            ->where('agent_id', auth()->id())
+            ->orderBy('id', 'desc')
+            ->get();
+
+        //kzt
+        return view('admin.agent.link_index', compact('users'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -97,11 +117,19 @@ class AgentController extends Controller
             app(WalletService::class)->transfer($master, $agent, $inputs['amount'], TransactionName::CreditTransfer);
         }
 
+            // Generate the agent link
+        //$agentLink = url('/agent/' . $agent->id);
+         $agentLoginLink = url('/agent/' . $agent->id . '/'. $agent->user_name . '/login');
+        // Save the agent link to the database
+        $agent->update(['agent_link' => $agentLoginLink]);
+
+
         return redirect()->back()
             ->with('success', 'Agent created successfully')
             ->with('password', $request->password)
             ->with('username', $agent->user_name)
-            ->with('amount', $transfer_amount);
+            ->with('amount', $transfer_amount)
+            ->with('agent_link', $agentLoginLink);
     }
 
     /**
@@ -350,4 +378,12 @@ class AgentController extends Controller
 
         return $randomString;
     }
+    
+
+    public function showAgentLogin($id)
+    {
+        $agent = User::findOrFail($id);
+        return view('auth.agent_login', compact('agent'));
+    }
+     
 }

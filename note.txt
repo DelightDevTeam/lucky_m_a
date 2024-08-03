@@ -7,3 +7,6 @@ tail -f /var/www/html/shweboslot/storage/logs/laravel.log
 crontab -e
 
 * * * * * cd /var/www/html/lucky_m_a && php artisan schedule:run >> /dev/null 2>&1
+
+
+php artisan make:migration add_agent_link_to_users_table --table=users
