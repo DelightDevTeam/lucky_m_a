@@ -28,8 +28,8 @@
     <div class="row">
         <div class="col-lg-8 col-md-10 offset-lg-2 offset-md-1">
             <a href="{{ url('/') }}" class="d-flex justify-content-around text-decoration-none text-white mb-4 d-block">
-                {{-- <img src="{{ asset('assets/img/logo.png') }}" width="300px" alt=""> --}}
-                <img src="{{ asset('assets/img/logo.png') }}" width="100px" alt="" class="rounded-circle d-block">
+                {{-- <img src="{{ asset('assets/img/main_logo.png') }}" width="300px" alt=""> --}}
+                <img src="{{ asset('assets/img/main_logo.png') }}" width="100px" alt="" class="rounded-circle d-block">
                 <div class="text-start mt-3">
                     <h3>Delight 2D | 3D</h3>
                     <span>အကောင့် ဝင်ရန်</span>

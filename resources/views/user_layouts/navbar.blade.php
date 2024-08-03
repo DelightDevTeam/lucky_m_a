@@ -6,7 +6,7 @@
                 <div class="col-4">
                     <a href="{{ url('/') }}" class="text-decoration-none">
                         <div class="d-flex">
-                            <img src="{{ asset('assets/img/logo.png') }}" class="d-block img-fluid" width="50px" alt="">
+                            <img src="{{ asset('assets/img/main_logo.png') }}" class="d-block img-fluid" width="50px" alt="">
                         </div>
                     </a>
                 </div>
@@ -81,9 +81,9 @@
                 <a href="#" class="login-btn">
                     {{ Auth::user()->name }}
                 </a>
-               
+
                 <small class="text-purple">
-                    <i class="fas fa-wallet text-purple"></i> :  MMK 
+                    <i class="fas fa-wallet text-purple"></i> :  MMK
                 </small>
             </div>
         </div>

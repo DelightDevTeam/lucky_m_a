@@ -23,14 +23,12 @@ use App\Http\Controllers\Admin\Deposit\DepositRequestController;
 use App\Http\Controllers\Admin\PaymentTypeController;
 use App\Http\Controllers\Admin\TransferLog\TransferLogController;
 use App\Http\Controllers\Admin\WithDraw\WithDrawRequestController;
+use \App\Http\Controllers\Admin\SiteLogoController;
 
 Route::group([
     'prefix' => 'admin', 'as' => 'admin.',
     'middleware' => ['auth', 'checkBanned']
 ], function () {
-    Route::post('test', function () {
-        dd('here');
-    })->name('test');
 
     Route::post('balance-up', [HomeController::class, 'balanceUp'])->name('balanceUp');
     Route::get('logs/{id}', [HomeController::class, 'logs'])
@@ -55,7 +53,7 @@ Route::group([
 
     Route::get('/players-list', [PlayerController::class, 'player_with_agent'])->name('playerListForAdmin');
 
-    
+
 
     Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('profile/change-password/{user}', [ProfileController::class, 'updatePassword'])
@@ -72,6 +70,7 @@ Route::group([
     Route::resource('adsbanners', BannerAdsController::class);
     Route::resource('text', BannerTextController::class);
     Route::resource('/promotions', PromotionController::class);
+    Route::resource('sitelogo', SiteLogoController::class);
     Route::resource('paymentTypes', PaymentTypeController::class);
     Route::get('gametypes', [GameTypeProductController::class, 'index'])->name('gametypes.index');
     Route::get('gametypes/{game_type_id}/product/{product_id}', [GameTypeProductController::class, 'edit'])->name('gametypes.edit');

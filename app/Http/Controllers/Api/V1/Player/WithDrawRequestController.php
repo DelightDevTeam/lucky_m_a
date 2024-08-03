@@ -19,13 +19,16 @@ class WithDrawRequestController extends Controller
         try {
             $inputs = $request->validated();
             $player = Auth::user();
+            if($request->amount < $player->balance){
+                $withdraw = ModelsWithDrawRequest::create(array_merge(
+                    $inputs,
+                    ['user_id' => $player->id, 'agent_id' => $player->agent_id]
+                ));
+                return $this->success($withdraw, 'Withdraw Request Success');
+            }else{
+                return $this->error('', 'Insufficient Balance',401);
+            }
 
-            $withdraw = ModelsWithDrawRequest::create(array_merge(
-                $inputs,
-                ['user_id' => $player->id, 'agent_id' => $player->agent_id]
-            ));
-
-            return $this->success($withdraw, 'Withdraw Request Success');
         } catch (Exception $e) {
             $this->error('', $e->getMessage(), 401);
         }

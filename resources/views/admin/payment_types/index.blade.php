@@ -55,11 +55,11 @@
                 {{ $payment->account_no }}
               </td>
               <td>
-                {{ $payment->paymentType->name }}
+                  <img src="{{asset('assets/img/paymentType/'. $payment->paymentType->image)}}" alt="" width="100px">
               </td>
               <td>
                 <a href="{{ route('admin.paymentTypes.edit', $payment->id) }}" data-bs-toggle="tooltip" data-bs-original-title="Edit Payment"><i class="material-icons-round text-secondary position-relative text-lg">mode_edit</i></a>
-                
+
               </td>
             </tr>
             @endforeach

@@ -41,19 +41,33 @@ class HomeController extends Controller
         $getUserCounts = function ($roleTitle) use ($isAdmin, $user) {
             return User::whereHas('roles', function ($query) use ($roleTitle) {
                 $query->where('title', '=', $roleTitle);
-            })->when(! $isAdmin, function ($query) use ($user) {
+            })->when(!$isAdmin, function ($query) use ($user) {
                 $query->where('agent_id', $user->id);
             })->count();
         };
-        $deposit = Auth::user()->transactions()->with('targetUser')
+        $totalDeposit = Auth::user()->transactions()->with('targetUser')
             ->select(DB::raw('SUM(transactions.amount) as amount')
             )
             ->where('transactions.type', 'deposit')
             ->first();
 
-        $withdraw = Auth::user()->transactions()->with('targetUser')->select(
+        $totalWithdraw = Auth::user()->transactions()->with('targetUser')->select(
             DB::raw('SUM(transactions.amount) as amount'),
         )->where('transactions.type', 'withdraw')->first();
+
+        $todayDeposit = Auth::user()->transactions()->with('targetUser')
+            ->select(DB::raw('SUM(transactions.amount) as amount')
+            )
+            ->where('transactions.type', 'deposit')
+            ->whereDate('created_at', date('Y-m-d'))
+            ->first();
+
+        $todayWithdraw = Auth::user()->transactions()->with('targetUser')->select(
+            DB::raw('SUM(transactions.amount) as amount')
+            )
+            ->where('transactions.type', 'withdraw')
+            ->whereDate('created_at', date('Y-m-d'))
+            ->first();
 
         $agent_count = $getUserCounts('Agent');
         $player_count = $getUserCounts('Player');
@@ -65,8 +79,10 @@ class HomeController extends Controller
             'agent_count',
             'player_count',
             'user',
-            'deposit',
-            'withdraw'
+            'totalDeposit',
+            'totalWithdraw',
+            'todayDeposit',
+            'todayWithdraw'
         ));
     }
 

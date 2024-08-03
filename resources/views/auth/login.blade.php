@@ -8,7 +8,7 @@
         <div class="col-md-6 offset-md-3">
           <div class="p-3 shadow bg-transparent border border-1 border-light rounded-4">
             <div class="text-center mt-3">
-              <img src="{{ asset('/assets/img/logo.png') }}" alt="" style="width: 120px; height: auto" />
+              <img src="{{ asset('/assets/img/main_logo.png') }}" alt="" style="width: 120px; height: auto" />
             </div>
             <h5 class="text-center mt-3 text-white">Login</h5>
             <p class="text-center text-white ">Enter your userId   and password to sign in</p>
@@ -21,7 +21,7 @@
                 <div class="alert alert-danger">{{ "The phone field is required." }}</div>
                 @enderror
               </div>
-      
+
               <div class="mb-3">
                 <div class="input-group border border-1">
                   <span class="input-group-text bg-white border border-0"><i class="fas fa-key text-purple"></i></span>
@@ -32,13 +32,13 @@
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
               </div>
-      
+
               <div class="mb-3">
                 <button type="submit" class="btn btn-primary w-100">Login</button>
               </div>
-      
+
               {{-- <hr /> --}}
-      
+
             </form>
           </div>
         </div>

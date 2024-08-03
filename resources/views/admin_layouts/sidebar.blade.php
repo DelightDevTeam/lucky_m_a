@@ -78,18 +78,11 @@
         <span class="sidenav-mini-icon"> <i class="fas fa-right-left"></i> </span>
         <span class="sidenav-normal  ms-2  ps-1">WithDraw Request</span>
       </a>
-    </li> 
-    @endcan
-    @can('bank')
-    <li class="nav-item ">
-      <a class="nav-link text-white " href="{{ route('admin.paymentTypes.index') }}">
-        <span class="sidenav-mini-icon"> <i class="fa-solid fa-panorama"></i> </span>
-        <span class="sidenav-normal  ms-2  ps-1"> Bank Account </span>
-      </a>
     </li>
     @endcan
+
     <hr class="horizontal light mt-0">
-    @can('admin_access')
+
     <li class="nav-item">
       <a data-bs-toggle="collapse" href="#dashboardsExamples" class="nav-link text-white " aria-controls="dashboardsExamples" role="button" aria-expanded="false">
         <i class="material-icons py-2">settings</i>
@@ -97,7 +90,23 @@
       </a>
       <div class="collapse " id="dashboardsExamples">
         <ul class="nav ">
-
+            @can('site_logo')
+            <li class="nav-item ">
+                <a class="nav-link text-white " href="{{ route('admin.sitelogo.index') }}">
+                    <span class="sidenav-mini-icon"> <i class="fa-solid fa-panorama"></i> </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> SiteLogo </span>
+                </a>
+            </li>
+            @endcan
+            @can('bank')
+            <li class="nav-item ">
+                <a class="nav-link text-white " href="{{ route('admin.paymentTypes.index') }}">
+                    <span class="sidenav-mini-icon"> <i class="fa-solid fa-panorama"></i> </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> Bank Account </span>
+                </a>
+            </li>
+            @endcan
+            @can('admin_access')
           <li class="nav-item ">
             <a class="nav-link text-white " href="{{ route('admin.banners.index') }}">
               <span class="sidenav-mini-icon"> <i class="fa-solid fa-panorama"></i> </span>
@@ -135,41 +144,11 @@
               <span class="sidenav-normal  ms-2  ps-1"> GameList </span>
             </a>
           </li>
-        </ul>
-      </div>
-    </li>
-    @endcan
-    <!-- @can('admin_access')
-    <li class="nav-item">
-      <a data-bs-toggle="collapse" href="#profileExample" class="nav-link text-white" aria-controls="pagesExamples" role="button" aria-expanded="false">
-        <i class="material-icons-round {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">content_paste</i>
-        <span class="nav-link-text ms-2 ps-1">Authorization</span>
-      </a>
-      <div class="collapse show" id="pagesExamples">
-        <ul class="nav">
-          <li class="nav-item ">
-            <div class="collapse " id="profileExample">
-              <ul class="nav nav-sm flex-column">
-                <li class="nav-item">
-                  <a class="nav-link text-white " href="{{ route('admin.roles.index') }}">
-                    <span class="sidenav-mini-icon">R</span>
-                    <span class="sidenav-normal  ms-2  ps-1">Roles</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link text-white " href="{{ route('admin.permissions.index')}}">
-                    <span class="sidenav-mini-icon"> P </span>
-                    <span class="sidenav-normal  ms-2  ps-1"> Permissions </span>
-                  </a>
-                </li>
 
-              </ul>
-            </div>
-          </li>
+                @endcan
         </ul>
       </div>
     </li>
-    @endcan -->
 
     <li class="nav-item">
       <a href="{{ route('logout') }}" onclick="event.preventDefault();

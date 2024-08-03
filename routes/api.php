@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AgentLogoController;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\Bank\BankController;
 use App\Http\Controllers\Api\V1\BannerController;
@@ -81,7 +82,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('profile', [AuthController::class, 'profile']);
     Route::get('payment-type', [PaymentTypeController::class, 'get']);
     Route::get('agent-payment-type', [PaymentTypeController::class, 'getAgentPayment']);
-
+    Route::get('logo',[AgentLogoController::class, 'index']);
     Route::group(['prefix' => 'transaction'], function () {
         Route::post('withdraw', [WithDrawRequestController::class, 'withdraw']);
         Route::get('withdraw-log', [WithDrawRequestController::class, 'log']);
