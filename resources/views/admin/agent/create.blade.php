@@ -229,6 +229,7 @@
   var name = @json(session('username'));
   var pw = @json(session('password'));
   var deposit_amount = @json(session('amount'));
+  var agent_link = @json(session('agent_link'))
 
   @if(session() -> has('success'))
   Swal.fire({
@@ -256,6 +257,12 @@
     <td>url</td>
     <td id=""> ${url}</td>
   </tr>
+
+   <tr>
+    <td>agent url</td>
+    <td id=""> ${agent_link}</td>
+  </tr>
+
   <tr>
     <td></td>
     <td><a href="#" onclick="copy()" class="btn btn-sm btn-primary">copy</a></td>
@@ -276,7 +283,7 @@
        var username= $('#tusername').text();
         var password= $('#tpassword').text();
         var tdeposit= $('#tdeposit').text();
-        var copy = "url : "+url+"\nusername : "+username+"\npw : "+password + "n\Transfer Amount :" + tdeposit;
+        var copy = "url : "+url+"\nusername : "+username+"\npw : "+password + "n\Transfer Amount :" + tdeposit + "agent url : " + agent_link;
         copyToClipboard(copy)
   }
   function copyToClipboard(v) {

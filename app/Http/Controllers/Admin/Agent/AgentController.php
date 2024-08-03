@@ -97,11 +97,19 @@ class AgentController extends Controller
             app(WalletService::class)->transfer($master, $agent, $inputs['amount'], TransactionName::CreditTransfer);
         }
 
+            // Generate the agent link
+        $agentLink = url('/agent/' . $agent->id);
+
+        // Save the agent link to the database
+        $agent->update(['agent_link' => $agentLink]);
+
+
         return redirect()->back()
             ->with('success', 'Agent created successfully')
             ->with('password', $request->password)
             ->with('username', $agent->user_name)
-            ->with('amount', $transfer_amount);
+            ->with('amount', $transfer_amount)
+            ->with('agent_link', $agentLink);
     }
 
     /**
