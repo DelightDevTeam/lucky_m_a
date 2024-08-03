@@ -40,6 +40,7 @@
             <th>AgentName</th>
             <th>AgentID</th>
             <th>ReferralCode</th>
+            <th>Phone</th>
             <th>Agent Link</th>
           </thead>
           <tbody>\
