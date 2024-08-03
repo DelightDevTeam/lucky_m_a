@@ -85,7 +85,7 @@
                 <div class="card-header p-3 pt-2 bg-transparent">
                     <div class="icon icon-lg icon-shape bg-gradient-success shadow-warning text-center border-radius-xl mt-n4 position-absolute">
                     <a href="{{route('admin.player.create')}}"> 
-                        <i class="fas fa-users">person_add</i>
+                        <i class="fas fa-users"></i>
                     </a>
                     </div>
                     <div class="text-end pt-1">
