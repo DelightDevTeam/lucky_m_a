@@ -119,7 +119,7 @@ class AgentController extends Controller
 
             // Generate the agent link
         //$agentLink = url('/agent/' . $agent->id);
-         $agentLoginLink = url('/agent/' . $agent->id . '/login');
+         $agentLoginLink = url('/agent/' . $agent->id . '/'. $agent->user_name . '/login');
         // Save the agent link to the database
         $agent->update(['agent_link' => $agentLoginLink]);
 
