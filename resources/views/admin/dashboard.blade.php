@@ -1,6 +1,6 @@
 @extends('admin_layouts.app')
 @section('content')
-<div class="container card py-4 bg-secondary">
+<div class="container card py-5 bg-secondary">
     <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6 mt-sm-0 mt-4">
             <div class="card  mb-2">
