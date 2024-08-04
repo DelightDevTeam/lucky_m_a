@@ -237,7 +237,7 @@
     showConfirmButton: false,
     showCloseButton: true,
     html: `
-  <table class="table table-bordered" style="background:#eee;">
+  <table class="table table-bordered" style="color: #fff;">
   <tbody>
   <tr>
     <td>username</td>
