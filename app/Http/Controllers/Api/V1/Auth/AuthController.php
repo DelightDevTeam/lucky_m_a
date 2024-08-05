@@ -64,15 +64,14 @@ class AuthController extends Controller
         {
             $inputs = $request->validated();
 
-            $userPrepare = array_merge(
-                $inputs,
-                [
+            $userPrepare = [
+                    'phone' => $request->phone,
+                    'name' => $request->name,
                     'user_name' => $this->generateRandomString(),
                     'password' => Hash::make($inputs['password']),
                     'agent_id' => $agent->id,
-                    'type' => UserType::Player,
-                ]
-            );
+                    'type' => UserType::Player
+                ];
 
             $player = User::create($userPrepare);
             $player->roles()->sync(self::PLAYER_ROLE);

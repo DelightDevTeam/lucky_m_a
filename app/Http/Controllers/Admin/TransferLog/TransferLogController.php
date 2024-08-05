@@ -22,18 +22,6 @@ class TransferLogController extends Controller
         return view('admin.trans_log.index', compact('transferLogs'));
     }
 
-    // public function transferLog($id)
-    // {
-    //     abort_if(
-    //         Gate::denies('make_transfer') || !$this->ifChildOfParent(request()->user()->id, $id),
-    //         Response::HTTP_FORBIDDEN,
-    //         '403 Forbidden |You cannot  Access this page because you do not have permission'
-    //     );
-    //     $transferLogs = Auth::user()->transactions()->with("targetUser")->where('target_user_id', $id)->latest()->paginate();
-
-    //     return view('admin.trans_log.detail', compact('transferLogs'));
-    // }
-    // In your transferLog method
     public function transferLog($id)
     {
         abort_if(
