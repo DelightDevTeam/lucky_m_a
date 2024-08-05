@@ -108,7 +108,7 @@
             <div class="custom-form-group">
               <label for="title">Agent ID <span class="text-danger">*</span></label>
               <input type="text"  name="user_name" class="form-control" value="{{$agent_name}}" readonly>
-              @error('name')
+              @error('user_name')
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
@@ -122,7 +122,7 @@
             <div class="custom-form-group">
               <label for="title">Agent Name <span class="text-danger">*</span></label>
               <input type="text"  name="name" class="form-control" value="{{old('name')}}" placeholder="Enter Agent Name">
-              @error('player_name')
+              @error('name')
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
