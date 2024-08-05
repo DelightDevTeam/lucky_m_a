@@ -14,11 +14,18 @@ class RegisterResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
+        $user = [
             'id' => $this->id,
             'name' => $this->name,
-            'user_name' => $this->user_name,
-            'phone' => $this->phone
+            'phone' => $this->phone,
+            'email' => $this->email,
+            'balance' => $this->balanceFloat,
+            'status' => $this->status,
+        ];
+
+        return [
+            'user' => $user,
+            'token' => $this->createToken($this->user_name)->plainTextToken,
         ];
     }
 }
