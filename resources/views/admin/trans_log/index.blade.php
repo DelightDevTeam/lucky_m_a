@@ -40,6 +40,7 @@
             <th>Date</th>
             <th>To User</th>
             <th>Amount</th>
+            <th>Type</th>
         </tr>
     </thead>
     <tbody>
@@ -52,7 +53,13 @@
                 <td>
                   <div class="d-flex align-items-center text-{{$log->type =='deposit' ? 'success' : 'danger'}} text-gradient text-sm font-weight-bold ms-auto"> {{$log->type == 'deposit' ? '+' : ''}}{{ $log->amountFloat }}</div>
                 </td>
-                
+                <td>
+                    @if($log->type == 'withdraw')
+                        <p class="text-danger">Withdraw</p>
+                    @else
+                        <p class="text-success">Deposit</p>
+                    @endif
+                </td>
             </tr>
         @endforeach
     </tbody>

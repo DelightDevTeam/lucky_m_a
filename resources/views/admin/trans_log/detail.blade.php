@@ -70,19 +70,16 @@
             <td>{{ $log->created_at }}</td>
             <td>{{ $log->targetUser->name }}</td>
             <td>
-                {{-- <div class="d-flex align-items-center text-{{ $log->type == 'deposit' ? 'danger' : 'success' }} text-gradient text-sm font-weight-bold ms-auto">
-                    {{ $log->amountFloat }}
-                </div> --}}
                 @if($log->type == 'deposit')
-                <p class="text-danger"> - {{ $log->amountFloat }}</p>
+                <p class="text-danger font-weight-bold">  +{{ abs($log->amountFloat) }}</p>
                 @elseif($log->type == 'withdraw')
-                <p class="text-success">+ {{ $log->amountFloat }}</p>
+                <p class="text-success font-weight-bold"> -{{ abs($log->amountFloat) }}</p>
                 @else
                 <p>No data Fount</p>
                 @endif
             </td>
             <td>
-                @if($log->type == 'deposit')
+                @if($log->type == 'withdraw')
                     <p class="text-danger">Withdraw</p>
                 @else
                     <p class="text-success">Deposit</p>

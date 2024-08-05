@@ -17,7 +17,10 @@ class TransferLogController extends Controller
     public function index()
     {
         $this->authorize('transfer_log', User::class);
-        $transferLogs = Auth::user()->transactions()->with('targetUser')->latest()->paginate();
+        $transferLogs = Auth::user()->transactions()->with('targetUser')
+            ->whereIn('transactions.type', ['withdraw', 'deposit'])
+            ->whereIn('transactions.name', ['credit_transfer', 'debit_transfer'])
+            ->latest()->paginate();
 
         return view('admin.trans_log.index', compact('transferLogs'));
     }
@@ -25,15 +28,15 @@ class TransferLogController extends Controller
     public function transferLog($id)
     {
         abort_if(
-            Gate::denies('make_transfer') || ! $this->ifChildOfParent(request()->user()->id, $id),
+Gate::denies('make_transfer') || !$this->ifChildOfParent(request()->user()->id, $id),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden | You cannot access this page because you do not have permission'
         );
 
-        $transferLogs = Auth::user()->transactions()->with('targetUser')->where('target_user_id', $id)->latest()->paginate();
-
-        // Log the transactions for debugging
-        Log::info($transferLogs->toArray());
+        $transferLogs = Auth::user()->transactions()->with('targetUser')
+            ->whereIn('transactions.type', ['withdraw', 'deposit'])
+            ->whereIn('transactions.name', ['credit_transfer', 'debit_transfer'])
+            ->where('target_user_id', $id)->latest()->paginate();
 
         return view('admin.trans_log.detail', compact('transferLogs'));
     }
