@@ -12,7 +12,7 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\PlayerResource;
-use App\Http\Resources\ContactResource;
+use App\Http\Resources\AgentResource;
 use App\Http\Requests\Api\LoginRequest;
 use App\Http\Resources\RegisterResource;
 use App\Http\Requests\Api\ProfileRequest;
@@ -147,11 +147,12 @@ class AuthController extends Controller
 
         return $this->success(new PlayerResource($player), 'Update profile');
     }
-    public function contact()
+
+    public  function getAgent()
     {
         $player = Auth::user();
 
-        return $this->success(new ContactResource($player->parent), 'Contact List');
+        return $this->success(new AgentResource($player->parent), 'Agent Information List');
     }
     private function generateRandomString()
     {

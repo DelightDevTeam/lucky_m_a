@@ -79,7 +79,7 @@
           </div>
         </div>
         <div class="card-body">
-          <form role="form" method="POST" class="text-start" action="{{ route('admin.agent.update',$agent->id) }}">
+          <form role="form" method="POST" class="text-start" action="{{ route('admin.agent.update',$agent->id) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="custom-form-group">
@@ -109,6 +109,13 @@
                   @error('line_id')
                   <span class="text-danger d-block">*{{ $message }}</span>
                   @enderror
+              </div>
+              <div class="custom-form-group">
+                  <label for="title">Agent Site Logo Image</label>
+                  <input type="file" class="form-control" id="" name="agent_logo">
+                  @if($agent->agent_logo)
+                      <img src="{{asset('assets/img/sitelogo/'. $agent->agent_logo)}}" alt="" width="100px">
+                  @endif
               </div>
             <div class="custom-form-group">
               <label for="title">Payment Type<span class="text-danger">*</span></label>

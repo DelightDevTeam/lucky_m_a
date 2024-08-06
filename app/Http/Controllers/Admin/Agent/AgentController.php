@@ -16,6 +16,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -98,7 +99,6 @@ class AgentController extends Controller
         $filename = uniqid('logo_') . '.' . $ext;
         $image->move(public_path('assets/img/sitelogo/'), $filename);
         $userPrepare['agent_logo'] = 'assets/img/sitelogo/' . $filename;
-
     }
 
 
@@ -108,13 +108,6 @@ class AgentController extends Controller
         if (isset($inputs['amount'])) {
             app(WalletService::class)->transfer($master, $agent, $inputs['amount'], TransactionName::CreditTransfer);
         }
-
-            // Generate the agent link
-        //$agentLink = url('/agent/' . $agent->id);
-         $agentLoginLink = url('/agent/' . $agent->id . '/'. $agent->user_name . '/login');
-        // Save the agent link to the database
-        $agent->update(['agent_link' => $agentLoginLink]);
-
 
         return redirect()->back()
             ->with('success', 'Agent created successfully')
@@ -161,8 +154,7 @@ class AgentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'user_name' => 'nullable|min:3|unique:users,user_name,'.$id,
+        $param = $request->validate([
             'name' => 'required|string',
             'phone' => ['nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'unique:users,phone,'.$id],
             'payment_type_id' => 'required|exists:payment_types,id',
@@ -171,7 +163,19 @@ class AgentController extends Controller
         ]);
 
         $user = User::find($id);
-        $user->update($request->all());
+        if($request->file('agent_logo'))
+        {
+            File::delete(public_path('assets/img/sitelogo/'.$user->agent_logo));
+            $image = $request->file('agent_logo');
+            $ext = $image->getClientOriginalExtension();
+            $filename = uniqid('agent_logo').'.'.$ext;
+            $image->move(public_path('assets/img/sitelogo/'), $filename);
+            array_merge($param,['agent_logo' => $filename]);
+            $user->update($param);
+        }else{
+            $user->update($param);
+        }
+
 
         return redirect()->back()
             ->with('success', 'Agent Updated successfully');
