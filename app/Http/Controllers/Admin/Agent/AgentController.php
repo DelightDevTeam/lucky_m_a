@@ -78,6 +78,7 @@ class AgentController extends Controller
         );
         $master = Auth::user();
         $inputs = $request->validated();
+
         if (isset($inputs['amount']) && $inputs['amount'] > $master->balanceFloat) {
             throw ValidationException::withMessages([
                 'amount' => 'Insufficient balance for transfer.',
@@ -98,9 +99,8 @@ class AgentController extends Controller
         $ext = $image->getClientOriginalExtension();
         $filename = uniqid('logo_') . '.' . $ext;
         $image->move(public_path('assets/img/sitelogo/'), $filename);
-        $userPrepare['agent_logo'] = 'assets/img/sitelogo/' . $filename;
+        $userPrepare['agent_logo'] = $filename;
     }
-
 
         $agent = User::create($userPrepare);
         $agent->roles()->sync(self::AGENT_ROLE);
@@ -170,12 +170,10 @@ class AgentController extends Controller
             $ext = $image->getClientOriginalExtension();
             $filename = uniqid('agent_logo').'.'.$ext;
             $image->move(public_path('assets/img/sitelogo/'), $filename);
-            array_merge($param,['agent_logo' => $filename]);
-            $user->update($param);
-        }else{
-            $user->update($param);
+            $param['agent_logo'] = $filename;
         }
 
+        $user->update($param);
 
         return redirect()->back()
             ->with('success', 'Agent Updated successfully');

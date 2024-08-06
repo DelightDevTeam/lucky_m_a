@@ -24,13 +24,13 @@ class AgentRequest extends FormRequest
         return [
             'user_name' => 'required', 'string', 'unique:users,user_name',
             'name' => 'required|min:3|string',
-            'phone' => ['nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'unique:users,phone'],
+            'phone' => ['nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/'],
             'password' => 'required|min:6',
             'amount' => 'nullable|numeric',
             'referral_code' => ['required', 'string', 'unique:users,referral_code'],
             'agent_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'payment_type_id' => 'required|numeric|exists:payment_types,id',
-            'account_name' => 'required|min:3|string',
+            'account_name' => 'required|string',
             'account_number' =>  ['required', 'regex:/^[0-9]+$/'],
             'line_id' => 'nullable',
         ];

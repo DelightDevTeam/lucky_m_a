@@ -155,7 +155,7 @@
                         <option value="{{$paymentType->id}}">{{$paymentType->name}}</option>
                     @endforeach
                 </select>
-                @error('account_name')
+                @error('payment_type_id')
                 <span class="text-danger d-block">*{{ $message }}</span>
                 @enderror
             </div>
