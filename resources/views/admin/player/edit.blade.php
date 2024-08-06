@@ -85,7 +85,7 @@
       @csrf
       @method('PUT')
       <div class="custom-form-group">
-              <label for="title">PlayerName <span class="text-danger">*</span></label>
+              <label for="title">PlayerId <span class="text-danger">*</span></label>
               <input type="text"  name="user_name" class="form-control" value="{{$player->name}}" readonly>
               @error('user_name')
               <span class="text-danger d-block">*{{ $message }}</span>
@@ -98,13 +98,38 @@
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
-            <!-- <div class="custom-form-group">
-              <label for="title">Phone No <span class="text-danger">*</span></label>
-              <input type="text"  name="phone" class="form-control" value="{{$player->phone}}">
-              @error('phone')
-              <span class="text-danger d-block">*{{ $message }}</span>
-              @enderror
-            </div> -->
+         <div class="custom-form-group">
+             <label for="title">Phone No</label>
+             <input type="text"  name="phone" class="form-control" value="{{$player->phone}}">
+             @error('phone')
+             <span class="text-danger d-block">*{{ $message }}</span>
+             @enderror
+         </div>
+         <div class="custom-form-group">
+             <label for="title">Payment Type<span class="text-danger">*</span></label>
+             <select name="payment_type_id" id="">
+                 @foreach($paymentTypes as $paymentType)
+                     <option value="{{$paymentType->id}}" {{$paymentType->id == $player->payment_type_id ? 'selected': ''}}>{{$paymentType->name}}</option>
+                 @endforeach
+             </select>
+             @error('payment_type_id')
+             <span class="text-danger d-block">*{{ $message }}</span>
+             @enderror
+         </div>
+         <div class="custom-form-group">
+             <label for="title">Account Name</label>
+             <input type="text"  name="account_name" class="form-control" value="{{$player->account_name}}">
+             @error('account_name')
+             <span class="text-danger d-block">*{{ $message }}</span>
+             @enderror
+         </div>
+         <div class="custom-form-group">
+             <label for="title">Account Number</label>
+             <input type="text"  name="account_number" class="form-control" value="{{$player->account_number}}">
+             @error('account_number')
+             <span class="text-danger d-block">*{{ $message }}</span>
+             @enderror
+         </div>
       <div class="custom-form-group">
        <button class="btn btn-primary" type="submit">Update</button>
       </div>

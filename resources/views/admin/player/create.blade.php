@@ -87,7 +87,7 @@
     <div class="col-12 col-md-8 mx-auto">
       <div class="card">
         <!-- Card header -->
-      
+
         <div class="card-header pb-0">
           <div class="d-lg-flex">
             <div>
@@ -95,7 +95,7 @@
               </h5>
 
             </div>
-            
+
             <div class="ms-auto my-auto mt-lg-0 mt-4">
               <div class="ms-auto my-auto">
                 <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.player.index') }}">
@@ -115,29 +115,54 @@
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
-            
+
             <div class="custom-form-group">
               <label for="title">Name <span class="text-danger">*</span></label>
-              <input type="text"  name="name" class="form-control" value="{{old('name')}}" placeholder="6-20 characters without spacing">
+              <input type="text"  name="name" class="form-control" value="{{old('name')}}" placeholder="Enter Name">
               @error('player_name')
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
             <div class="custom-form-group">
               <label for="title">Password <span class="text-danger">*</span></label>
-              <input type="text"  name="password" class="form-control" value="{{old('password')}}" placeholder="6-20 characters without spacing">
+              <input type="text"  name="password" class="form-control" value="{{old('password')}}" placeholder="Enter Password">
               @error('password')
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
             <div class="custom-form-group">
               <label for="title">Phone No</label>
-              <input type="text"  name="phone" class="form-control" value="{{old('phone')}}">
+              <input type="text"  name="phone" class="form-control" value="{{old('phone')}}" placeholder="Enter Phone Number">
               @error('phone')
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
-
+              <div class="custom-form-group">
+                  <label for="title">Payment Type <span class="text-danger">*</span></label>
+                  <select name="payment_type_id" id="">
+                      <option value="">Select Payment Type</option>
+                      @foreach($paymentTypes as $paymentType)
+                          <option value="{{$paymentType->id}}">{{$paymentType->name}}</option>
+                      @endforeach
+                  </select>
+                  @error('account_name')
+                  <span class="text-danger d-block">*{{ $message }}</span>
+                  @enderror
+              </div>
+              <div class="custom-form-group">
+                  <label for="title">Account Name <span class="text-danger">*</span></label>
+                  <input type="text"  name="account_name" class="form-control" value="{{old('account_name')}}" placeholder="Enter Bank Account Name">
+                  @error('account_name')
+                  <span class="text-danger d-block">*{{ $message }}</span>
+                  @enderror
+              </div>
+              <div class="custom-form-group">
+                  <label for="title">Account Number <span class="text-danger">*</span></label>
+                  <input type="text"  name="account_number" class="form-control" value="{{old('account_number')}}" placeholder="Enter Bank Account Number">
+                  @error('account_number')
+                  <span class="text-danger d-block">*{{ $message }}</span>
+                  @enderror
+              </div>
             <div class="custom-form-group">
               <p>Max Balance : </p>
               <span class="badge badge-sm bg-gradient-success">{{auth()->user()->balanceFloat}}</span>
@@ -149,21 +174,7 @@
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
-            {{-- active and inactive with dropdown --}} 
-            <div class="custom-form-group">
-            <label for="title">Status <span class="text-danger">*</span></label>
-            <div class="custom-select-wrapper">
-                <select name="status" class="form-control custom-select">
-                    <option value="1">Active</option>
-                    <option value="0">Inactive</option>
-                </select>
-            </div>
-            @error('status')
-            <span class="text-danger d-block">*{{ $message }}</span>
-            @enderror
-          </div>
 
-           
             <div class="custom-form-group">
               <button class="btn btn-info" type="button" id="resetFormButton">Reset</button>
 

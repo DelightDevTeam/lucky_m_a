@@ -84,14 +84,14 @@
             @method('PUT')
             <div class="custom-form-group">
               <label for="title">Agent Id <span class="text-danger">*</span></label>
-              <input type="text"  name="name" class="form-control" value="{{$agent->user_name}}" readonly>
+              <input type="text"  name="user_name" class="form-control" value="{{$agent->user_name}}" readonly>
               @error('name')
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
             <div class="custom-form-group">
               <label for="title">Agent Name <span class="text-danger">*</span></label>
-              <input type="text"  name="player_name" class="form-control" value="{{$agent->name}}">
+              <input type="text"  name="name" class="form-control" value="{{$agent->name}}">
               @error('player_name')
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
@@ -102,6 +102,31 @@
               @error('phone')
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
+            </div>
+            <div class="custom-form-group">
+              <label for="title">Payment Type<span class="text-danger">*</span></label>
+                <select name="payment_type_id" id="">
+              @foreach($paymentTypes as $paymentType)
+                    <option value="{{$paymentType->id}}" {{$paymentType->id == $agent->payment_type_id ? 'selected': ''}}>{{$paymentType->name}}</option>
+              @endforeach
+                </select>
+              @error('payment_type_id')
+              <span class="text-danger d-block">*{{ $message }}</span>
+              @enderror
+            </div>
+            <div class="custom-form-group">
+               <label for="title">Account Name</label>
+               <input type="text"  name="account_name" class="form-control" value="{{$agent->account_name}}">
+               @error('account_name')
+               <span class="text-danger d-block">*{{ $message }}</span>
+               @enderror
+            </div>
+            <div class="custom-form-group">
+               <label for="title">Account Number</label>
+               <input type="text"  name="account_number" class="form-control" value="{{$agent->account_number}}">
+               @error('account_number')
+               <span class="text-danger d-block">*{{ $message }}</span>
+               @enderror
             </div>
             <div class="custom-form-group">
               <button type="submit" class="btn btn-primary" type="button">Update</button>
@@ -129,7 +154,7 @@
     icon: "success",
     showConfirmButton: false,
     showCloseButton: true,
-    
+
   });
   @elseif(session()->has('error'))
   Swal.fire({

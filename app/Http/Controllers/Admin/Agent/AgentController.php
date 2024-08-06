@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AgentRequest;
 use App\Http\Requests\TransferLogRequest;
 use App\Models\Admin\TransferLog;
+use App\Models\PaymentType;
 use App\Models\User;
 use App\Services\WalletService;
 use Exception;
@@ -59,8 +60,9 @@ class AgentController extends Controller
         );
         $agent_name = $this->generateRandomString();
         $referral_code = $this->generateReferralCode();
+        $paymentTypes = PaymentType::all();
 
-        return view('admin.agent.create', compact('agent_name', 'referral_code'));
+        return view('admin.agent.create', compact('agent_name', 'referral_code', 'paymentTypes'));
     }
 
     /**
@@ -85,11 +87,10 @@ class AgentController extends Controller
             $inputs,
             [
                 'password' => Hash::make($inputs['password']),
-                'agent_id' => Auth()->user()->id,
+                'agent_id' => Auth::id(),
                 'type' => UserType::Admin,
             ]
         );
-
 
         if ($request->hasFile('agent_logo')) {
         $image = $request->file('agent_logo');
@@ -97,9 +98,9 @@ class AgentController extends Controller
         $filename = uniqid('logo_') . '.' . $ext;
         $image->move(public_path('assets/img/sitelogo/'), $filename);
         $userPrepare['agent_logo'] = 'assets/img/sitelogo/' . $filename;
-        
+
     }
-       
+
 
         $agent = User::create($userPrepare);
         $agent->roles()->sync(self::AGENT_ROLE);
@@ -150,8 +151,9 @@ class AgentController extends Controller
         );
 
         $agent = User::find($id);
+        $paymentTypes = PaymentType::all();
 
-        return view('admin.agent.edit', compact('agent'));
+        return view('admin.agent.edit', compact('agent', 'paymentTypes'));
     }
 
     /**
@@ -159,24 +161,17 @@ class AgentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        abort_if(
-            Gate::denies('agent_update') || ! $this->ifChildOfParent(request()->user()->id, $id),
-            Response::HTTP_FORBIDDEN,
-            '403 Forbidden |You cannot  Access this page because you do not have permission'
-        );
-
         $request->validate([
-            'name' => 'required|min:3|unique:users,name,'.$id,
-            'player_name' => 'required|string',
+            'user_name' => 'nullable|min:3|unique:users,user_name,'.$id,
+            'name' => 'required|string',
             'phone' => ['nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'unique:users,phone,'.$id],
+            'payment_type_id' => 'required|exists:payment_types,id',
+            'account_number' => 'required|string',
+            'account_name' => 'required|string',
         ]);
 
         $user = User::find($id);
-        $user->update([
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'player_name' => $request->player_name,
-        ]);
+        $user->update($request->all());
 
         return redirect()->back()
             ->with('success', 'Agent Updated successfully');
@@ -297,7 +292,7 @@ class AgentController extends Controller
     {
         $randomNumber = mt_rand(10000000, 99999999);
 
-        return 'A'.$randomNumber;
+        return 'LKM'.$randomNumber;
     }
 
     public function banAgent($id)

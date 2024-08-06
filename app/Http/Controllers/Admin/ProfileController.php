@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\Admin\AdminAddBalance;
+use App\Models\PaymentType;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
@@ -27,24 +28,10 @@ class ProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $paymentTypes = PaymentType::all();
 
-        return view('admin.profile.admin_profile', compact('user'));
+        return view('admin.profile.admin_profile', compact('user', 'paymentTypes'));
 
-    }
-
-    //UserProfile
-    public function UserProfile()
-    {
-        if (auth()->user()->hasRole('Admin')) {
-            $user = User::find(Auth::user()->id);
-
-            return view('admin.profile.admin_profile', compact('user'));
-        } else {
-            $user = User::find(Auth::user()->id);
-
-            return view('user_profile', compact('user'));
-        }
-        //return view('admin.profile.index');
     }
 
     /**

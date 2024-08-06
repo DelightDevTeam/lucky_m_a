@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             PermissionsTableSeeder::class,
             RolesTableSeeder::class,
             PermissionRoleTableSeeder::class,
+            PaymentTypeTableSeeder::class,
             UsersTableSeeder::class,
             RoleUserTableSeeder::class,
             GameTypeTableSeeder::class,
@@ -63,8 +64,7 @@ class DatabaseSeeder extends Seeder
             GamingWorldTablesSeeder::class,
             YesGetRichTablesSeeder::class,
             Live22SMTablesSeeder::class,
-            BannerAdsSeeder::class,
-            PaymentTypeTableSeeder::class,
+            BannerAdsSeeder::class
         ]);
 
     }

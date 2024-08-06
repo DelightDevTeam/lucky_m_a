@@ -7,6 +7,7 @@ use App\Enums\UserType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PlayerRequest;
 use App\Http\Requests\TransferLogRequest;
+use App\Models\PaymentType;
 use App\Models\User;
 use App\Services\UserService;
 use App\Services\WalletService;
@@ -75,8 +76,9 @@ class PlayerController extends Controller
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
         $player_name = $this->generateRandomString();
+        $paymentTypes = PaymentType::all();
 
-        return view('admin.player.create', compact('player_name'));
+        return view('admin.player.create', compact('player_name', 'paymentTypes'));
     }
 
     /**
@@ -105,7 +107,7 @@ class PlayerController extends Controller
                 $inputs,
                 [
                     'password' => Hash::make($inputs['password']),
-                    'agent_id' => Auth()->user()->id,
+                    'agent_id' => Auth::id(),
                     'type' => UserType::Player,
                 ]
             );
@@ -157,8 +159,9 @@ class PlayerController extends Controller
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
+        $paymentTypes = PaymentType::all();
 
-        return response()->view('admin.player.edit', compact('player'));
+        return response()->view('admin.player.edit', compact('player', 'paymentTypes'));
     }
 
     /**
@@ -321,7 +324,7 @@ class PlayerController extends Controller
     {
         $randomNumber = mt_rand(10000000, 99999999);
 
-        return 'MW'.$randomNumber;
+        return 'LKM'.$randomNumber;
     }
 
     private function getRefrenceId($prefix = 'REF')
