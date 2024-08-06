@@ -90,6 +90,17 @@ class AgentController extends Controller
             ]
         );
 
+
+        if ($request->hasFile('agent_logo')) {
+        $image = $request->file('agent_logo');
+        $ext = $image->getClientOriginalExtension();
+        $filename = uniqid('logo_') . '.' . $ext;
+        $image->move(public_path('assets/img/sitelogo/'), $filename);
+        $userPrepare['agent_logo'] = 'assets/img/sitelogo/' . $filename;
+        
+    }
+       
+
         $agent = User::create($userPrepare);
         $agent->roles()->sync(self::AGENT_ROLE);
 

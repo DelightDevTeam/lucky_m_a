@@ -103,7 +103,7 @@
           </div>
         </div>
          <div class="card-body">
-          <form role="form" method="POST" class="text-start" action="{{ route('admin.agent.store') }}">
+          <form role="form" method="POST" class="text-start" action="{{ route('admin.agent.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="custom-form-group">
               <label for="title">Agent ID <span class="text-danger">*</span></label>
@@ -140,6 +140,11 @@
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
+
+             <div class="custom-form-group">
+              <label for="title">Agent Site Logo Image</label>
+              <input type="file" class="form-control" id="" name="agent_logo">
+             </div>
 
             <div class="custom-form-group">
               <label>Max Balance : </label>

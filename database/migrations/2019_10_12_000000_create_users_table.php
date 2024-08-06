@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('is_changed_password')->default(1);
             $table->unsignedBigInteger('agent_id')->nullable();
             $table->string('referral_code')->unique()->nullable();
+            $table->string('agent_logo', 2000)->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('agent_id')->references('id')->on('users')->onDelete('cascade');
