@@ -18,14 +18,11 @@ class DepositRequestController extends Controller
     {
         try {
             $player = Auth::user();
-
             $deposit = ModelsDepositRequest::create([
-                'user_payment_id' => $request->agent_payment_id,
+                'agent_payment_type_id' => $request->agent_payment_type_id,
                 'user_id' => $player->id,
                 'agent_id' => $player->agent_id,
-                'amount' => $request->amount,
-                'refrence_no' => $request->refrence_no,
-                'note' => $request->note,
+                'amount' => $request->amount
             ]);
 
             return $this->success($deposit, 'Deposit Request Success');

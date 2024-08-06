@@ -106,16 +106,12 @@ Route::group([
 
 
     Route::get('withdraw', [WithDrawRequestController::class, 'index'])->name('agent.withdraw');
-    Route::get('withdraw/{id}', [WithDrawRequestController::class, 'show'])->name('agent.withdrawshow');
-    Route::post('withdraw/{withdraw}', [WithDrawRequestController::class, 'statusChange'])->name('agent.withdrawStatus');
+    Route::post('withdraw/{withdraw}', [WithDrawRequestController::class, 'statusChangeIndex'])->name('agent.withdrawStatusUpdate');
+    Route::post('withdraw/reject/{withdraw}', [WithDrawRequestController::class, 'statusChangeReject'])->name('agent.withdrawStatusreject');
 
     Route::get('deposit', [DepositRequestController::class, 'index'])->name('agent.deposit');
-    Route::get('deposit/{id}', [DepositRequestController::class, 'show'])->name('agent.depositshow');
-    Route::post('deposit/{deposit}', [DepositRequestController::class, 'statusChange'])->name('agent.depositStatus');
-
-    Route::post('deposit/{id}', [DepositRequestController::class, 'statusChangeIndex'])->name('agent.depositStatusUpdate');
-
-     Route::post('deposit/reject/{deposit}', [DepositRequestController::class, 'statusChangeReject'])->name('agent.depositStatusreject');
+    Route::post('deposit/{deposit}', [DepositRequestController::class, 'statusChangeIndex'])->name('agent.depositStatusUpdate');
+    Route::post('deposit/reject/{deposit}', [DepositRequestController::class, 'statusChangeReject'])->name('agent.depositStatusreject');
 
     Route::get('transer-log', [TransferLogController::class, 'index'])->name('transferLog');
     Route::get('transferlog/{id}', [TransferLogController::class, 'transferLog'])->name('transferLogDetail');

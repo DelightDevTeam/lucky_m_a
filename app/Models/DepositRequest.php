@@ -11,16 +11,20 @@ class DepositRequest extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'agent_id', 'user_payment_id', 'note', 'amount', 'status', 'refrence_no'];
+    protected $fillable = ['user_id', 'agent_id', 'agent_payment_type_id', 'amount', 'status', 'refrence_no'];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id');
     }
 
-    public function userPayment()
+    public function agent()
     {
-        return $this->belongsTo(UserPayment::class);
+        return $this->belongsTo(User::class,'agent_id');
+    }
+    public function paymentType()
+    {
+        return $this->belongsTo(PaymentType::class,'agent_payment_type_id');
     }
 
 }

@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('agent_logo', 2000)->nullable();
             $table->string('account_name');
             $table->string('account_number');
+            $table->string('line_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('payment_type_id')->references('id')->on('payment_types')->onDelete('cascade');

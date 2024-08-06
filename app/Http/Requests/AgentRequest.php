@@ -31,7 +31,8 @@ class AgentRequest extends FormRequest
             'agent_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'payment_type_id' => 'required|numeric|exists:payment_types,id',
             'account_name' => 'required|min:3|string',
-            'account_number' => 'required|min:3|string',
+            'account_number' =>  ['required', 'regex:/^[0-9]+$/'],
+            'line_id' => 'nullable',
         ];
     }
 }

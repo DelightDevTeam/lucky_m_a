@@ -22,10 +22,8 @@ class DepositRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'agent_payment_id' => ['required', 'exists:user_payments,id'],
+            'agent_payment_type_id' => ['required', 'exists:payment_types,id'],
             'amount' => ['required', 'integer', 'min:1000'],
-            'refrence_no' => ['required', 'integer', 'digits:6'],
-            'note' => ['nullable', 'string'],
         ];
     }
 }

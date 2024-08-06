@@ -30,8 +30,7 @@
     <table class="table table-flush" id="users-search">
       <thead class="thead-light">
         <th>#</th>
-        {{-- <th>id</th> --}}
-        <th>PlayerId</th>
+        <th>PlayerName</th>
         <th>Requested Amount</th>
         <th>Payment Method</th>
         <th>Bank Account Name</th>
@@ -44,18 +43,13 @@
         @foreach ($deposits as $deposit)
         <tr>
           <td>{{ $loop->iteration }}</td>
-          {{-- <td>{{ $deposit->user->id }}</td> --}}
           <td>
-            <span class="d-block">{{ $deposit->user->user_name }}</span>
+            <span class="d-block">{{ $deposit->user->name }}</span>
           </td>
           <td>{{ number_format($deposit->amount) }}</td>
-          <td>{{ $deposit->userPayment->paymentType->name }}</td>
-          <td>{{$deposit->userPayment->account_name}}</td>
-          <td>{{$deposit->userPayment->account_no}}</td>
-          {{-- <td>
-          <span class="badge text-bg-{{ $deposit->status == 0 ? 'danger' : 'success' }} text-white mb-2">{{ $deposit->status == 0 ? "pending" : "done" }}</span>
-          </td> --}}
-
+          <td>{{ $deposit->paymentType->name }}</td>
+          <td>{{$deposit->agent->account_name}}</td>
+          <td>{{$deposit->agent->account_number}}</td>
           <td>
             @if ($deposit->status == 0)
                 <span class="badge text-bg-warning text-white mb-2">Pending</span>
@@ -75,48 +69,24 @@
             <input type="hidden" name="amount" value="{{ $deposit->amount }}">
             <input type="hidden" name="status" value="1">
             <input type="hidden" name="player" value="{{ $deposit->user_id }}">
-            <button class="btn btn-success p-1 me-1" type="submit">
-                <i class="fas fa-check"></i>
-            </button>
+            @if($deposit->status == 0)
+                <button class="btn btn-success p-1 me-1" type="submit">
+                    <i class="fas fa-check"></i>
+                </button>
+            @endif
         </form>
 
          <form action="{{ route('admin.agent.depositStatusreject', $deposit->id) }}" method="post">
             @csrf
             <input type="hidden" name="status" value="2">
-            <button class="btn btn-danger p-1 me-1" type="submit">
-                <i class="fas fa-xmark"></i>
-            </button>
+             @if($deposit->status == 0)
+                 <button class="btn btn-danger p-1 me-1" type="submit">
+                     <i class="fas fa-xmark"></i>
+                 </button>
+             @endif
         </form>
-        <a href="{{ route('admin.agent.depositshow', $deposit->id) }}" class="btn btn-warning p-1 d-block">
-            <i class="fas fa-eye"></i>
-        </a>
     </div>
 </td>
-
-          {{-- <td>
-            <div class="d-flex align-items-center">
-              <form action="{{ route('admin.agent.depositStatus',$deposit->id) }}" method="post">
-                @csrf
-                <input type="hidden" name="amount" value="{{ $deposit->amount }}">
-                <input type="hidden" name="status" value="1">
-                <button class="btn btn-success p-1 me-1" type="submit">
-                  <i class="fas fa-check"></i>
-                </button>
-              </form>
-              <form action="{{ route('admin.agent.depositStatus',$deposit->id) }}" method="post">
-                @csrf
-                <input type="hidden" name="amount" value="{{ $deposit->amount }}">
-                <input type="hidden" name="status" value="2">
-                <button class="btn btn-danger p-1 me-1" type="submit">
-                  <i class="fas fa-xmark"></i>
-                </button>
-              </form>
-              <a href="{{route('admin.agent.depositshow',$deposit->id)}}" class="btn btn-warning p-1 d-block">
-                <i class="fas fa-eye"></i>
-              </a>
-            </div>
-
-          </td> --}}
         </tr>
         @endforeach
       </tbody>
