@@ -15,15 +15,14 @@ class HistoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,  // Gets the 'id' property of the object
-            'name' => $this->user->name,  // Gets the 'name' property from the related 'user' object
-            'payment_type' => $this->paymentType->name,  // Gets the 'name' property from the related 'paymentType' object
-            'account_name' => $this->account_name,  // Gets the 'account_name' property of the object
-            'account_no' => $this->account_no,  // Gets the 'account_no' property of the object
-            'amount' => $this->amount,  // Gets the 'amount' property of the object
-            'status' => $this->status === 0 ? 'Pending' : ($this->status === 1 ? 'Success' : 'Reject'),  // Converts the 'status' property to a human-readable string
-            'message' => $this->message,  // Gets the 'message' property of the object
-            'datetime' => $this->created_at->format('Y-m-d H:i:s'),  // Formats the 'created_at' property as a string
+            'id' => $this->id,
+            'name' => $this->user->name,
+            'payment_type' => $this->user->paymentType->name,
+            'account_name' => $this->user->account_name,
+            'account_number' => $this->user->account_number,
+            'amount' => $this->amount,
+            'status' => $this->status === 0 ? 'Pending' : ($this->status === 1 ? 'Success' : 'Reject'),
+            'datetime' => $this->created_at->format('Y-m-d H:i:s'),
         ];
     }
 }

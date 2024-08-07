@@ -39,6 +39,5 @@ class WithDrawRequestController extends Controller
         $withdraw = ModelsWithDrawRequest::where('user_id', Auth::id())->get();
 
         return $this->success(HistoryResource::collection($withdraw));
-        // return $this->success($withdraw);
     }
 }

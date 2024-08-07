@@ -27,7 +27,6 @@
           <div class="ms-auto my-auto mt-lg-0 mt-4">
             <div class="ms-auto my-auto">
               <a href="{{ route('admin.player.create') }}" class="btn bg-gradient-primary btn-sm mb-0">+&nbsp; Create Player</a>
-              <button class="btn btn-outline-primary btn-sm export mb-0 mt-sm-0 mt-1" data-type="csv" type="button" name="button">Export</button>
             </div>
           </div>
         </div>
@@ -53,7 +52,7 @@
               <td>{{ $loop->iteration }}</td>
               <td>
                 <span class="d-block">{{ $user->user_name }}</span>
-                  
+
               </td>
               <td>{{$user->name}}</td>
               <td>{{ $user->phone }}</td>
@@ -81,7 +80,7 @@
                 <a class="me-1" href="{{ route('admin.player.edit', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="Edit Player">
                   <i class="fas fa-pen-to-square text-info" style="font-size: 20px;"></i>
                 </a>
-                
+
               </td>
               <td>
                 <a href="{{ route('admin.player.getCashIn', $user->id) }}" data-bs-toggle="tooltip" data-bs-original-title="Deposit To Player" class="btn btn-info btn-sm">
