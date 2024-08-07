@@ -24,7 +24,8 @@ class AgentResource extends JsonResource
             'payment_type_id' => $this->payment_type_id,
             'payment_type_name' => $this->paymentType->name,
             'account_number' => $this->account_number,
-            'account_name' => $this->account_name
+            'account_name' => $this->account_name,
+            'line_id' => $this->line_id
         ];
     }
 }
