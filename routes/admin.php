@@ -70,7 +70,6 @@ Route::group([
     Route::resource('adsbanners', BannerAdsController::class);
     Route::resource('text', BannerTextController::class);
     Route::resource('/promotions', PromotionController::class);
-    Route::resource('sitelogo', SiteLogoController::class);
     Route::resource('paymentTypes', PaymentTypeController::class);
     Route::get('gametypes', [GameTypeProductController::class, 'index'])->name('gametypes.index');
     Route::get('gametypes/{game_type_id}/product/{product_id}', [GameTypeProductController::class, 'edit'])->name('gametypes.edit');

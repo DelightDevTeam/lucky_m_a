@@ -26,14 +26,6 @@
         <span class="sidenav-normal  ms-2  ps-1"> Win/lose Report </span>
       </a>
     </li>
-
-    {{-- <li class="nav-item">
-      <a class="nav-link text-white " href="{{ url('admin/get-bet-detail')}}">
-    <span class="sidenav-mini-icon"> <i class="fa-solid fa-chart-column"></i> </span>
-    <span class="sidenav-normal  ms-2  ps-1"> getBetDetail </span>
-    </a>
-    </li> --}}
-
     @can('agent_index')
     <li class="nav-item">
       <a class="nav-link text-white " href="{{ route('admin.agent.index')}}">
@@ -90,13 +82,6 @@
       </a>
       <div class="collapse " id="dashboardsExamples">
         <ul class="nav ">
-            @can('site_logo')
-            <li class="nav-item ">
-                <a class="nav-link text-white " href="{{ route('admin.sitelogo.index') }}">
-                    <span class="sidenav-mini-icon"> <i class="fa-solid fa-panorama"></i> </span>
-                    <span class="sidenav-normal  ms-2  ps-1"> SiteLogo </span>
-                </a>
-            </li>
             @endcan
             @can('bank')
             <li class="nav-item ">
