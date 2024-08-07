@@ -82,7 +82,6 @@
       </a>
       <div class="collapse " id="dashboardsExamples">
         <ul class="nav ">
-            @endcan
             @can('bank')
             <li class="nav-item ">
                 <a class="nav-link text-white " href="{{ route('admin.paymentTypes.index') }}">
