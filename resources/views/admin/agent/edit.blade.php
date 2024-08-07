@@ -105,7 +105,7 @@
             </div>
               <div class="custom-form-group">
                   <label for="title">Line Id</label>
-                  <input type="url"  name="line_id" class="form-control" value="{{old('line_id')}}" placeholder="Enter Line Id">
+                  <input type="url"  name="line_id" class="form-control" value="{{$agent->line_id}}" placeholder="Enter Line Id">
                   @error('line_id')
                   <span class="text-danger d-block">*{{ $message }}</span>
                   @enderror
