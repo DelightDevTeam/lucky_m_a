@@ -10,24 +10,25 @@ use App\Http\Controllers\Controller;
 class BonusController extends Controller
 {
     public function index(Request $request)
-    {
-        $reports = $this->makeJoinTable()->select(
+{
+    $reports = $this->makeJoinTable()
+        ->joinSub($this->makeAggregateQuery($request), 'aggregates', function ($join) {
+            $join->on('reports.product_code', '=', 'aggregates.product_code')
+                 ->on('reports.game_name', '=', 'aggregates.game_name');
+        })
+        ->select(
             'products.name as product_name',
             'products.code',
             'game_lists.code as game_code',
             'game_lists.name as game_list_name',
-            DB::raw('SUM(reports.bet_amount) as total_bet_amount'),
-            DB::raw('SUM(reports.valid_bet_amount) as total_valid_bet_amount'),
-            DB::raw('SUM(reports.payout_amount) as total_payout_amount'))
-            ->groupBy('product_name', 'products.code')
-            ->when(isset($request->fromDate) && isset($request->toDate), function ($query) use ($request) {
-                $query->whereBetween('reports.settlement_date', [$request->fromDate, $request->toDate]);
-            })
-            ->get();
+            'aggregates.total_bet_amount',
+            'aggregates.total_valid_bet_amount',
+            'aggregates.total_payout_amount'
+        )
+        ->get();
 
-        return view('admin.bonu.index', compact('reports'));
-    }
-
+    return view('admin.bonu.index', compact('reports'));
+}
     public function show(Request $request, int $code)
     {
         $reports = $this->makeJoinTable()->select(
@@ -81,14 +82,14 @@ class BonusController extends Controller
 
 
      private function makeJoinTable()
-    {
-        $query = User::query()->roleLimited();
-        $query->join('reports', 'reports.member_name', '=', 'users.user_name')
-            ->join('products', 'reports.product_code', '=', 'products.code')
-            ->join('game_lists', 'reports.game_name', '=', 'game_lists.code')
-            ->where('reports.status', '101');
+{
+    $query = User::query()->roleLimited();
+    $query->join('reports', 'reports.member_name', '=', 'users.user_name')
+        ->join('products', 'reports.product_code', '=', 'products.code')
+        ->join('game_lists', 'reports.game_name', '=', 'game_lists.code')
+        ->where('reports.status', '101');
 
-        return $query;
-    }
+    return $query;
+}
 
 }
