@@ -50,14 +50,14 @@
       </a>
     </li>
     @endcan
-     @can('admin_access')
+     {{-- @can('admin_access')
     <li class="nav-item">
       <a class="nav-link text-white " href="{{ url('admin/bonu/countindex')}}">
         <span class="sidenav-mini-icon"> <i class="fa-solid fa-user"></i> </span>
         <span class="sidenav-normal  ms-2  ps-1">BonusList</span>
       </a>
     </li>
-    @endcan
+    @endcan --}}
     <li class="nav-item">
       <a class="nav-link text-white " href="{{ route('admin.transferLog')}}">
         <span class="sidenav-mini-icon"> <i class="fas fa-right-left"></i> </span>
