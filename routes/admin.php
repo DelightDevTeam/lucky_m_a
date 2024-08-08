@@ -9,10 +9,13 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\GameListController;
+use \App\Http\Controllers\Admin\SiteLogoController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\BannerTextController;
+use App\Http\Controllers\Admin\Bonu\BonusController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\Agent\AgentController;
+use App\Http\Controllers\Admin\PaymentTypeController;
 use App\Http\Controllers\Report\TestReportController;
 use App\Http\Controllers\Admin\GetBetDetailController;
 use App\Http\Controllers\Admin\Master\MasterController;
@@ -20,10 +23,8 @@ use App\Http\Controllers\Admin\Player\PlayerController;
 use App\Http\Controllers\Admin\GameTypeProductController;
 use App\Http\Controllers\Admin\BannerAds\BannerAdsController;
 use App\Http\Controllers\Admin\Deposit\DepositRequestController;
-use App\Http\Controllers\Admin\PaymentTypeController;
 use App\Http\Controllers\Admin\TransferLog\TransferLogController;
 use App\Http\Controllers\Admin\WithDraw\WithDrawRequestController;
-use \App\Http\Controllers\Admin\SiteLogoController;
 
 Route::group([
     'prefix' => 'admin', 'as' => 'admin.',
@@ -120,6 +121,13 @@ Route::group([
         Route::get('view/{user_id}', [ReportController::class, 'view'])->name('report.view');
         Route::get('show/{proudct_code}', [ReportController::class, 'show'])->name('report.show');
         Route::get('detail/{user_id}/{product_code}', [ReportController::class, 'detail'])->name('report.detail');
+    });
+
+    Route::group(['prefix' => 'bonu'], function () {
+        Route::get('countindex', [BonusController::class, 'index'])->name('bonu_count.index');
+        // Route::get('view/{user_id}', [ReportController::class, 'view'])->name('report.view');
+        // Route::get('show/{proudct_code}', [ReportController::class, 'show'])->name('report.show');
+        // Route::get('detail/{user_id}/{product_code}', [ReportController::class, 'detail'])->name('report.detail');
     });
 
     // get bet deatil
