@@ -92,4 +92,20 @@ class BonusController extends Controller
     return $query;
 }
 
+private function makeAggregateQuery(Request $request)
+{
+    return DB::table('reports')
+        ->select(
+            'product_code',
+            'game_name',
+            DB::raw('SUM(bet_amount) as total_bet_amount'),
+            DB::raw('SUM(valid_bet_amount) as total_valid_bet_amount'),
+            DB::raw('SUM(payout_amount) as total_payout_amount')
+        )
+        ->when(isset($request->fromDate) && isset($request->toDate), function ($query) use ($request) {
+            $query->whereBetween('settlement_date', [$request->fromDate, $request->toDate]);
+        })
+        ->groupBy('product_code', 'game_name');
+}
+
 }
