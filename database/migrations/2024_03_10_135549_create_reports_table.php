@@ -30,7 +30,9 @@ return new class extends Migration
             $table->datetime('settlement_date');
             $table->datetime('modified_on');
             //$table->unsignedBigInteger("seamless_transaction_id")->nullable();
+             $table->unsignedBigInteger('agent_id')->nullable();
             $table->timestamps();
+            $table->foreign('agent_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
