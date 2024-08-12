@@ -52,7 +52,7 @@
         </div>
       </div>
       <div class="container">
-        <form action="" >
+        <form>
           <div class="row">
             <div class="col-md-3">
               <div class="input-group input-group-static my-3">
