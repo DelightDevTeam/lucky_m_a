@@ -86,52 +86,47 @@ class PlayerController extends Controller
      */
     public function store(PlayerRequest $request)
     {
-        abort_if(
-            Gate::denies('player_store'),
-            Response::HTTP_FORBIDDEN,
-            '403 Forbidden |You cannot Access this page because you do not have permission'
-        );
-
+        Gate::allows('player_store');
+    
+        $agent = Auth::user();
+        $inputs = $request->validated();
+    
+        if ($this->isExistingUserForAgent($request->phone, $agent->id)) {
+            return redirect()->back()->with('error', 'This phone number already exists');
+        }
+    
         try {
-            // Validate input
-            $agent = Auth::user();
-            $inputs = $request->validated();
-
             if (isset($inputs['amount']) && $inputs['amount'] > $agent->balanceFloat) {
-                throw ValidationException::withMessages([
-                    'amount' => 'Insufficient balance for transfer.',
-                ]);
+                throw new \Exception('Insufficient balance for transfer.');
             }
-
-            $userPrepare = array_merge(
-                $inputs,
-                [
-                    'password' => Hash::make($inputs['password']),
-                    'agent_id' => Auth::id(),
-                    'type' => UserType::Player,
-                ]
-            );
-            Log::info('User prepared: '.json_encode($userPrepare));
-
-            $player = User::create($userPrepare);
-            $player->roles()->sync(self::PLAYER_ROLE);
-
+    
+            $user = User::create([
+                'phone' => $inputs['phone'],
+                'name' => $inputs['name'],
+                // ... other fields
+                'password' => Hash::make($inputs['password']),
+                'agent_id' => $agent->id,
+                'type' => UserType::Player,
+            ]);
+    
+            $user->roles()->sync(self::PLAYER_ROLE);
+    
             if (isset($inputs['amount'])) {
-                app(WalletService::class)->transfer($agent, $player, $inputs['amount'], TransactionName::CreditTransfer);
+                app(WalletService::class)->transfer($agent, $user, $inputs['amount'], TransactionName::CreditTransfer);
             }
-
+    
             return redirect()->back()
                 ->with('success', 'Player created successfully')
                 ->with('url', env('APP_URL'))
                 ->with('password', $request->password)
-                ->with('username', $player->user_name);
-
-        } catch (Exception $e) {
-            Log::error('Error creating user: '.$e->getMessage());
-
-            return redirect()->back()->with('error', $e->getMessage());
+                ->with('username', $user->user_name);
+        } catch (\Exception $e) {
+            Log::error('Error creating user: ' . $e->getMessage());
+    
+            return redirect()->back()->with('error', 'An error occurred while creating the player.');
         }
     }
+    
 
     /**
      * Display the specified resource.
@@ -337,5 +332,10 @@ class PlayerController extends Controller
         $players = User::getPlayersByAgentId($agentId);
 
         return view('players.index', compact('players'));
+    }
+
+    private function isExistingUserForAgent($phone, $agent_id): bool
+    {
+        return User::where('phone', $phone)->where('agent_id', $agent_id)->first();
     }
 }

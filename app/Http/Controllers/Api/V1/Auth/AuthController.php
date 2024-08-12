@@ -31,21 +31,13 @@ class AuthController extends Controller
 
         $user = User::where('user_name', $request->user_name)->first();
 
-        if (! $user || ! Hash::check($request->password, $user->password)) {
-            return $this->error('', 'Credentail does not match!', 401);
+        if (!Auth::attempt($credentials)) {
+            return $this->error('', 'Credentials do not match!', 401);
         }
+        $user = Auth::user();
 
         if ($user->is_changed_password == 0) {
             return $this->error($user, 'You have to change password', 200);
-        }
-
-        if (! Auth::attempt($credentials)) {
-            return $this->error('', 'Credentials do not match!', 401);
-        }
-
-        $user = User::where('user_name', $request->user_name)->first();
-        if (! $user->hasRole('Player')) {
-            return $this->error('', 'You are not a player!', 401);
         }
 
         UserLog::create([
@@ -60,30 +52,31 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         $agent = User::where('referral_code', $request->referral_code)->first();
-        if($agent)
-        {
-            $inputs = $request->validated();
 
-            $userPrepare = [
-                    'phone' => $request->phone,
-                    'name' => $request->name,
-                    'user_name' => $this->generateRandomString(),
-                    'password' => Hash::make($inputs['password']),
-                    'payment_type_id' => $request->payment_type_id,
-                    'account_name' => $request->account_name,
-                    'account_number' => $request->account_number,
-                    'agent_id' => $agent->id,
-                    'type' => UserType::Player
-                ];
-
-            $player = User::create($userPrepare);
-            $player->roles()->sync(self::PLAYER_ROLE);
-
-            return $this->success(new RegisterResource($player), 'User register successfully.');
-        }else{
+        if (!$agent) {
             return $this->error('', 'Not Found Agent', 401);
         }
+    
+        if ($this->isExistingUserForAgent($request->phone, $agent->id)) {
+            return $this->error('', 'Already Exist Account for this number', 401);
+        }
 
+        $inputs = $request->validated();
+
+        $user = User::create([
+            'phone' => $request->phone,
+            'name' => $request->name,
+            'user_name' => $this->generateRandomString(),
+            'password' => Hash::make($inputs['password']),
+            'payment_type_id' => $request->payment_type_id,
+            'account_name' => $request->account_name,
+            'account_number' => $request->account_number,
+            'agent_id' => $agent->id,
+            'type' => UserType::Player,
+        ]);
+        $user->roles()->sync(self::PLAYER_ROLE);
+
+        return $this->success(new RegisterResource($user), 'User register successfully.');
     }
 
     public function logout()
@@ -103,16 +96,16 @@ class AuthController extends Controller
     public function changePassword(ChangePasswordRequest $request)
     {
         $player = Auth::user();
-        if (Hash::check($request->current_password, $player->password)) {
-            $player->update([
-                'password' => $request->password,
-                'status' => 1,
 
-            ]);
-        } else {
-            return $this->error('', 'Old Passowrd is incorrect', 401);
+        if (!Hash::check($request->current_password, $player->password)) {
+            return $this->error('', 'Old Password is incorrect', 401);
         }
-
+    
+        $player->update([
+            'password' => Hash::make($request->password),
+            'status' => 1,
+        ]);
+    
         return $this->success($player, 'Password has been changed successfully.');
     }
 
@@ -154,10 +147,16 @@ class AuthController extends Controller
 
         return $this->success(new AgentResource($player->parent), 'Agent Information List');
     }
+
     private function generateRandomString()
     {
         $randomNumber = mt_rand(10000000, 99999999);
 
         return 'SB'.$randomNumber;
+    }
+
+    private function isExistingUserForAgent($phone, $agent_id): bool
+    {
+        return User::where('phone', $phone)->where('agent_id', $agent_id)->first();
     }
 }

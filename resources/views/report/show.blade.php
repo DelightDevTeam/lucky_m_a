@@ -82,13 +82,23 @@
     <div class="table-responsive">
       <table class="table table-flush" id="users-search">
         <thead class="thead-light bg-gradient-info">
-            <th class="text-white">PlayerId</th>
-            <th class="text-white">Product Name</th>
-            <th class="text-white">Total Valid Bet</th>
-            <th class="text-white">Total Bet</th>
-            <th class="text-white">Total Payout</th>
-            <th class="text-white">Win/Lose</th>
-            <th class="text-white">Action</th>
+          <tr>
+            <th rowspan="2" class="text-white">PlayerId</th>
+            <th rowspan="2" class="text-white">Product Name</th>
+            <th rowspan="2" class="text-white">Total Valid Bet</th>
+            <th rowspan="2" class="text-white">Total Bet</th>
+            <th rowspan="2" class="text-white">Total Payout</th>
+            <th colspan="3" class="text-white">Member W/L </th>
+            <th colspan="3" class="text-white">Agent W/L </th>
+          </tr>
+          <tr>
+                <th>Win/L</th>
+                <th>Com</th>
+                <th>Total</th>
+                <th>Win/L</th>
+                <th>Com</th>
+                <th>Total</th>
+            </tr>
         </thead>
         <tbody>
           @foreach ($reports as $rep)
@@ -104,9 +114,15 @@
             @if($result > 0)
             <td class="text-sm text-success font-weight-bold">{{$result}}</td>
             @else
-            <td class="text-sm text-danger font-weight-bold">{{$result}}</td>
+            <td class="text-sm  font-weight-bold">{{$rep->commission_amount}}</td>
             @endif
-            <td><a href="{{route('admin.report.detail',[$rep->user_id,$rep->product_code])}}" class="btn btn-sm btn-info">Detail</a></td>
+            @if($result > 0)
+            <td class="text-sm text-success font-weight-bold">{{$rep->commission_amount+ $result}}</td>
+            @else
+            <td class="text-sm text-danger font-weight-bold">{{$rep->commission_amount + $result}}</td>
+            @endif
+
+            <!-- <td><a href="{{route('admin.report.detail',[$rep->user_id,$rep->product_code])}}" class="btn btn-sm btn-info">Detail</a></td> -->
           </tr>
           @endforeach
         </tbody>
