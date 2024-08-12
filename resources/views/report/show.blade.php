@@ -84,19 +84,18 @@
         <thead class="thead-light bg-gradient-info">
           <tr>
             <th rowspan="2" class="text-white">PlayerId</th>
-            <th rowspan="2" class="text-white">Product Name</th>
             <th rowspan="2" class="text-white">Total Valid Bet</th>
             <th rowspan="2" class="text-white">Total Bet</th>
             <th rowspan="2" class="text-white">Total Payout</th>
             <th colspan="3" class="text-white">Member W/L </th>
-            <th colspan="3" class="text-white">Agent W/L </th>
+            <th colspan="2" class="text-white">Agent W/L </th>
+            <th rowspan="2" class="text-white">Action</th>
           </tr>
           <tr>
                 <th>Win/L</th>
-                <th>Com</th>
+                <th>Comm</th>
                 <th>Total</th>
                 <th>Win/L</th>
-                <th>Com</th>
                 <th>Total</th>
             </tr>
         </thead>
@@ -104,25 +103,27 @@
           @foreach ($reports as $rep)
           <tr>
             <td>{{ $rep->user_name}}</td>
-            <td>{{ $rep->product_name}}</td>
             <td>{{ $rep->total_valid_bet_amount}}</td>
             <td>{{ $rep->total_bet_amount}}</td>
             <td>{{ $rep->total_payout_amount}}</td>
             @php
               $result = $rep->total_payout_amount - $rep->total_valid_bet_amount;
+              $agentPercent = $result * $rep->agent_commission/100;
             @endphp
             @if($result > 0)
             <td class="text-sm text-success font-weight-bold">{{$result}}</td>
             @else
-            <td class="text-sm  font-weight-bold">{{$rep->commission_amount}}</td>
+            <td class="text-sm  font-weight-bold">{{$result}}</td>
             @endif
+            <td class="text-sm font-weight-bold">{{$rep->total_commission_amount}}</td>
             @if($result > 0)
             <td class="text-sm text-success font-weight-bold">{{$rep->commission_amount+ $result}}</td>
             @else
             <td class="text-sm text-danger font-weight-bold">{{$rep->commission_amount + $result}}</td>
-            @endif
-
-            <!-- <td><a href="{{route('admin.report.detail',[$rep->user_id,$rep->product_code])}}" class="btn btn-sm btn-info">Detail</a></td> -->
+            @endif          
+            <td class="text-sm font-weight-bold">{{$agentPercent}}</td>
+            <td class="text-sm font-weight-bold">{{$agentPercent}}</td>
+            <td><a href="{{route('admin.report.detail',$rep->user_id)}}" class="btn btn-sm btn-info">Detail</a></td>
           </tr>
           @endforeach
         </tbody>

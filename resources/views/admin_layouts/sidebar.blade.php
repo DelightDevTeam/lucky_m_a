@@ -26,7 +26,15 @@
         <span class="sidenav-normal  ms-2  ps-1"> Win/lose Report </span>
       </a>
     </li>
-    @can('withdraw')
+    @can('admin_access')
+    <li class="nav-item">
+      <a class="nav-link text-white " href="{{ route('admin.agent.index')}}">
+        <span class="sidenav-mini-icon"> <i class="fa-solid fa-user"></i> </span>
+        <span class="sidenav-normal  ms-2  ps-1">Agent List</span>
+      </a>
+    </li>
+    @endcan
+    @can('player_access')
     <li class="nav-item">
       <a class="nav-link text-white " href="{{ route('admin.player.index')}}">
         <span class="sidenav-mini-icon"> <i class="fa-solid fa-user"></i> </span>

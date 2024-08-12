@@ -143,6 +143,13 @@
                @enderror
             </div>
             <div class="custom-form-group">
+              <label for="title">Commission</label>
+              <input type="number"  name="commission" class="form-control" value="{{$agent->commission}}" >
+              @error('commission')
+              <span class="text-danger d-block">*{{ $message }}</span>
+              @enderror
+            </div>
+            <div class="custom-form-group">
               <button type="submit" class="btn btn-primary" type="button">Update</button>
             </div>
           </form>

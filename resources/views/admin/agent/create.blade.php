@@ -189,6 +189,13 @@
               @enderror
             </div>
             <div class="custom-form-group">
+              <label for="title">Commission</label>
+              <input type="number"  name="commission" class="form-control" value="{{old('commission')}}" >
+              @error('commission')
+              <span class="text-danger d-block">*{{ $message }}</span>
+              @enderror
+            </div>
+            <div class="custom-form-group">
               <button class="btn btn-info" type="button" id="resetFormButton">Cancel</button>
 
               <button type="submit" class="btn btn-primary" type="button">Submit</button>

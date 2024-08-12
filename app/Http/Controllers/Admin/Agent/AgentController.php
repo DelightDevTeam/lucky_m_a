@@ -160,7 +160,8 @@ class AgentController extends Controller
             'payment_type_id' => 'required|exists:payment_types,id',
             'account_number' => 'required|string',
             'account_name' => 'required|string',
-            'line_id' => 'nullable'
+            'line_id' => 'nullable',
+            'commission' => 'nullable'
         ]);
 
         $user = User::find($id);

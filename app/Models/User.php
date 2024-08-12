@@ -46,7 +46,8 @@ class User extends Authenticatable implements Wallet
         'payment_type_id',
         'account_number',
         'account_name',
-        'line_id'
+        'line_id',
+        'commission'
     ];
 
     protected $dispatchesEvents = [
@@ -156,7 +157,7 @@ class User extends Authenticatable implements Wallet
     public function scopeRoleLimited($query)
     {
         if (! Auth::user()->hasRole('Admin')) {
-            return $query->where('agent_id', Auth::id());
+            return $query->where('users.agent_id', Auth::id());
         }
 
         return $query;

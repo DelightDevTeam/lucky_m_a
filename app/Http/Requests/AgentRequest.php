@@ -33,6 +33,7 @@ class AgentRequest extends FormRequest
             'account_name' => 'required|string',
             'account_number' =>  ['required'],
             'line_id' => 'nullable',
+            'commission' => 'nullable'
         ];
     }
 }
