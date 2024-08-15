@@ -79,6 +79,7 @@ class PullReport extends Command
                 foreach ($data as $report) {
                     $user = User::where('user_name', $report['MemberName'])->first();
                     $agent_commission = User::where('agent_id', $user->agent_id)->first();
+                    Log::info($agent_commission);
                     $wagerId = Report::where('wager_id', $report['WagerID'])->first();
 
                     if ($wagerId) {
