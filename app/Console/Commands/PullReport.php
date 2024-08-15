@@ -78,6 +78,7 @@ class PullReport extends Command
                // $user = Auth::user(); // Get the authenticated user
                 foreach ($data as $report) {
                     $user = User::where('user_name', $report['MemberName'])->first();
+                    $agent_commission = User::where('agent_id', $user->agent_id)->first();
                     $wagerId = Report::where('wager_id', $report['WagerID'])->first();
 
                     if ($wagerId) {
@@ -99,7 +100,7 @@ class PullReport extends Command
                             'modified_on' => $report['ModifiedOn'],
                             'settlement_date' => $report['SettlementDate'],
                             'agent_id' => $user->agent_id, // Store the agent_id
-                            'agent_commission' => $user->commission,
+                            'agent_commission' => $agent_commission->commission,
                         ]);
                     } else {
                         Report::create([
@@ -120,7 +121,7 @@ class PullReport extends Command
                             'modified_on' => $report['ModifiedOn'],
                             'settlement_date' => $report['SettlementDate'],
                             'agent_id' => $user->agent_id, // Store the agent_id
-                            'agent_commission' => $user->commission,
+                            'agent_commission' => $agent_commission->commission,
 
                         ]);
                     }
