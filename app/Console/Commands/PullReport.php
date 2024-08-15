@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\User;
 use App\Models\Report;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -77,16 +78,48 @@ class PullReport extends Command
                 Log::info($response);
                // $user = Auth::user(); // Get the authenticated user
                 foreach ($data as $report) {
-                    $agent_commission = null; // Default value in case agent is not found
-                    $user = User::where('user_name', $report['MemberName'])->first();
-                    // Retrieve the player's record
+                //     $agent_commission = null; // Default value in case agent is not found
+                //     $user = User::where('user_name', $report['MemberName'])->first();
+                //     // Retrieve the player's record
 
+                // if ($user && $user->agent_id) {
+                //     // Retrieve the agent's record using the agent_id from the player's record
+                //     $agent = User::where('id', $user->agent_id)->first();
+                    
+                //     if ($agent) {
+                //         $agent_commission = $agent->commission; // Get the agent's commission
+                //     } else {
+                //         Log::warning("Agent not found for agent_id: " . $user->agent_id);
+                //         $agent_commission = null; // Handle case where agent is not found
+                //     }
+                // } else {
+                //     Log::warning("User not found or user does not have an agent: " . $report['MemberName']);
+                //     $agent_commission = null; // Handle case where user is not found or has no agent
+                // }
+
+                $agent_commission = null; // Default value in case agent is not found
+                $user = User::where('user_name', $report['MemberName'])->first();
+                
                 if ($user && $user->agent_id) {
                     // Retrieve the agent's record using the agent_id from the player's record
                     $agent = User::where('id', $user->agent_id)->first();
                     
                     if ($agent) {
                         $agent_commission = $agent->commission; // Get the agent's commission
+                        
+                        // Fetch the total valid bets and the agent's commission rate
+                        $agentData = DB::table('reports')
+                            ->join('users', 'reports.agent_id', '=', 'users.id')
+                            ->where('reports.agent_id', $agent->id)
+                            ->select(
+                                DB::raw('SUM(reports.valid_bet_amount) as total_valid_bets'),
+                                'users.commission as commission_rate'
+                            )
+                            ->first();
+
+                        // Calculate the gross commission
+                        $grossCommission = $agentData->total_valid_bets * ($agentData->commission_rate / 100);
+
                     } else {
                         Log::warning("Agent not found for agent_id: " . $user->agent_id);
                         $agent_commission = null; // Handle case where agent is not found
@@ -95,8 +128,6 @@ class PullReport extends Command
                     Log::warning("User not found or user does not have an agent: " . $report['MemberName']);
                     $agent_commission = null; // Handle case where user is not found or has no agent
                 }
-
-                // You can now use $agent_commission as needed in your report
 
                     $wagerId = Report::where('wager_id', $report['WagerID'])->first();
 
