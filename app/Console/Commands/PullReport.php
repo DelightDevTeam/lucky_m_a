@@ -107,19 +107,17 @@ class PullReport extends Command
                     if ($agent) {
                         $agent_commission = $agent->commission; // Get the agent's commission
                         
-                        // Fetch the total valid bets and the agent's commission rate
-                        $agentData = DB::table('reports')
-                            ->join('users', 'reports.agent_id', '=', 'users.id')
-                            ->where('reports.agent_id', $agent->id)
-                            ->select(
-                                DB::raw('SUM(reports.valid_bet_amount) as total_valid_bets'),
-                                'users.commission as commission_rate'
-                            )
-                            ->first();
+                       $agentData = DB::table('reports')
+                        ->join('users', 'reports.agent_id', '=', 'users.id')
+                        ->where('reports.agent_id', $agent->id)
+                        ->select(
+                            DB::raw('SUM(reports.valid_bet_amount) as total_valid_bets'),
+                            DB::raw('MAX(users.commission) as commission_rate') // or use groupBy('users.commission')
+                        )
+                        ->first();
 
-                        // Calculate the gross commission
-                        $grossCommission = $agentData->total_valid_bets * ($agentData->commission_rate / 100);
-
+                    // Calculate the gross commission
+                    $grossCommission = $agentData->total_valid_bets * ($agentData->commission_rate / 100);
                     } else {
                         Log::warning("Agent not found for agent_id: " . $user->agent_id);
                         $agent_commission = null; // Handle case where agent is not found
@@ -150,7 +148,7 @@ class PullReport extends Command
                             'modified_on' => $report['ModifiedOn'],
                             'settlement_date' => $report['SettlementDate'],
                             'agent_id' => $user->agent_id, // Store the agent_id
-                            'agent_commission' => $agent_commission,
+                            'agent_commission' => $grossCommission,
                         ]);
                     } else {
                         Report::create([
@@ -171,7 +169,7 @@ class PullReport extends Command
                             'modified_on' => $report['ModifiedOn'],
                             'settlement_date' => $report['SettlementDate'],
                             'agent_id' => $user->agent_id, // Store the agent_id
-                            'agent_commission' => $agent_commission,
+                            'agent_commission' => $grossCommission,
 
                         ]);
                     }
