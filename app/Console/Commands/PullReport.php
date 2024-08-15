@@ -119,7 +119,7 @@ class PullReport extends Command
                             'modified_on' => $report['ModifiedOn'],
                             'settlement_date' => $report['SettlementDate'],
                             'agent_id' => $user->agent_id, // Store the agent_id
-                            'agent_commission' => $agent_commission->commission,
+                            'agent_commission' => $agent_commission,
                         ]);
                     } else {
                         Report::create([
@@ -140,7 +140,7 @@ class PullReport extends Command
                             'modified_on' => $report['ModifiedOn'],
                             'settlement_date' => $report['SettlementDate'],
                             'agent_id' => $user->agent_id, // Store the agent_id
-                            'agent_commission' => $agent_commission->commission,
+                            'agent_commission' => $agent_commission,
 
                         ]);
                     }
