@@ -155,6 +155,7 @@ $(document).ready(function() {
      icon: 'success',
      title: 'Role created successfully',
      showConfirmButton: false,
+     background: 'hsl(230, 40%, 10%)',
      timer: 1500
     });
     // Reset the form after successful submission
@@ -165,6 +166,7 @@ $(document).ready(function() {
     Swal.fire({
      icon: 'error',
      title: 'Oops...',
+     background: 'hsl(230, 40%, 10%)',
      text: 'Something went wrong!'
     });
    }

@@ -87,7 +87,7 @@
     <div class="col-12 col-md-8 mx-auto">
       <div class="card">
         <!-- Card header -->
-          
+
         <div class="card-header pb-0">
           <div class="d-lg-flex">
             <div>
@@ -113,7 +113,7 @@
               <span class="text-danger d-block">*{{ $message }}</span>
               @enderror
             </div>
-            
+
             <div class="custom-form-group">
               <label for="title">Master Name <span class="text-danger">*</span></label>
               <input type="text"  name="name" class="form-control" value="{{old('name')}}" placeholder="6-20 characters without spacing">
@@ -161,7 +161,7 @@
             @enderror
           </div>
 
-           
+
             <div class="custom-form-group">
               <button class="btn btn-info" type="button" id="resetFormButton">Cancel</button>
 
@@ -220,7 +220,7 @@
 <script>
   var errorMessage = @json(session('error'));
   var successMessage = @json(session('success'));
-  var url = 'https://maxwinapi.online/login';
+  var url = 'https://www.luckym.online/login';
   var name = @json(session('username'));
   var pw = @json(session('password'));
 
@@ -228,22 +228,23 @@
   Swal.fire({
     title: successMessage,
     icon: "success",
+    background: 'hsl(230, 40%, 10%)',
     showConfirmButton: false,
     showCloseButton: true,
     html: `
   <table class="table table-bordered" style="background:#eee;">
   <tbody>
+    <tr>
+        <td>Url</td>
+    <td id=""> ${url}</td>
+  </tr>
   <tr>
-    <td>username</td>
+    <td>Username</td>
     <td id="tusername"> ${name}</td>
   </tr>
   <tr>
-    <td>pw</td>
+    <td>Password</td>
     <td id="tpassword"> ${pw}</td>
-  </tr>
-  <tr>
-    <td>url</td>
-    <td id=""> ${url}</td>
   </tr>
   <tr>
     <td></td>
@@ -257,6 +258,7 @@
   Swal.fire({
     icon: 'error',
     title: errorMessage,
+    background: 'hsl(230, 40%, 10%)',
     showConfirmButton: false,
     timer: 1500
   })

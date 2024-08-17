@@ -163,6 +163,7 @@ $(document).ready(function() {
     Swal.fire({
      icon: 'success',
      title: 'Role created successfully',
+     background: 'hsl(230, 40%, 10%)',
      showConfirmButton: false,
      timer: 1500
     });
@@ -174,6 +175,7 @@ $(document).ready(function() {
     Swal.fire({
      icon: 'error',
      title: 'Oops...',
+     background: 'hsl(230, 40%, 10%)',
      text: 'Something went wrong!'
     });
    }

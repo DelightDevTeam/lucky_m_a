@@ -92,7 +92,7 @@
               <label for="title">Confirm Password <span class="text-danger">*</span></label>
               <input type="text"  name="password_confirmation" class="form-control" >
             </div>
-           
+
             <div class="custom-form-group">
               <button type="submit" class="btn btn-primary" type="button">Confirm</button>
             </div>
@@ -121,23 +121,25 @@
   Swal.fire({
     title: successMessage,
     icon: "success",
+    background: 'hsl(230, 40%, 10%)',
     showConfirmButton: false,
     showCloseButton: true,
     html: `
   <table class="table table-bordered" style="background:#eee;">
   <tbody>
+    <tr>
+    <td>Url</td>
+    <td id=""> ${url}</td>
+  </tr>
   <tr>
-    <td>username</td>
+    <td>Username</td>
     <td id="tusername"> ${name}</td>
   </tr>
   <tr>
-    <td>pw</td>
+    <td>Password</td>
     <td id="tpassword"> ${pw}</td>
   </tr>
-  <tr>
-    <td>url</td>
-    <td id=""> ${url}</td>
-  </tr>
+
   <tr>
     <td></td>
     <td><a href="#" onclick="copy()" class="btn btn-sm btn-primary">copy</a></td>
@@ -150,6 +152,7 @@
   Swal.fire({
     icon: 'error',
     title: errorMessage,
+    background: 'hsl(230, 40%, 10%)',
     showConfirmButton: false,
     timer: 1500
   })

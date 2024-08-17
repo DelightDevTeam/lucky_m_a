@@ -180,6 +180,7 @@
         Swal.fire({
             icon: 'success',
             title: successMessage,
+            background: 'hsl(230, 40%, 10%)',
             showConfirmButton: false,
             timer: 1500
         })
@@ -187,6 +188,7 @@
         Swal.fire({
             icon: 'error',
             title: errorMessage,
+            background: 'hsl(230, 40%, 10%)',
             showConfirmButton: false,
             timer: 1500
         })

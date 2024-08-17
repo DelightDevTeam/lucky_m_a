@@ -83,13 +83,13 @@
          <label for="title">Role Name</label>
          <input type="text" id="title" name="title" class="form-control" value="{{$role->title}}">
         </div>
-        
+
         <div class="row custom-form-group">
          <div class="col-12">
           <label for="choices-role">Permission</label>
           <select class="form-control" name="permissions[]" id="choices-tags-edit" multiple>
            @foreach ($permissions as  $permission)
-           
+
            <option value="{{ $permission->id }}"
             {{ in_array($permission->id, old('permissions', [])) ||
               (isset($role) && $role->permissions->contains($permission->id)) ? 'selected' : '' }}>
@@ -163,6 +163,7 @@ $(document).ready(function() {
    success: function(response) {
     Swal.fire({
      icon: 'success',
+     background: 'hsl(230, 40%, 10%)',
      title: 'Role created successfully',
      showConfirmButton: false,
      timer: 1500
@@ -175,6 +176,7 @@ $(document).ready(function() {
     Swal.fire({
      icon: 'error',
      title: 'Oops...',
+     background: 'hsl(230, 40%, 10%)',
      text: 'Something went wrong!'
     });
    }

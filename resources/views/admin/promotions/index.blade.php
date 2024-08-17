@@ -124,6 +124,7 @@
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
         icon: 'warning',
+        background: 'hsl(230, 40%, 10%)',
         showCancelButton: true,
         confirmButtonText: 'Yes, delete it!',
         cancelButtonText: 'No, cancel!'
@@ -141,6 +142,7 @@
     icon: 'success',
     title: '{{ session('
     success ') }}',
+    background: 'hsl(230, 40%, 10%)',
     showConfirmButton: false,
     timer: 1500
   })

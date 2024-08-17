@@ -120,6 +120,7 @@
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
         icon: 'warning',
+        background: 'hsl(230, 40%, 10%)',
         showCancelButton: true,
         confirmButtonText: 'Yes, delete it!',
         cancelButtonText: 'No, cancel!'
@@ -138,6 +139,7 @@
     title: '{{ session('
     success ') }}',
     showConfirmButton: false,
+    background: 'hsl(230, 40%, 10%)',
     timer: 1500
   })
 </script>

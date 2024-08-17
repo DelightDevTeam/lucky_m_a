@@ -83,6 +83,7 @@
                 <th>Phone</th>
                 <td>{!! $player->phone !!}</td>
               </tr>
+              <tr></tr>
             </tbody>
           </table>
         </div>
@@ -101,7 +102,7 @@
           <div>
           <h5 class="mb-0">Deposit</h5>
           </div>
-        
+
         </div>
       </div>
       <div class="card-body">
@@ -129,7 +130,7 @@
               @enderror
             </div>
           </div>
-          
+
           <div class="row">
             <div class="col-md-6">
               <div class="input-group input-group-outline is-valid my-3">
@@ -176,7 +177,7 @@
   document.addEventListener('DOMContentLoaded', function() {
     var errorMessage =  @json(session('error'));
     var successMessage =  @json(session('success'));
-   
+
 
     @if(session()->has('success'))
     Swal.fire({
@@ -184,6 +185,7 @@
       title: successMessage,
       text: '{{ session('
       SuccessRequest ') }}',
+      background: 'hsl(230, 40%, 10%)',
       timer: 3000,
       showConfirmButton: false
     });
@@ -192,6 +194,7 @@
       icon: 'error',
       title: '',
       text: errorMessage,
+      background: 'hsl(230, 40%, 10%)',
       timer: 3000,
       showConfirmButton: false
     });

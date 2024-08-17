@@ -64,7 +64,7 @@
   <div class="col-lg-12">
     <div class="card">
       <!-- Card header -->
-      
+
       <div class="card-body">
         <form action="{{ route('admin.agent.withdrawStatus',$withdraw->id) }}" method="POST">
           @csrf
@@ -157,7 +157,7 @@
   document.addEventListener('DOMContentLoaded', function() {
     var errorMessage =  @json(session('error'));
     var successMessage =  @json(session('success'));
-   
+
 
     @if(session()->has('success'))
     Swal.fire({
@@ -166,6 +166,7 @@
       text: '{{ session('
       SuccessRequest ') }}',
       timer: 3000,
+      background: 'hsl(230, 40%, 10%)',
       showConfirmButton: false
     });
     @elseif(session()->has('error'))
@@ -173,6 +174,7 @@
       icon: 'error',
       title: '',
       text: errorMessage,
+      background: 'hsl(230, 40%, 10%)',
       timer: 3000,
       showConfirmButton: false
     });
