@@ -85,7 +85,9 @@
                     <td>{{ $transaction->agent_name }}</td>
                     <td>{{ $transaction->player_name }}</td>
                     <td>{{ $transaction->total_deposits }}</td>
-                    <td>{{ number_format($transaction->total_amount, 2) }}</td>
+                    {{-- <td>{{ number_format($transaction->total_amount, 2) }}</td> --}}
+                    <td>{{ $transaction->total_amount }}</td>
+
                 </tr>
             @endforeach
         </tbody>
