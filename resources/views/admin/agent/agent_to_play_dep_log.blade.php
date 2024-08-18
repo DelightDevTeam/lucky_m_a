@@ -63,7 +63,7 @@
  <div class="col-12">
   <div class="container mt-2">
    <div class="d-flex justify-content-between">
-    <h4>Agent Detail</h4>
+    <h4>Agent To Player Deposit Log Detail</h4>
     <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.agent.index') }}">
      <span class="btn-inner--icon mt-1"><i class="material-icons">arrow_back</i>Back</span>
     </a>
@@ -79,6 +79,7 @@
                 <th>Total DepositAmount</th>
                 <th>Commission Percentage %</th>
                 <th>Commission Amount</th>
+                <th>Detail</th>
             </tr>
         </thead>
         <tbody>
@@ -90,7 +91,43 @@
                     <td>{{ number_format($transaction->total_amount / 100, 2) }}</td>
                     <td>{{ $transaction->agent_commission }}%</td>
                     <td>{{ number_format(($transaction->total_amount / 100) * ($transaction->agent_commission / 100), 2) }}</td>
+                     <td>
+                        <button type="button" data-toggle="modal" data-target="#detailModal-{{ $transaction->agent_id }}-{{ $transaction->player_id }}">
+                            View Details
+                        </button>
+                    </td>
                 </tr>
+
+                <!-- Modal for Detailed Commission Info -->
+                <div class="modal fade" id="detailModal-{{ $transaction->agent_id }}-{{ $transaction->player_id }}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="detailModalLabel">Commission Details for {{ $transaction->agent_name }} & {{ $transaction->player_name }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Agent Name:</strong> {{ $transaction->agent_name }}</p>
+                                <p><strong>Player Name:</strong> {{ $transaction->player_name }}</p>
+                                <p><strong>Total Deposits:</strong> {{ $transaction->total_deposits }}</p>
+                                <p><strong>Total Amount:</strong> {{ number_format($transaction->total_amount / 100, 2) }}</p>
+                                <p><strong>Commission Percentage:</strong> {{ $transaction->agent_commission }}%</p>
+                                <p><strong>Commission Amount:</strong> {{ number_format(($transaction->total_amount / 100) * ($transaction->agent_commission / 100), 2) }}</p>
+                                <p><strong>Additional Details:</strong></p>
+                                <ul>
+                                    <li>Here you can add any additional details or breakdowns related to the commission.</li>
+                                    <li>For example, you could show each individual transaction, the date of each deposit, etc.</li>
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             @endforeach
         </tbody>
      </table>
