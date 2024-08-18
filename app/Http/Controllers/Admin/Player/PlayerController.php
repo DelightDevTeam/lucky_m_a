@@ -103,7 +103,7 @@ class PlayerController extends Controller
             $user = User::create([
                 'phone' => $inputs['phone'],
                 'name' => $inputs['name'],
-                // ... other fields
+                'user_name' => $inputs['user_name'],
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => $agent->id,
                 'type' => UserType::Player,
