@@ -382,7 +382,7 @@ class AgentController extends Controller
         ->where('transactions.type', 'deposit')
         ->where('transactions.name', 'credit_transfer')
         ->where('agents.id', '<>', 1) // Exclude agent_id 1
-        ->groupBy('agents.id', 'players.id')
+        ->groupBy('agents.id', 'players.id','agents.name','players.name','agents.commission')
         ->select(
             'agents.id as agent_id',
             'agents.name as agent_name',
@@ -445,26 +445,26 @@ class AgentController extends Controller
 
 }
 
-/* 
-agent to player deposit log query 
-SELECT 
+/*
+agent to player deposit log query
+SELECT
     agents.id AS agent_id,
     agents.name AS agent_name,
     players.id AS player_id,
     players.name AS player_name,
     COUNT(transactions.id) AS total_deposits,
     SUM(transactions.amount) AS total_amount
-FROM 
+FROM
     transactions
-INNER JOIN 
+INNER JOIN
     users AS players ON players.id = transactions.payable_id
-INNER JOIN 
+INNER JOIN
     users AS agents ON agents.id = players.agent_id
-WHERE 
+WHERE
     transactions.type = 'deposit'
     AND transactions.name = 'credit_transfer'
     AND agents.id <> 1 -- Exclude agent_id 1
-GROUP BY 
+GROUP BY
     agents.id, players.id;
 
 */

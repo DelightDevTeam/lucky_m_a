@@ -64,7 +64,7 @@
   <div class="container mt-2">
    <div class="d-flex justify-content-between">
     {{-- <h4>Agent To Player Deposit Log Detail</h4> --}}
-    <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.agent.index') }}">
+    <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.agent.AgentToPlayerDepLog') }}">
      <span class="btn-inner--icon mt-1"><i class="material-icons">arrow_back</i>Back</span>
     </a>
    </div>
@@ -75,20 +75,20 @@
     <div class="table-responsive">
      <table class="table align-items-center mb-0">
        <thead>
-            <tr>
-                <th>Transaction Amount</th>
-                <th>Transaction Date</th>
-                <th>Commission Percentage %</th>
-                <th>Commission Earned</th>
+            <tr >
+                <th class="text-center align-middle">Transaction Amount</th>
+                <th class="text-center align-middle">Transaction Date</th>
+                <th class="text-center align-middle">Commission Percentage %</th>
+                <th class="text-center align-middle">Commission Earned</th>
             </tr>
         </thead>
         <tbody>
             @foreach($transactionDetails as $detail)
                 <tr>
-                    <td>{{ number_format($detail->amount / 100, 2) }}</td>
-                    <td>{{ $detail->created_at }}</td>
-                    <td>{{ $detail->agent_commission }}%</td>
-                    <td>{{ number_format(($detail->amount / 100) * ($detail->agent_commission / 100), 2) }}</td>
+                    <td  class="text-center align-middle">{{ number_format($detail->amount / 100, 2) }}</td>
+                    <td  class="text-center align-middle">{{ $detail->created_at }}</td>
+                    <td  class="text-center align-middle">{{ $detail->agent_commission }}%</td>
+                    <td  class="text-center align-middle">{{ number_format(($detail->amount / 100) * ($detail->agent_commission / 100), 2) }}</td>
                 </tr>
             @endforeach
         </tbody>

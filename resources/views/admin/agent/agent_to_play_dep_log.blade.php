@@ -64,34 +64,31 @@
   <div class="container mt-2">
    <div class="d-flex justify-content-between">
     <h4>Agent To Player Deposit Log Detail</h4>
-    <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.agent.index') }}">
-     <span class="btn-inner--icon mt-1"><i class="material-icons">arrow_back</i>Back</span>
-    </a>
    </div>
    <div class="card">
     <div class="table-responsive">
      <table class="table align-items-center mb-0">
       <thead>
             <tr>
-                <th>Agent Name</th>
-                <th>Player Name</th>
-                <th>Total Deposits</th>
-                <th>Total DepositAmount</th>
-                <th>Commission Percentage %</th>
-                <th>Commission Amount</th>
-                <th>Detail</th>
+                <th class="text-center align-middle">Agent Name</th>
+                <th class="text-center align-middle">Player Name</th>
+                <th class="text-center align-middle">Total Deposits</th>
+                <th class="text-center align-middle">Total DepositAmount</th>
+                <th class="text-center align-middle">Commission Percentage %</th>
+                <th class="text-center align-middle">Commission Amount</th>
+                <th class="text-center align-middle">Detail</th>
             </tr>
         </thead>
         <tbody>
             @foreach($transactions as $transaction)
                 <tr>
-                    <td>{{ $transaction->agent_name }}</td>
-                    <td>{{ $transaction->player_name }}</td>
-                    <td>{{ $transaction->total_deposits }}</td>
-                    <td>{{ number_format($transaction->total_amount / 100, 2) }}</td>
-                    <td>{{ $transaction->agent_commission }}%</td>
-                    <td>{{ number_format(($transaction->total_amount / 100) * ($transaction->agent_commission / 100), 2) }}</td>
-<td>
+                    <td  class="text-center align-middle">{{ $transaction->agent_name }}</td>
+                    <td  class="text-center align-middle">{{ $transaction->player_name }}</td>
+                    <td  class="text-center align-middle">{{ $transaction->total_deposits }}</td>
+                    <td  class="text-center align-middle">{{ number_format($transaction->total_amount / 100, 2) }}</td>
+                    <td  class="text-center align-middle">{{ $transaction->agent_commission }}%</td>
+                    <td  class="text-center align-middle">{{ number_format(($transaction->total_amount / 100) * ($transaction->agent_commission / 100), 2) }}</td>
+                    <td class="text-center align-middle">
                         <a href="{{ route('admin.agent.to.player.detail', ['agent_id' => $transaction->agent_id, 'player_id' => $transaction->player_id]) }}" class="btn btn-primary btn-sm">
                             View Details
                         </a>
