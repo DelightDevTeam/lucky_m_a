@@ -397,6 +397,29 @@ class AgentController extends Controller
     return view('admin.agent.agent_to_play_dep_log', compact('transactions'));
 }
 
+    public function AgentToPlayerDetail($agent_id, $player_id)
+{
+    // Retrieve detailed information about the agent and player
+    $transactionDetails = DB::table('transactions')
+        ->join('users as players', 'players.id', '=', 'transactions.payable_id')
+        ->join('users as agents', 'agents.id', '=', 'players.agent_id')
+        ->where('agents.id', $agent_id)
+        ->where('players.id', $player_id)
+        ->where('transactions.type', 'deposit')
+        ->where('transactions.name', 'credit_transfer')
+        ->select(
+            'agents.name as agent_name',
+            'players.name as player_name',
+            'transactions.amount',
+            'transactions.created_at',
+            'agents.commission as agent_commission'
+        )
+        ->get();
+
+    return view('admin.agent.agent_to_player_detail', compact('transactionDetails'));
+}
+
+
 //     public function AgentToPlayerDepositLog()
 // {
 //     $transactions = DB::table('transactions')

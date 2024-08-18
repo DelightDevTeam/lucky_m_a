@@ -69,33 +69,26 @@
     </a>
    </div>
    <div class="card">
+    <div class="card-header">
+      <h4>Detail for {{ $transactionDetails[0]->agent_name }} and {{ $transactionDetails[0]->player_name }}</h4>
+    </div>
     <div class="table-responsive">
      <table class="table align-items-center mb-0">
-      <thead>
+       <thead>
             <tr>
-                <th>Agent Name</th>
-                <th>Player Name</th>
-                <th>Total Deposits</th>
-                <th>Total DepositAmount</th>
+                <th>Transaction Amount</th>
+                <th>Transaction Date</th>
                 <th>Commission Percentage %</th>
-                <th>Commission Amount</th>
-                <th>Detail</th>
+                <th>Commission Earned</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($transactions as $transaction)
+            @foreach($transactionDetails as $detail)
                 <tr>
-                    <td>{{ $transaction->agent_name }}</td>
-                    <td>{{ $transaction->player_name }}</td>
-                    <td>{{ $transaction->total_deposits }}</td>
-                    <td>{{ number_format($transaction->total_amount / 100, 2) }}</td>
-                    <td>{{ $transaction->agent_commission }}%</td>
-                    <td>{{ number_format(($transaction->total_amount / 100) * ($transaction->agent_commission / 100), 2) }}</td>
-<td>
-                        <a href="{{ route('admin.agent.to.player.detail', ['agent_id' => $transaction->agent_id, 'player_id' => $transaction->player_id]) }}">
-                            View Details
-                        </a>
-                    </td>
+                    <td>{{ number_format($detail->amount / 100, 2) }}</td>
+                    <td>{{ $detail->created_at }}</td>
+                    <td>{{ $detail->agent_commission }}%</td>
+                    <td>{{ number_format(($detail->amount / 100) * ($detail->agent_commission / 100), 2) }}</td>
                 </tr>
             @endforeach
         </tbody>
