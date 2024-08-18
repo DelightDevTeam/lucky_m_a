@@ -374,4 +374,52 @@ class AgentController extends Controller
         return view('auth.agent_login', compact('agent'));
     }
 
+
+    public function AgentToPlayerDepositLog()
+{
+    $transactions = DB::table('transactions')
+        ->join('users as players', 'players.id', '=', 'transactions.payable_id')
+        ->join('users as agents', 'agents.id', '=', 'players.agent_id')
+        ->where('transactions.type', 'deposit')
+        ->where('transactions.name', 'credit_transfer')
+        ->where('agents.id', '<>', 1) // Exclude agent_id 1
+        ->groupBy('agents.id', 'players.id')
+        ->select(
+            'agents.id as agent_id',
+            'agents.name as agent_name',
+            'players.id as player_id',
+            'players.name as player_name',
+            DB::raw('count(transactions.id) as total_deposits'),
+            DB::raw('sum(transactions.amount) as total_amount')
+        )
+        ->get();
+
+    return view('admin.agent.agent_to_play_dep_log', compact('transactions'));
 }
+
+
+}
+
+/* 
+agent to player deposit log query 
+SELECT 
+    agents.id AS agent_id,
+    agents.name AS agent_name,
+    players.id AS player_id,
+    players.name AS player_name,
+    COUNT(transactions.id) AS total_deposits,
+    SUM(transactions.amount) AS total_amount
+FROM 
+    transactions
+INNER JOIN 
+    users AS players ON players.id = transactions.payable_id
+INNER JOIN 
+    users AS agents ON agents.id = players.agent_id
+WHERE 
+    transactions.type = 'deposit'
+    AND transactions.name = 'credit_transfer'
+    AND agents.id <> 1 -- Exclude agent_id 1
+GROUP BY 
+    agents.id, players.id;
+
+*/
