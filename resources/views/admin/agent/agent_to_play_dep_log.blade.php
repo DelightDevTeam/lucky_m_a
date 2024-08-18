@@ -63,7 +63,7 @@
  <div class="col-12">
   <div class="container mt-2">
    <div class="d-flex justify-content-between">
-    <h4>Agent To Player Deposit Log Detail</h4>
+    {{-- <h4>Agent To Player Deposit Log Detail</h4> --}}
     <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.agent.index') }}">
      <span class="btn-inner--icon mt-1"><i class="material-icons">arrow_back</i>Back</span>
     </a>
@@ -92,7 +92,7 @@
                     <td>{{ $transaction->agent_commission }}%</td>
                     <td>{{ number_format(($transaction->total_amount / 100) * ($transaction->agent_commission / 100), 2) }}</td>
 <td>
-                        <a href="{{ route('admin.agent.to.player.detail', ['agent_id' => $transaction->agent_id, 'player_id' => $transaction->player_id]) }}">
+                        <a href="{{ route('admin.agent.to.player.detail', ['agent_id' => $transaction->agent_id, 'player_id' => $transaction->player_id]) }}" class="btn btn-primary btn-sm">
                             View Details
                         </a>
                     </td>
