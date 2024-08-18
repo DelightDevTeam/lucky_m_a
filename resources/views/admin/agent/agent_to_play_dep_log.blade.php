@@ -76,7 +76,7 @@
                 <th>Agent Name</th>
                 <th>Player Name</th>
                 <th>Total Deposits</th>
-                <th>Total Amount</th>
+                <th>Total DepositAmount</th>
                 <th>Commission Percentage %</th>
                 <th>Commission Amount</th>
             </tr>
