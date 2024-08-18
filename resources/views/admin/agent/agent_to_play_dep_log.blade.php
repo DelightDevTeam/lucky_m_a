@@ -60,7 +60,7 @@
 @endsection
 @section('content')
 <div class="row justify-content-center">
- <div class="col-8">
+ <div class="col-12">
   <div class="container mt-2">
    <div class="d-flex justify-content-between">
     <h4>Agent Detail</h4>
