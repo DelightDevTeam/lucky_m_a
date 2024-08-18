@@ -71,12 +71,14 @@
    <div class="card">
     <div class="table-responsive">
      <table class="table align-items-center mb-0">
-       <thead>
+      <thead>
             <tr>
                 <th>Agent Name</th>
                 <th>Player Name</th>
                 <th>Total Deposits</th>
                 <th>Total Amount</th>
+                <th>Commission Percentage %</th>
+                <th>Commission Amount</th>
             </tr>
         </thead>
         <tbody>
@@ -85,11 +87,9 @@
                     <td>{{ $transaction->agent_name }}</td>
                     <td>{{ $transaction->player_name }}</td>
                     <td>{{ $transaction->total_deposits }}</td>
-                    {{-- <td>{{ number_format($transaction->total_amount, 2) }}</td> --}}
                     <td>{{ number_format($transaction->total_amount / 100, 2) }}</td>
-
-                    {{-- <td>{{ $transaction->total_amount }}</td> --}}
-
+                    <td>{{ $transaction->agent_commission }}%</td>
+                    <td>{{ number_format(($transaction->total_amount / 100) * ($transaction->agent_commission / 100), 2) }}</td>
                 </tr>
             @endforeach
         </tbody>

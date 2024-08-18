@@ -374,7 +374,6 @@ class AgentController extends Controller
         return view('auth.agent_login', compact('agent'));
     }
 
-
     public function AgentToPlayerDepositLog()
 {
     $transactions = DB::table('transactions')
@@ -389,6 +388,7 @@ class AgentController extends Controller
             'agents.name as agent_name',
             'players.id as player_id',
             'players.name as player_name',
+            'agents.commission as agent_commission', // Get the commission percentage
             DB::raw('count(transactions.id) as total_deposits'),
             DB::raw('sum(transactions.amount) as total_amount')
         )
@@ -396,6 +396,28 @@ class AgentController extends Controller
 
     return view('admin.agent.agent_to_play_dep_log', compact('transactions'));
 }
+
+//     public function AgentToPlayerDepositLog()
+// {
+//     $transactions = DB::table('transactions')
+//         ->join('users as players', 'players.id', '=', 'transactions.payable_id')
+//         ->join('users as agents', 'agents.id', '=', 'players.agent_id')
+//         ->where('transactions.type', 'deposit')
+//         ->where('transactions.name', 'credit_transfer')
+//         ->where('agents.id', '<>', 1) // Exclude agent_id 1
+//         ->groupBy('agents.id', 'players.id')
+//         ->select(
+//             'agents.id as agent_id',
+//             'agents.name as agent_name',
+//             'players.id as player_id',
+//             'players.name as player_name',
+//             DB::raw('count(transactions.id) as total_deposits'),
+//             DB::raw('sum(transactions.amount) as total_amount')
+//         )
+//         ->get();
+
+//     return view('admin.agent.agent_to_play_dep_log', compact('transactions'));
+// }
 
 
 }
