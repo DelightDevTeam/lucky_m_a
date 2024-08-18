@@ -336,6 +336,7 @@ class PlayerController extends Controller
 
     private function isExistingUserForAgent($phone, $agent_id): bool
     {
-        return User::where('phone', $phone)->where('agent_id', $agent_id)->first();
+        //return User::where('phone', $phone)->where('agent_id', $agent_id)->first();
+        return User::where('phone', $phone)->where('agent_id', $agent_id)->exists();
     }
 }
