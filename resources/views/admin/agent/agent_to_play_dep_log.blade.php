@@ -63,7 +63,7 @@
  <div class="col-12">
   <div class="container mt-2">
    <div class="d-flex justify-content-between">
-    {{-- <h4>Agent To Player Deposit Log Detail</h4> --}}
+    <h4>Agent To Player Deposit Log Detail</h4>
     <a class="btn btn-icon btn-2 btn-primary" href="{{ route('admin.agent.index') }}">
      <span class="btn-inner--icon mt-1"><i class="material-icons">arrow_back</i>Back</span>
     </a>
