@@ -25,7 +25,7 @@
     </style>
 </head>
 <body>
-    <h1>Agent Monthly Report</h1>
+    <h1>Agent Monthly Win / Lose Report</h1>
 
     <table>
         <thead>
@@ -66,6 +66,7 @@
             @foreach($agentReports as $report)
                 <tr>
                     <td>Agent {{ $report->agent_id }}</td>
+                    <td>{{ $report->agent_name }}</td>
                     <td>Direct Member</td>
                     <td>{{ number_format($report->total_bet_amount, 2) }}</td>
                     <td>{{ number_format($report->total_valid_bet_amount, 2) }}</td>
