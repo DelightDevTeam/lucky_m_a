@@ -96,7 +96,7 @@ trait UseWebhook
                 'bet_amount' => $requestTransaction->BetAmount,
                 'valid_amount' => $requestTransaction->ValidBetAmount,
                 'status' => $requestTransaction->Status,
-                'agent_id' => $user->agent_id
+                //'agent_id' => $user->agent_id
             ]);
         }
 
