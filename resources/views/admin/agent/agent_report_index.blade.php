@@ -39,6 +39,7 @@
     <table>
         <thead>
             <tr>
+                <th rowspan="2">Month</th>
                 <th rowspan="2">Account</th>
                 <th rowspan="2">Name</th>
                 <th rowspan="2">Bet Amount</th>
@@ -68,6 +69,7 @@
         <tbody>
             @foreach($agentReports as $report)
                 <tr>
+                    <td class="qty">{{ $report->report_month }}</td>
                     <td class="qty">Qty: {{ $report->qty }}</td>
                     <td>{{ $report->agent_name }}</td>
                     <td>{{ number_format($report->total_bet_amount, 2) }}</td>
