@@ -43,7 +43,7 @@
         background-color: #f1f1f1;
     }
 </style>
-
+<button><a href="{{ url('admin/agent-win-lose-report')}}">Back</a></button>
 <h1>Agent Detail Report for {{ $details->first()->agent_name }} ({{ \Carbon\Carbon::parse($details->first()->created_at)->format('F Y') }})</h1>
 
 
