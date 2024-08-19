@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers\Admin\Agent;
 
+use Exception;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Enums\UserType;
+use App\Models\PaymentType;
+use Illuminate\Http\Request;
 use App\Enums\TransactionName;
 use App\Enums\TransactionType;
-use App\Enums\UserType;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\AgentRequest;
-use App\Http\Requests\TransferLogRequest;
-use App\Models\Admin\TransferLog;
-use App\Models\PaymentType;
-use App\Models\User;
 use App\Services\WalletService;
-use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Admin\TransferLog;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\AgentRequest;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\TransferLogRequest;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -436,6 +437,7 @@ class AgentController extends Controller
         DB::raw('SUM(reports.agent_commission) as total_agent_commission'),
         DB::raw('(SUM(reports.payout_amount) - SUM(reports.valid_bet_amount)) as win_or_lose'),
         DB::raw('COUNT(*) as stake_count'),
+        DB::raw('MONTHNAME(reports.created_at) as report_month_name'),  // Adding month name
         DB::raw('DATE_FORMAT(reports.created_at, "%Y %M") as report_month_year')  // Adding year and month name
     )
     ->groupBy('reports.agent_id', 'users.name', 'report_month_year')  // Grouping by year and month
@@ -444,6 +446,18 @@ class AgentController extends Controller
     return view('admin.agent.agent_report_index', compact('agentReports'));
 
     }
+
+    public function AgentWinLoseDetails($agent_id, $month)
+{
+    $details = DB::table('reports')
+        ->where('agent_id', $agent_id)
+        ->whereMonth('created_at', Carbon::parse($month)->month)
+        ->whereYear('created_at', Carbon::parse($month)->year)
+        ->get();
+
+    return view('admin.agent.details', compact('details'));
+}
+
     
 
 }
