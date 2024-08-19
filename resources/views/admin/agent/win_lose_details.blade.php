@@ -44,7 +44,8 @@
     }
 </style>
 
-<h1>Agent Detail Report for {{ $details->first()->agent_name }} ({{ $details->first()->created_at->format('F Y') }})</h1>
+<h1>Agent Detail Report for {{ $details->first()->agent_name }} ({{ \Carbon\Carbon::parse($details->first()->created_at)->format('F Y') }})</h1>
+
 
 <table class="table table-bordered">
     <thead>
