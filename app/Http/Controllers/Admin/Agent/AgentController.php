@@ -450,13 +450,19 @@ class AgentController extends Controller
     public function AgentWinLoseDetails($agent_id, $month)
 {
     $details = DB::table('reports')
+        ->join('users', 'reports.agent_id', '=', 'users.id')
         ->where('agent_id', $agent_id)
-        ->whereMonth('created_at', Carbon::parse($month)->month)
-        ->whereYear('created_at', Carbon::parse($month)->year)
+        ->whereMonth('reports.created_at', Carbon::parse($month)->month)
+        ->whereYear('reports.created_at', Carbon::parse($month)->year)
+        ->select(
+            'reports.*',
+            'users.name as agent_name'  // Select the agent's name from the users table
+        )
         ->get();
 
     return view('admin.agent.win_lose_details', compact('details'));
 }
+
 
     
 
