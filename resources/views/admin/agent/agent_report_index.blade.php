@@ -12,7 +12,7 @@
         }
         th, td {
             padding: 8px;
-            text-align: right;
+            text-align: center;
         }
         th {
             background-color: #f2f2f2;
