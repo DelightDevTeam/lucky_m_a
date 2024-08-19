@@ -451,17 +451,19 @@ class AgentController extends Controller
 {
     $details = DB::table('reports')
         ->join('users', 'reports.agent_id', '=', 'users.id')
-        ->where('reports.agent_id', $agent_id)  // Specify the table for agent_id
+        ->where('reports.agent_id', $agent_id)
         ->whereMonth('reports.created_at', Carbon::parse($month)->month)
         ->whereYear('reports.created_at', Carbon::parse($month)->year)
         ->select(
             'reports.*',
-            'users.name as agent_name'  // Select the agent's name from the users table
+            'users.name as agent_name',
+            DB::raw('(reports.payout_amount - reports.valid_bet_amount) as win_or_lose') // Calculating win_or_lose
         )
         ->get();
 
     return view('admin.agent.win_lose_details', compact('details'));
 }
+
 
 
 
