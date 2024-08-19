@@ -27,9 +27,9 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $credentials = $request->only('user_name', 'password');
+        $credentials = $request->only('phone', 'password');
 
-        $user = User::where('user_name', $request->user_name)->first();
+        $user = User::where('phone', $request->phone)->first();
 
         if (!Auth::attempt($credentials)) {
             return $this->error('', 'Credentials do not match!', 401);
