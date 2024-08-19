@@ -22,7 +22,7 @@ return new class extends Migration
                 ->nullable();
             $table->uuid('uuid')
                 ->unique();
-            $table->unsignedBigInteger('agent_id')->nullable();
+            //$table->unsignedBigInteger('agent_id')->nullable();
             
             $table->timestamps();
 
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->index(['payable_type', 'payable_id', 'confirmed'], 'payable_confirmed_ind');
             $table->index(['payable_type', 'payable_id', 'type', 'confirmed'], 'payable_type_confirmed_ind');
 
-            $table->foreign('agent_id')->references('id')->on('users')->onDelete('cascade');
+           // $table->foreign('agent_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
