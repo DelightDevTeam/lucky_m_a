@@ -25,6 +25,12 @@
         .qty {
             text-align: left;
         }
+        .win {
+            color: green;
+        }
+        .lose {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -68,16 +74,29 @@
                     <td>{{ number_format($report->total_valid_bet_amount, 2) }}</td>
                     <td>--</td> <!-- Placeholder for stake count -->
                     <td>{{ number_format($report->total_commission_amount, 2) }}</td>
-                    <td>{{ number_format($report->win_or_lose, 2) }}</td> <!-- Member W/L -->
+                    
+                    <!-- Win/Loss for Member -->
+                    <td class="{{ $report->win_or_lose < 0 ? 'lose' : 'win' }}">
+                        {{ number_format($report->win_or_lose, 2) }}
+                    </td>
                     <td>0</td> <!-- Member Comm -->
                     <td>{{ number_format($report->win_or_lose + $report->total_commission_amount, 2) }}</td> <!-- Member Total -->
+                    
                     <td>--</td> <!-- Downline W/L Placeholder -->
                     <td>0</td> <!-- Downline Comm Placeholder -->
                     <td>--</td> <!-- Downline Total Placeholder -->
-                    <td>{{ number_format($report->win_or_lose, 2) }}</td> <!-- Myself W/L -->
+                    
+                    <!-- Win/Loss for Myself -->
+                    <td class="{{ $report->win_or_lose < 0 ? 'lose' : 'win' }}">
+                        {{ number_format($report->win_or_lose, 2) }}
+                    </td>
                     <td>0</td> <!-- Myself Comm -->
                     <td>{{ number_format($report->win_or_lose + $report->total_commission_amount, 2) }}</td> <!-- Myself Total -->
-                    <td>{{ number_format($report->win_or_lose, 2) }}</td> <!-- Upline W/L -->
+                    
+                    <!-- Win/Loss for Upline -->
+                    <td class="{{ $report->win_or_lose < 0 ? 'lose' : 'win' }}">
+                        {{ number_format($report->win_or_lose, 2) }}
+                    </td>
                     <td>0</td> <!-- Upline Comm -->
                     <td>{{ number_format($report->win_or_lose + $report->total_commission_amount, 2) }}</td> <!-- Upline Total -->
                 </tr>
@@ -88,16 +107,29 @@
                 <td>{{ number_format($agentReports->sum('total_valid_bet_amount'), 2) }}</td>
                 <td>--</td>
                 <td>{{ number_format($agentReports->sum('total_commission_amount'), 2) }}</td>
-                <td>{{ number_format($agentReports->sum('win_or_lose'), 2) }}</td>
+                
+                <!-- Summary Win/Loss -->
+                <td class="{{ $agentReports->sum('win_or_lose') < 0 ? 'lose' : 'win' }}">
+                    {{ number_format($agentReports->sum('win_or_lose'), 2) }}
+                </td>
                 <td>0</td>
                 <td>{{ number_format($agentReports->sum('win_or_lose') + $agentReports->sum('total_commission_amount'), 2) }}</td>
+                
                 <td>--</td>
                 <td>0</td>
                 <td>--</td>
-                <td>{{ number_format($agentReports->sum('win_or_lose'), 2) }}</td>
+                
+                <!-- Summary Myself Win/Loss -->
+                <td class="{{ $agentReports->sum('win_or_lose') < 0 ? 'lose' : 'win' }}">
+                    {{ number_format($agentReports->sum('win_or_lose'), 2) }}
+                </td>
                 <td>0</td>
                 <td>{{ number_format($agentReports->sum('win_or_lose') + $agentReports->sum('total_commission_amount'), 2) }}</td>
-                <td>{{ number_format($agentReports->sum('win_or_lose'), 2) }}</td>
+                
+                <!-- Summary Upline Win/Loss -->
+                <td class="{{ $agentReports->sum('win_or_lose') < 0 ? 'lose' : 'win' }}">
+                    {{ number_format($agentReports->sum('win_or_lose'), 2) }}
+                </td>
                 <td>0</td>
                 <td>{{ number_format($agentReports->sum('win_or_lose') + $agentReports->sum('total_commission_amount'), 2) }}</td>
             </tr>
