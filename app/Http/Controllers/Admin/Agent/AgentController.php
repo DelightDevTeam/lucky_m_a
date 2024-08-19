@@ -437,7 +437,7 @@ class AgentController extends Controller
         DB::raw('SUM(reports.agent_commission) as total_agent_commission'),
         DB::raw('(SUM(reports.payout_amount) - SUM(reports.valid_bet_amount)) as win_or_lose'),
         DB::raw('COUNT(*) as stake_count'),
-        DB::raw('MONTHNAME(reports.created_at) as report_month_name'),  // Adding month name
+       // DB::raw('MONTHNAME(reports.created_at) as report_month_name'),  // Adding month name
         DB::raw('DATE_FORMAT(reports.created_at, "%Y %M") as report_month_year')  // Adding year and month name
     )
     ->groupBy('reports.agent_id', 'users.name', 'report_month_year')  // Grouping by year and month

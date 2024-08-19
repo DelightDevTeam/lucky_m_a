@@ -103,7 +103,7 @@
                     <td>0</td> <!-- Upline Comm -->
                     <td>{{ number_format($report->win_or_lose + $report->total_commission_amount, 2) }}</td> <!-- Upline Total -->
                     <td>
-                    <a href="{{ route('admin.agent_winLdetails', ['agent_id' => $report->agent_id, 'month' => $report->report_month_name]) }}" class="btn btn-info">
+                    <a href="{{ route('admin.agent_winLdetails', ['agent_id' => $report->agent_id, 'month' => $report->report_month_year]) }}" class="btn btn-info">
                         View Detail
                     </a>
                     </td>
