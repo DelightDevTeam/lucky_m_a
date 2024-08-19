@@ -50,6 +50,7 @@
 <table class="table table-bordered">
     <thead>
         <tr>
+            <th>Date</th>
             <th>WagerID</th>
             <th>Bet Amount</th>
             <th>Valid Amount</th>
@@ -64,6 +65,7 @@
     <tbody>
         @foreach ($details as $detail)
         <tr>
+            <td>{{ $detail->created_at }}</td>
             <td>
              <a href="https://prodmd.9977997.com/Report/BetDetail?agentCode=E821&WagerID={{ $detail->wager_id }}" target="_blank" style="color: blueviolet; text-decoration: underline;">{{ $detail->wager_id }}</a>
             </td>
