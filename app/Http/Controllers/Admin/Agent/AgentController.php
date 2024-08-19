@@ -455,7 +455,7 @@ class AgentController extends Controller
         ->whereYear('created_at', Carbon::parse($month)->year)
         ->get();
 
-    return view('admin.agent.details', compact('details'));
+    return view('admin.agent.win_lose_details', compact('details'));
 }
 
     
