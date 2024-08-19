@@ -419,6 +419,31 @@ class AgentController extends Controller
     return view('admin.agent.agent_to_player_detail', compact('transactionDetails'));
 }
 
+    public function AgentWinLoseReport()
+    {
+        $agentReports = DB::table('reports')
+    ->join('users', 'reports.agent_id', '=', 'users.id')
+    ->select(
+        'reports.agent_id',
+        'users.name as agent_name',
+        DB::raw('MONTH(reports.created_on) as month'),
+        DB::raw('YEAR(reports.created_on) as year'),
+        DB::raw('SUM(reports.bet_amount) as total_bet_amount'),
+        DB::raw('SUM(reports.valid_bet_amount) as total_valid_bet_amount'),
+        DB::raw('SUM(reports.payout_amount) as total_payout_amount'),
+        DB::raw('SUM(reports.commission_amount) as total_commission_amount'),
+        DB::raw('SUM(reports.jack_pot_amount) as total_jack_pot_amount'),
+        DB::raw('SUM(reports.jp_bet) as total_jp_bet'),
+        DB::raw('SUM(reports.agent_commission) as total_agent_commission')
+    )
+    ->groupBy('reports.agent_id', 'users.name', DB::raw('YEAR(reports.created_on)'), DB::raw('MONTH(reports.created_on)'))
+    ->get();
+
+    return view('admin.agent.agent_report_index', compact('agentReports'));
+
+
+    }
+
 
 //     public function AgentToPlayerDepositLog()
 // {
@@ -466,5 +491,25 @@ WHERE
     AND agents.id <> 1 -- Exclude agent_id 1
 GROUP BY 
     agents.id, players.id;
+
+    // agent report comission query 
+    SELECT 
+    agent_id,
+    MONTH(created_on) as month,
+    YEAR(created_on) as year,
+    SUM(valid_bet_amount) as total_valid_bet_amount,
+    SUM(bet_amount) as total_bet_amount,
+    SUM(payout_amount) as total_payout_amount,
+    SUM(commission_amount) as total_commission_amount,
+    SUM(jack_pot_amount) as total_jack_pot_amount,
+    SUM(jp_bet) as total_jp_bet,
+    SUM(agent_commission) as total_agent_commission
+FROM 
+    reports
+GROUP BY 
+    agent_id, 
+    YEAR(created_on), 
+    MONTH(created_on);
+
 
 */
