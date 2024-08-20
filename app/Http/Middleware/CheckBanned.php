@@ -16,7 +16,8 @@ class CheckBanned
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->status == 2) {
+        if (Auth::check() && Auth::user()->status == 0) {
+            dd(Auth::user());
             Auth::logout();
 
             return redirect()->route('login')->with('error', 'You are banned. Please contact the administrator for more information.');

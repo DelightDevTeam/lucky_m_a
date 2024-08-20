@@ -29,12 +29,15 @@ class AuthController extends Controller
     {
         $credentials = $request->only('phone', 'password');
 
-        $user = User::where('phone', $request->phone)->first();
-
         if (!Auth::attempt($credentials)) {
             return $this->error('', 'Credentials do not match!', 401);
         }
         $user = Auth::user();
+
+        if($user->status == 0)
+        {
+            return $this->error('', 'Your account is not activated!', 401);
+        }
 
         if ($user->is_changed_password == 0) {
             return $this->error($user, 'You have to change password', 200);
@@ -56,7 +59,7 @@ class AuthController extends Controller
         if (!$agent) {
             return $this->error('', 'Not Found Agent', 401);
         }
-    
+
         if ($this->isExistingUserForAgent($request->phone, $agent->id)) {
             return $this->error('', 'Already Exist Account for this number', 401);
         }
@@ -100,12 +103,12 @@ class AuthController extends Controller
         if (!Hash::check($request->current_password, $player->password)) {
             return $this->error('', 'Old Password is incorrect', 401);
         }
-    
+
         $player->update([
             'password' => Hash::make($request->password),
             'status' => 1,
         ]);
-    
+
         return $this->success($player, 'Password has been changed successfully.');
     }
 

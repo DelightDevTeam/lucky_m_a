@@ -309,7 +309,7 @@ class AgentController extends Controller
         );
 
         $user = User::find($id);
-        $user->update(['status' => $user->status == 1 ? 2 : 1]);
+        $user->update(['status' => $user->status == 1 ? 0 : 1]);
         if (Auth::check() && Auth::id() == $id) {
             Auth::logout();
         }
@@ -467,7 +467,7 @@ class AgentController extends Controller
 
 
 
-    
+
 
 }
 
@@ -493,8 +493,8 @@ WHERE
 GROUP BY
     agents.id, players.id;
 
-    // agent report comission query 
-    SELECT 
+    // agent report comission query
+    SELECT
     agent_id,
     MONTH(created_on) as month,
     YEAR(created_on) as year,
@@ -505,11 +505,11 @@ GROUP BY
     SUM(jack_pot_amount) as total_jack_pot_amount,
     SUM(jp_bet) as total_jp_bet,
     SUM(agent_commission) as total_agent_commission
-FROM 
+FROM
     reports
-GROUP BY 
-    agent_id, 
-    YEAR(created_on), 
+GROUP BY
+    agent_id,
+    YEAR(created_on),
     MONTH(created_on);
 
     //     $agentReports = DB::table('reports')
