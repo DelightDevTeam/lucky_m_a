@@ -84,6 +84,7 @@
         <th>Phone</th>
         <td>{!! $agent->phone !!}</td>
        </tr>
+       <tr></tr>
       </tbody>
      </table>
     </div>
@@ -104,7 +105,7 @@
       </div>
       <div class="ms-auto my-auto mt-lg-0 mt-4">
        <div class="ms-auto my-auto">
-        
+
 
        </div>
       </div>
@@ -192,6 +193,7 @@
       icon: 'success',
       title: 'Success',
       text: successMessage,
+      background: 'hsl(230, 40%, 10%)',
       timer: 3000,
       showConfirmButton: false
     });
@@ -200,6 +202,7 @@
       icon: 'error',
       title: 'Error',
       text: errorMessage,
+      background: 'hsl(230, 40%, 10%)',
       timer: 3000,
       showConfirmButton: false
     });

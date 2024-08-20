@@ -2,7 +2,7 @@
 php -r "file_put_contents('/var/www/html/lucky_m_a/storage/logs/laravel.log', '');"
 // created dev branch for kzt
 
-tail -f /var/www/html/all_spider_man_slot_a_2_confirm/storage/logs/laravel.log
+tail -f /var/www/html/lucky_m_a/storage/logs/laravel.log
 
 crontab -e
 
@@ -10,3 +10,7 @@ crontab -e
 
 
 php artisan make:migration add_agent_link_to_users_table --table=users
+
+// to add column 
+ALTER TABLE transactions
+ADD COLUMN agent_id INT(11) AFTER name;

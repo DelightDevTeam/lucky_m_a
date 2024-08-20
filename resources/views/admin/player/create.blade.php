@@ -203,7 +203,7 @@
 <script>
   var errorMessage = @json(session('error'));
   var successMessage = @json(session('success'));
-  var url = 'https://panda666.info/login';
+  var url = 'https://www.luckym.pro';
   var name = @json(session('username'));
   var pw = @json(session('password'));
 
@@ -211,22 +211,23 @@
   Swal.fire({
     title: successMessage,
     icon: "success",
+    background: 'hsl(230, 40%, 10%)',
     showConfirmButton: false,
     showCloseButton: true,
     html: `
   <table class="table table-bordered" style="color: #fff;">
   <tbody>
+    <tr>
+    <td>Url</td>
+    <td id=""> ${url}</td>
+  </tr>
   <tr>
-    <td>username</td>
+    <td>Username</td>
     <td id="tusername"> ${name}</td>
   </tr>
   <tr>
-    <td>pw</td>
+    <td>Password</td>
     <td id="tpassword"> ${pw}</td>
-  </tr>
-  <tr>
-    <td>url</td>
-    <td id=""> ${url}</td>
   </tr>
   <tr>
     <td></td>
@@ -240,6 +241,7 @@
   Swal.fire({
     icon: 'error',
     title: errorMessage,
+    background: 'hsl(230, 40%, 10%)',
     showConfirmButton: false,
     timer: 1500
   })

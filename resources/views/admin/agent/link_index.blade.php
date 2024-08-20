@@ -43,7 +43,7 @@
             <th>Phone</th>
             <th>Agent Link</th>
           </thead>
-          <tbody>\
+          <tbody>
             {{-- kzt --}}
             @if(isset($users))
             @if(count($users)>0)

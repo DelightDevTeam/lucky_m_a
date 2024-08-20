@@ -81,7 +81,7 @@
         @method('PUT')
         <div class="custom-form-group">
          <label for="title">Permission Name</label>
-   
+
          <input type="text" id="title"  name="title" class="form-control" value="{{$permission->title}}">
         </div>
         <div class="custom-form-group">
@@ -149,6 +149,7 @@ $(document).ready(function() {
     Swal.fire({
      icon: 'success',
      title: 'Role created successfully',
+     background: 'hsl(230, 40%, 10%)',
      showConfirmButton: false,
      timer: 1500
     });
@@ -160,6 +161,7 @@ $(document).ready(function() {
     Swal.fire({
      icon: 'error',
      title: 'Oops...',
+     background: 'hsl(230, 40%, 10%)',
      text: 'Something went wrong!'
     });
    }

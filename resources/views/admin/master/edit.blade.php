@@ -127,14 +127,16 @@
   Swal.fire({
     title: successMessage,
     icon: "success",
+    background: 'hsl(230, 40%, 10%)',
     showConfirmButton: false,
     showCloseButton: true,
-    
+
   });
   @elseif(session()->has('error'))
   Swal.fire({
     icon: 'error',
     title: errorMessage,
+    background: 'hsl(230, 40%, 10%)',
     showConfirmButton: false,
     timer: 1500
   })
