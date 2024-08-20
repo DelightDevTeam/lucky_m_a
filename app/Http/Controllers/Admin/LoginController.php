@@ -15,7 +15,6 @@ class LoginController extends Controller
 {
     public function showLogin()
     {
-
         return view('auth.login');
     }
 
@@ -44,7 +43,7 @@ class LoginController extends Controller
                 'user_agent' => $request->userAgent(),
             ]);
 
-            return redirect()->route('admin.home');
+            return redirect()->route('home');
         }
 
         return redirect()->back()->with('error', 'Invalid credentials. Please try again.');
