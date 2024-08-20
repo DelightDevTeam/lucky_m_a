@@ -3,7 +3,7 @@
   <ul class="navbar-nav">
     {{-- kzt --}}
     <li class="nav-item active">
-      <a class="nav-link text-white " href="{{ route('home') }}" style="font-szie:large;">
+      <a class="nav-link text-white " href="{{ route('admin.home') }}" style="font-szie:large;">
         <span class="sidenav-mini-icon"> <i class="material-icons-round opacity-10">dashboard</i> </span>
         @if(Auth::user()->hasRole('Admin'))
         <span class="sidenav-normal ms-2 ps-1">Admin Dashboard</span>
@@ -34,7 +34,7 @@
       </a>
     </li>
     @endcan
-    @can('player_access')
+    @can('player_index')
     <li class="nav-item">
       <a class="nav-link text-white " href="{{ route('admin.player.index')}}">
         <span class="sidenav-mini-icon"> <i class="fa-solid fa-user"></i> </span>
@@ -50,14 +50,6 @@
       </a>
     </li>
     @endcan
-     {{-- @can('admin_access')
-    <li class="nav-item">
-      <a class="nav-link text-white " href="{{ url('admin/bonu/countindex')}}">
-        <span class="sidenav-mini-icon"> <i class="fa-solid fa-user"></i> </span>
-        <span class="sidenav-normal  ms-2  ps-1">BonusList</span>
-      </a>
-    </li>
-    @endcan --}}
     <li class="nav-item">
       <a class="nav-link text-white " href="{{ route('admin.transferLog')}}">
         <span class="sidenav-mini-icon"> <i class="fas fa-right-left"></i> </span>

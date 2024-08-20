@@ -92,7 +92,7 @@
     <!-- nav-links -->
     <div class="nav-links" id="sideLink">
         @can('user_access')
-        <a href="{{ route('home') }}" class="link shadow">
+        <a href="{{ route('admin.home') }}" class="link shadow">
             <div class="d-flex">
                 <i class="fas fa-dashboard d-block me-2"></i>
                 <p class="py-0">Admin Dashboard</p>

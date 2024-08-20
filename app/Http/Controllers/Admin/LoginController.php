@@ -44,7 +44,7 @@ class LoginController extends Controller
                 'user_agent' => $request->userAgent(),
             ]);
 
-            return redirect()->route('home');
+            return redirect()->route('admin.home');
         }
 
         return redirect()->back()->with('error', 'Invalid credentials. Please try again.');

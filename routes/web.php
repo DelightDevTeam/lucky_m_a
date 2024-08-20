@@ -9,7 +9,6 @@ require_once __DIR__.'/admin.php';
 
 Auth::routes();
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
 
 //auth routes

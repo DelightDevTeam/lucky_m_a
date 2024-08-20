@@ -30,6 +30,7 @@ Route::group([
     'prefix' => 'admin', 'as' => 'admin.',
     'middleware' => ['auth', 'checkBanned']
 ], function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::post('balance-up', [HomeController::class, 'balanceUp'])->name('balanceUp');
     Route::get('logs/{id}', [HomeController::class, 'logs'])
