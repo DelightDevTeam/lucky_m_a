@@ -76,7 +76,7 @@
                     <td>{{ number_format($report->total_bet_amount, 2) }}</td>
                     <td>{{ number_format($report->total_valid_bet_amount, 2) }}</td>
                     <td>{{ $report->stake_count }}</td> <!-- Placeholder for stake count -->
-                    <td>{{ number_format($report->agent_comm, 2) }}</td>
+                    <td>{{ number_format($report->agent_comm, 2) % }}</td>
                     
                     <!-- Win/Loss for Member -->
                     <td class="{{ $report->win_or_lose < 0 ? 'lose' : 'win' }}">
