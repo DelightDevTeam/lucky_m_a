@@ -464,10 +464,33 @@ class AgentController extends Controller
     return view('admin.agent.win_lose_details', compact('details'));
 }
 
+public function AuthAgentWinLoseReport()
+{
+    $agentId = Auth::user()->agent_id;  // Get the authenticated user's agent_id
 
+    $agentReports = DB::table('reports')
+        ->join('users', 'reports.agent_id', '=', 'users.id')
+        ->select(
+            'reports.agent_id',
+            'users.name as agent_name',
+            DB::raw('COUNT(DISTINCT reports.id) as qty'),
+            DB::raw('SUM(reports.bet_amount) as total_bet_amount'),
+            DB::raw('SUM(reports.valid_bet_amount) as total_valid_bet_amount'),
+            DB::raw('SUM(reports.payout_amount) as total_payout_amount'),
+            DB::raw('SUM(reports.commission_amount) as total_commission_amount'),
+            DB::raw('SUM(reports.jack_pot_amount) as total_jack_pot_amount'),
+            DB::raw('SUM(reports.jp_bet) as total_jp_bet'),
+            DB::raw('SUM(reports.agent_commission) as total_agent_commission'),
+            DB::raw('(SUM(reports.payout_amount) - SUM(reports.valid_bet_amount)) as win_or_lose'),
+            DB::raw('COUNT(*) as stake_count'),
+            DB::raw('DATE_FORMAT(reports.created_at, "%Y %M") as report_month_year')  // Adding year and month name
+        )
+        ->where('reports.agent_id', $agentId)  // Filter by authenticated user's agent_id
+        ->groupBy('reports.agent_id', 'users.name', 'report_month_year')  // Grouping by year and month
+        ->get();
 
-
-
+    return view('admin.agent.auth_agent_report_index', compact('agentReports'));
+}
 
 }
 
