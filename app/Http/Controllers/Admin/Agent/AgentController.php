@@ -467,7 +467,7 @@ class AgentController extends Controller
 public function AuthAgentWinLoseReport()
 {
     $agentId = Auth::user()->id;  // Get the authenticated user's agent_id
-    dd($agentId);
+    //dd($agentId); auth_win_lose_details
 
     $agentReports = DB::table('reports')
         ->join('users', 'reports.agent_id', '=', 'users.id')
@@ -492,6 +492,25 @@ public function AuthAgentWinLoseReport()
 
     return view('admin.agent.auth_agent_report_index', compact('agentReports'));
 }
+
+    public function AuthAgentWinLoseDetails($agent_id, $month)
+{
+    $details = DB::table('reports')
+        ->join('users', 'reports.agent_id', '=', 'users.id')
+        ->where('reports.agent_id', $agent_id)
+        ->whereMonth('reports.created_at', Carbon::parse($month)->month)
+        ->whereYear('reports.created_at', Carbon::parse($month)->year)
+        ->select(
+            'reports.*',
+            'users.name as agent_name',
+            DB::raw('(reports.payout_amount - reports.valid_bet_amount) as win_or_lose') // Calculating win_or_lose
+        )
+        ->get();
+
+    return view('admin.agent.auth_win_lose_details', compact('details'));
+}
+
+
 
 }
 
