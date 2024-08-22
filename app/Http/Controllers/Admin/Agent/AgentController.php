@@ -473,6 +473,7 @@ public function AuthAgentWinLoseReport()
         ->join('users', 'reports.agent_id', '=', 'users.id')
         ->select(
             'reports.agent_id',
+            'reports.agent_commission',  // Select without summing
             'users.name as agent_name',
             DB::raw('COUNT(DISTINCT reports.id) as qty'),
             DB::raw('SUM(reports.bet_amount) as total_bet_amount'),
@@ -484,7 +485,6 @@ public function AuthAgentWinLoseReport()
             //DB::raw('SUM(reports.agent_commission) as total_agent_commission'),
             DB::raw('(SUM(reports.payout_amount) - SUM(reports.valid_bet_amount)) as win_or_lose'),
             DB::raw('COUNT(*) as stake_count'),
-            'reports.agent_commission',  // Select without summing
             DB::raw('DATE_FORMAT(reports.created_at, "%Y %M") as report_month_year')  // Adding year and month name
         )
         ->where('reports.agent_id', $agentId)  // Filter by authenticated user's agent_id
