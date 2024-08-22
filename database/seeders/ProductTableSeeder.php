@@ -346,6 +346,13 @@ class ProductTableSeeder extends Seeder
                 'order' => 50,
                 'status' => 1
             ],
+            [
+                'code' => '1002',
+                'name' => 'Evolution Gaming',
+                'short_name' => 'Evolution',
+                'order' => 51,
+                'status' => 1
+            ],
         ];
 
         //Product::insert($data);

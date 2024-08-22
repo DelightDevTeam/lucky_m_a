@@ -467,6 +467,7 @@ class AgentController extends Controller
 public function AuthAgentWinLoseReport()
 {
     $agentId = Auth::user()->agent_id;  // Get the authenticated user's agent_id
+    dd($agentId);
 
     $agentReports = DB::table('reports')
         ->join('users', 'reports.agent_id', '=', 'users.id')
