@@ -488,7 +488,7 @@ public function AuthAgentWinLoseReport()
             DB::raw('DATE_FORMAT(reports.created_at, "%Y %M") as report_month_year')  // Adding year and month name
         )
         ->where('reports.agent_id', $agentId)  // Filter by authenticated user's agent_id
-        ->groupBy('reports.agent_id', 'users.name', 'report_month_year')  // Grouping by year and month
+        ->groupBy('reports.agent_id', 'users.name', 'reports.agent_commission', 'report_month_year')  // Grouping by year and month
         ->get();
 
     return view('admin.agent.auth_agent_report_index', compact('agentReports'));
