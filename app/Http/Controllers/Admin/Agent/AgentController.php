@@ -475,6 +475,7 @@ public function AuthAgentWinLoseReport()
             'reports.agent_id',
             'reports.agent_commission',  // Select without summing
             'users.name as agent_name',
+            'users.commission as agent_comm', 
             DB::raw('COUNT(DISTINCT reports.id) as qty'),
             DB::raw('SUM(reports.bet_amount) as total_bet_amount'),
             DB::raw('SUM(reports.valid_bet_amount) as total_valid_bet_amount'),
@@ -488,7 +489,7 @@ public function AuthAgentWinLoseReport()
             DB::raw('DATE_FORMAT(reports.created_at, "%Y %M") as report_month_year')  // Adding year and month name
         )
         ->where('reports.agent_id', $agentId)  // Filter by authenticated user's agent_id
-        ->groupBy('reports.agent_id', 'users.name', 'reports.agent_commission', 'report_month_year')  // Grouping by year and month
+        ->groupBy('reports.agent_id', 'users.name', 'users.commission', 'reports.agent_commission', 'report_month_year')  // Grouping by year and month
         ->get();
 
     return view('admin.agent.auth_agent_report_index', compact('agentReports'));
