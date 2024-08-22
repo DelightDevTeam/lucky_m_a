@@ -75,7 +75,7 @@
             <td>{{ $detail->commission_amount }}</td>
             <td>{{ $detail->jack_pot_amount }}</td>
             <td>{{ $detail->jp_bet }}</td>
-            <td>{{ $detail->agent_commission }}</td>
+            <td>{{ $detail->agent_comm }} %</td>
             <td>{{ $detail->win_or_lose }}</td>
         </tr>
         @endforeach
