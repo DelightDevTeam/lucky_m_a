@@ -82,7 +82,7 @@
                     <td class="{{ $report->win_or_lose < 0 ? 'lose' : 'win' }}">
                         {{ number_format($report->win_or_lose, 2) }}
                     </td>
-                    <td>0</td> <!-- Member Comm -->
+                    <td>{{ $report->agent_commission }}</td> <!-- Member Comm -->
                     <td>{{ number_format($report->win_or_lose + $report->total_commission_amount, 2) }}</td> <!-- Member Total -->
                     
                     <td>--</td> <!-- Downline W/L Placeholder -->
