@@ -426,9 +426,9 @@ class AgentController extends Controller
     ->join('users', 'reports.agent_id', '=', 'users.id')
     ->select(
         'reports.agent_id',
-        'reports.agent_commission',  // Select without summing
+       // 'reports.agent_commission',  // Select without summing
         'users.name as agent_name',
-        'users.commission as agent_comm',
+        //'users.commission as agent_comm',
 
         DB::raw('COUNT(DISTINCT reports.id) as qty'),
         DB::raw('SUM(reports.bet_amount) as total_bet_amount'),
@@ -443,7 +443,7 @@ class AgentController extends Controller
        // DB::raw('MONTHNAME(reports.created_at) as report_month_name'),  // Adding month name
         DB::raw('DATE_FORMAT(reports.created_at, "%Y %M") as report_month_year')  // Adding year and month name
     )
-    ->groupBy('reports.agent_id', 'users.name', 'users.commission', 'reports.agent_commission', 'report_month_year')  // Grouping by year and month
+    ->groupBy('reports.agent_id', 'users.name', 'report_month_year')  // Grouping by year and month
     ->get();
 
     return view('admin.agent.agent_report_index', compact('agentReports'));
