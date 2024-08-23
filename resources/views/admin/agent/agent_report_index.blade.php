@@ -2,6 +2,17 @@
 <html>
 <head>
     <title>Agent Monthly Report</title>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+  <!-- Nucleo Icons -->
+  <link href="{{ asset('admin_app/assets/css/nucleo-icons.css')}}" rel="stylesheet" />
+  <link href="{{ asset('admin_app/assets/css/nucleo-svg.css')}}" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/b829c5162c.js" crossorigin="anonymous"></script>
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <!-- CSS Files -->
+  <link id="pagestyle" href="{{ asset('admin_app/assets/css/material-dashboard.css?v=3.0.6')}}" rel="stylesheet" />
+  <link href="{{asset('admin_app/assets/css/datatables.bootstrap.min.css')}}" rel="stylesheet">
     <style>
         table {
             width: 100%;
@@ -32,11 +43,36 @@
             color: red;
         }
     </style>
+
 </head>
 <body>
     <h1>Agent Monthly Report</h1>
 
-    <table>
+    <div class="card">
+        <div class="card-header">
+            <p>Agent Win / lose filter by month or date</p>
+        </div>
+        <div class="card-body">
+            <form method="GET" action="{{ route('admin.agent.AgentWinLose') }}">
+                <label for="start_date">Start Date:</label>
+                <input type="date" id="start_date" name="start_date" value="{{ request('start_date') }}">
+
+                <label for="end_date">End Date:</label>
+                <input type="date" id="end_date" name="end_date" value="{{ request('end_date') }}">
+
+                <label for="month_year">Month/Year:</label>
+                <input type="month" id="month_year" name="month_year" value="{{ request('month_year') }}">
+
+                <button type="submit">Filter</button>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="col-md-12">
+            <div class="card mt-4">
+                <table>
         <thead>
             <tr>
                 <th rowspan="2">Month</th>
@@ -141,7 +177,10 @@
                 <td>0</td>
                 <td>{{ number_format($agentReports->sum('win_or_lose') + $agentReports->sum('total_commission_amount'), 2) }}</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
