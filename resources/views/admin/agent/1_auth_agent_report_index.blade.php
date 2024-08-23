@@ -2,18 +2,6 @@
 <html>
 <head>
     <title>Agent Monthly Report</title>
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-  <!-- Nucleo Icons -->
-  <link href="{{ asset('admin_app/assets/css/nucleo-icons.css')}}" rel="stylesheet" />
-  <link href="{{ asset('admin_app/assets/css/nucleo-svg.css')}}" rel="stylesheet" />
-  <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/b829c5162c.js" crossorigin="anonymous"></script>
-  <!-- Material Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-  <!-- CSS Files -->
-  {{-- <link id="pagestyle" href="{{ asset('admin_app/assets/css/material-dashboard.css?v=3.0.6')}}" rel="stylesheet" />
-  <link href="{{asset('admin_app/assets/css/datatables.bootstrap.min.css')}}" rel="stylesheet"> --}}
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         table {
             width: 100%;
@@ -44,36 +32,11 @@
             color: red;
         }
     </style>
-
 </head>
 <body>
-    <h1 class="text-center">Agent Monthly Report</h1>
+    <h1>Agent Monthly Report</h1>
 
-    <div class="card">
-        <div class="card-header">
-            <p class="text-center">Agent Win / lose filter by month or date</p>
-        </div>
-        <div class="card-body">
-            <form method="GET" action="{{ route('admin.agent.AgentWinLose') }}">
-                <label for="start_date">Start Date:</label>
-                <input type="date" id="start_date" name="start_date" value="{{ request('start_date') }}">
-
-                <label for="end_date">End Date:</label>
-                <input type="date" id="end_date" name="end_date" value="{{ request('end_date') }}">
-
-                <label for="month_year">Month/Year:</label>
-                <input type="month" id="month_year" name="month_year" value="{{ request('month_year') }}">
-
-                <button type="submit">Filter</button>
-            </form>
-
-        </div>
-    </div>
-
-    <div class="mt-2">
-        {{-- <div class="col-md-12"> --}}
-            {{-- <div class="card mt-4"> --}}
-        <table>
+    <table>
         <thead>
             <tr>
                 <th rowspan="2">Month</th>
@@ -113,13 +76,13 @@
                     <td>{{ number_format($report->total_bet_amount, 2) }}</td>
                     <td>{{ number_format($report->total_valid_bet_amount, 2) }}</td>
                     <td>{{ $report->stake_count }}</td> <!-- Placeholder for stake count -->
-                    <td>0</td>
+                    <td>{{ number_format($report->agent_comm, 2) }} %</td>
                     
                     <!-- Win/Loss for Member -->
                     <td class="{{ $report->win_or_lose < 0 ? 'lose' : 'win' }}">
                         {{ number_format($report->win_or_lose, 2) }}
                     </td>
-                    <td>0 </td>
+                    <td>{{ $report->agent_commission }}</td> <!-- Member Comm -->
                     <td>{{ number_format($report->win_or_lose + $report->total_commission_amount, 2) }}</td> <!-- Member Total -->
                     
                     <td>--</td> <!-- Downline W/L Placeholder -->
@@ -140,7 +103,7 @@
                     <td>0</td> <!-- Upline Comm -->
                     <td>{{ number_format($report->win_or_lose + $report->total_commission_amount, 2) }}</td> <!-- Upline Total -->
                     <td>
-                    <a href="{{ route('admin.agent_winLdetails', ['agent_id' => $report->agent_id, 'month' => $report->report_month_year]) }}" class="btn btn-info">
+                    <a href="{{ route('admin.authagent_winLdetails', ['agent_id' => $report->agent_id, 'month' => $report->report_month_year]) }}" class="btn btn-info">
                         View Detail
                     </a>
                     </td>
@@ -178,10 +141,7 @@
                 <td>0</td>
                 <td>{{ number_format($agentReports->sum('win_or_lose') + $agentReports->sum('total_commission_amount'), 2) }}</td>
             </tr>
-            </tbody>
-            </table>
-            {{-- </div> --}}
-        {{-- </div> --}}
-    </div>
+        </tbody>
+    </table>
 </body>
 </html>

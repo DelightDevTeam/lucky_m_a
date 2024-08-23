@@ -451,38 +451,38 @@ class AgentController extends Controller
     // }
 
     public function AgentWinLoseReport(Request $request)
-{
-    $query = DB::table('reports')
-        ->join('users', 'reports.agent_id', '=', 'users.id')
-        ->select(
-            'reports.agent_id',
-            'users.name as agent_name',
-            DB::raw('COUNT(DISTINCT reports.id) as qty'),
-            DB::raw('SUM(reports.bet_amount) as total_bet_amount'),
-            DB::raw('SUM(reports.valid_bet_amount) as total_valid_bet_amount'),
-            DB::raw('SUM(reports.payout_amount) as total_payout_amount'),
-            DB::raw('SUM(reports.commission_amount) as total_commission_amount'),
-            DB::raw('SUM(reports.jack_pot_amount) as total_jack_pot_amount'),
-            DB::raw('SUM(reports.jp_bet) as total_jp_bet'),
-            DB::raw('(SUM(reports.payout_amount) - SUM(reports.valid_bet_amount)) as win_or_lose'),
-            DB::raw('COUNT(*) as stake_count'),
-            DB::raw('DATE_FORMAT(reports.created_at, "%Y %M") as report_month_year')
-        );
+    {
+        $query = DB::table('reports')
+            ->join('users', 'reports.agent_id', '=', 'users.id')
+            ->select(
+                'reports.agent_id',
+                'users.name as agent_name',
+                DB::raw('COUNT(DISTINCT reports.id) as qty'),
+                DB::raw('SUM(reports.bet_amount) as total_bet_amount'),
+                DB::raw('SUM(reports.valid_bet_amount) as total_valid_bet_amount'),
+                DB::raw('SUM(reports.payout_amount) as total_payout_amount'),
+                DB::raw('SUM(reports.commission_amount) as total_commission_amount'),
+                DB::raw('SUM(reports.jack_pot_amount) as total_jack_pot_amount'),
+                DB::raw('SUM(reports.jp_bet) as total_jp_bet'),
+                DB::raw('(SUM(reports.payout_amount) - SUM(reports.valid_bet_amount)) as win_or_lose'),
+                DB::raw('COUNT(*) as stake_count'),
+                DB::raw('DATE_FORMAT(reports.created_at, "%Y %M") as report_month_year')
+            );
 
-    // Apply the date filter if provided
-    if ($request->has('start_date') && $request->has('end_date')) {
-        $query->whereBetween('reports.created_at', [$request->start_date, $request->end_date]);
-    } elseif ($request->has('month_year')) {
-        // Filter by month and year if provided
-        $monthYear = Carbon::parse($request->month_year);
-        $query->whereMonth('reports.created_at', $monthYear->month)
-              ->whereYear('reports.created_at', $monthYear->year);
+        // Apply the date filter if provided
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $query->whereBetween('reports.created_at', [$request->start_date, $request->end_date]);
+        } elseif ($request->has('month_year')) {
+            // Filter by month and year if provided
+            $monthYear = Carbon::parse($request->month_year);
+            $query->whereMonth('reports.created_at', $monthYear->month)
+                ->whereYear('reports.created_at', $monthYear->year);
+        }
+
+        $agentReports = $query->groupBy('reports.agent_id', 'users.name', 'report_month_year')->get();
+
+        return view('admin.agent.agent_report_index', compact('agentReports'));
     }
-
-    $agentReports = $query->groupBy('reports.agent_id', 'users.name', 'report_month_year')->get();
-
-    return view('admin.agent.agent_report_index', compact('agentReports'));
-}
 
 
     public function AgentWinLoseDetails($agent_id, $month)
@@ -503,18 +503,46 @@ class AgentController extends Controller
     return view('admin.agent.win_lose_details', compact('details'));
 }
 
-public function AuthAgentWinLoseReport()
+// public function AuthAgentWinLoseReport()
+// {
+//     $agentId = Auth::user()->id;  // Get the authenticated user's agent_id
+//     //dd($agentId); auth_win_lose_details
+
+//     $agentReports = DB::table('reports')
+//         ->join('users', 'reports.agent_id', '=', 'users.id')
+//         ->select(
+//             'reports.agent_id',
+//             'reports.agent_commission',  // Select without summing
+//             'users.name as agent_name',
+//             'users.commission as agent_comm', 
+//             DB::raw('COUNT(DISTINCT reports.id) as qty'),
+//             DB::raw('SUM(reports.bet_amount) as total_bet_amount'),
+//             DB::raw('SUM(reports.valid_bet_amount) as total_valid_bet_amount'),
+//             DB::raw('SUM(reports.payout_amount) as total_payout_amount'),
+//             DB::raw('SUM(reports.commission_amount) as total_commission_amount'),
+//             DB::raw('SUM(reports.jack_pot_amount) as total_jack_pot_amount'),
+//             DB::raw('SUM(reports.jp_bet) as total_jp_bet'),
+//             //DB::raw('SUM(reports.agent_commission) as total_agent_commission'),
+//             DB::raw('(SUM(reports.payout_amount) - SUM(reports.valid_bet_amount)) as win_or_lose'),
+//             DB::raw('COUNT(*) as stake_count'),
+//             DB::raw('DATE_FORMAT(reports.created_at, "%Y %M") as report_month_year')  // Adding year and month name
+//         )
+//         ->where('reports.agent_id', $agentId)  // Filter by authenticated user's agent_id
+//         ->groupBy('reports.agent_id', 'users.name', 'users.commission', 'reports.agent_commission', 'report_month_year')  // Grouping by year and month
+//         ->get();
+
+//     return view('admin.agent.auth_agent_report_index', compact('agentReports'));
+// }
+
+    public function AuthAgentWinLoseReport(Request $request)
 {
     $agentId = Auth::user()->id;  // Get the authenticated user's agent_id
-    //dd($agentId); auth_win_lose_details
 
-    $agentReports = DB::table('reports')
+    $query = DB::table('reports')
         ->join('users', 'reports.agent_id', '=', 'users.id')
         ->select(
             'reports.agent_id',
-            'reports.agent_commission',  // Select without summing
             'users.name as agent_name',
-            'users.commission as agent_comm', 
             DB::raw('COUNT(DISTINCT reports.id) as qty'),
             DB::raw('SUM(reports.bet_amount) as total_bet_amount'),
             DB::raw('SUM(reports.valid_bet_amount) as total_valid_bet_amount'),
@@ -522,14 +550,23 @@ public function AuthAgentWinLoseReport()
             DB::raw('SUM(reports.commission_amount) as total_commission_amount'),
             DB::raw('SUM(reports.jack_pot_amount) as total_jack_pot_amount'),
             DB::raw('SUM(reports.jp_bet) as total_jp_bet'),
-            //DB::raw('SUM(reports.agent_commission) as total_agent_commission'),
             DB::raw('(SUM(reports.payout_amount) - SUM(reports.valid_bet_amount)) as win_or_lose'),
             DB::raw('COUNT(*) as stake_count'),
-            DB::raw('DATE_FORMAT(reports.created_at, "%Y %M") as report_month_year')  // Adding year and month name
+            DB::raw('DATE_FORMAT(reports.created_at, "%Y %M") as report_month_year')
         )
-        ->where('reports.agent_id', $agentId)  // Filter by authenticated user's agent_id
-        ->groupBy('reports.agent_id', 'users.name', 'users.commission', 'reports.agent_commission', 'report_month_year')  // Grouping by year and month
-        ->get();
+        ->where('reports.agent_id', $agentId);  // Filter by authenticated user's agent_id
+
+    // Apply the date filter if provided
+    if ($request->has('start_date') && $request->has('end_date')) {
+        $query->whereBetween('reports.created_at', [$request->start_date, $request->end_date]);
+    } elseif ($request->has('month_year')) {
+        // Filter by month and year if provided
+        $monthYear = Carbon::parse($request->month_year);
+        $query->whereMonth('reports.created_at', $monthYear->month)
+            ->whereYear('reports.created_at', $monthYear->year);
+    }
+
+    $agentReports = $query->groupBy('reports.agent_id', 'users.name', 'report_month_year')->get();
 
     return view('admin.agent.auth_agent_report_index', compact('agentReports'));
 }
