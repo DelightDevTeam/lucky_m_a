@@ -47,11 +47,11 @@
 
 </head>
 <body>
-    <h1>Agent Monthly Report</h1>
+    <h1 class="text-center">Agent Monthly Report</h1>
 
     <div class="card">
         <div class="card-header">
-            <p>Agent Win / lose filter by month or date</p>
+            <p class="text-center">Agent Win / lose filter by month or date</p>
         </div>
         <div class="card-body">
             <form method="GET" action="{{ route('admin.agent.AgentWinLose') }}">
@@ -72,7 +72,7 @@
 
     <div class="container">
         <div class="col-md-12">
-            <div class="card mt-4">
+            {{-- <div class="card mt-4"> --}}
                 <table>
         <thead>
             <tr>
@@ -180,7 +180,7 @@
             </tr>
             </tbody>
             </table>
-            </div>
+            {{-- </div> --}}
         </div>
     </div>
 </body>
