@@ -70,10 +70,10 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="col-md-12">
+    <div class="mt-2">
+        {{-- <div class="col-md-12"> --}}
             {{-- <div class="card mt-4"> --}}
-                <table>
+        <table>
         <thead>
             <tr>
                 <th rowspan="2">Month</th>
@@ -181,7 +181,7 @@
             </tbody>
             </table>
             {{-- </div> --}}
-        </div>
+        {{-- </div> --}}
     </div>
 </body>
 </html>
