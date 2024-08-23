@@ -54,7 +54,7 @@
             </tr>
             <tr>
                 <th>W/L</th>
-                {{-- <th>Comm</th> --}}
+                <th>Comm</th>
                 <th>Total</th>
                 <th>W/L</th>
                 <th>Comm</th>
