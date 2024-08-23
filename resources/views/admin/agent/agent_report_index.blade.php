@@ -45,7 +45,7 @@
                 <th rowspan="2">Bet Amount</th>
                 <th rowspan="2">Valid Amount</th>
                 <th rowspan="2">Stake Count</th>
-                {{-- <th rowspan="2">Gross Comm</th> --}}
+                <th rowspan="2">Gross Comm</th>
                 <th colspan="3">Member</th>
                 <th colspan="3">Downline</th>
                 <th colspan="3">Myself</th>
