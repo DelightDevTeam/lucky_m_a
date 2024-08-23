@@ -54,7 +54,7 @@
             <p class="text-center">Agent Win / lose filter by month or date</p>
         </div>
         <div class="card-body">
-            <form method="GET" action="{{ route('admin.agent.AgentWinLose') }}">
+            <form method="GET" action="{{ route('admin.AuthAgentWinLose') }}">
                 <label for="start_date">Start Date:</label>
                 <input type="date" id="start_date" name="start_date" value="{{ request('start_date') }}">
 
@@ -140,7 +140,7 @@
                     <td>0</td> <!-- Upline Comm -->
                     <td>{{ number_format($report->win_or_lose + $report->total_commission_amount, 2) }}</td> <!-- Upline Total -->
                     <td>
-                    <a href="{{ route('admin.agent_winLdetails', ['agent_id' => $report->agent_id, 'month' => $report->report_month_year]) }}" class="btn btn-info">
+                    <a href="{{ route('admin.authagent_winLdetails', ['agent_id' => $report->agent_id, 'month' => $report->report_month_year]) }}" class="btn btn-info">
                         View Detail
                     </a>
                     </td>
