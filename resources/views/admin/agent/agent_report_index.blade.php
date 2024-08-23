@@ -11,8 +11,9 @@
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
-  <link id="pagestyle" href="{{ asset('admin_app/assets/css/material-dashboard.css?v=3.0.6')}}" rel="stylesheet" />
-  <link href="{{asset('admin_app/assets/css/datatables.bootstrap.min.css')}}" rel="stylesheet">
+  {{-- <link id="pagestyle" href="{{ asset('admin_app/assets/css/material-dashboard.css?v=3.0.6')}}" rel="stylesheet" />
+  <link href="{{asset('admin_app/assets/css/datatables.bootstrap.min.css')}}" rel="stylesheet"> --}}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         table {
             width: 100%;
