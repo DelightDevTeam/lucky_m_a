@@ -45,7 +45,7 @@
                 <th rowspan="2">Bet Amount</th>
                 <th rowspan="2">Valid Amount</th>
                 <th rowspan="2">Stake Count</th>
-                <th rowspan="2">Gross Comm</th>
+                {{-- <th rowspan="2">Gross Comm</th> --}}
                 <th colspan="3">Member</th>
                 <th colspan="3">Downline</th>
                 <th colspan="3">Myself</th>
@@ -54,7 +54,7 @@
             </tr>
             <tr>
                 <th>W/L</th>
-                <th>Comm</th>
+                {{-- <th>Comm</th> --}}
                 <th>Total</th>
                 <th>W/L</th>
                 <th>Comm</th>
@@ -82,7 +82,7 @@
                     <td class="{{ $report->win_or_lose < 0 ? 'lose' : 'win' }}">
                         {{ number_format($report->win_or_lose, 2) }}
                     </td>
-                    <td>{{ number_format($report->agent_commission, 2) }} </td>
+                    {{-- <td>{{ number_format($report->agent_commission, 2) }} </td> --}}
                     <td>{{ number_format($report->win_or_lose + $report->total_commission_amount, 2) }}</td> <!-- Member Total -->
                     
                     <td>--</td> <!-- Downline W/L Placeholder -->
