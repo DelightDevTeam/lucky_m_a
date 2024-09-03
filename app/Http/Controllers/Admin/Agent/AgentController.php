@@ -86,24 +86,31 @@ class AgentController extends Controller
             ]);
         }
         $transfer_amount = $inputs['amount'];
-        $userPrepare = array_merge(
-            $inputs,
-            [
-                'password' => Hash::make($inputs['password']),
-                'agent_id' => Auth::id(),
-                'type' => UserType::Admin,
-            ]
-        );
 
         if ($request->hasFile('agent_logo')) {
         $image = $request->file('agent_logo');
         $ext = $image->getClientOriginalExtension();
         $filename = uniqid('logo_') . '.' . $ext;
         $image->move(public_path('assets/img/sitelogo/'), $filename);
-        $userPrepare['agent_logo'] = $filename;
+        $request->agent_logo = $filename;
     }
 
-        $agent = User::create($userPrepare);
+        $agent = User::create([
+            'user_name' => $request->user_name,
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'password' => Hash::make($inputs['password']),
+            'agent_id' => Auth::id(),
+            'type' => UserType::Agent,
+            'agent_logo' => $request->agent_logo,
+            'referral_code' => $request->referral_code,
+            'line_id' => $request->line_id,
+            'payment_type_id' => $request->payment_type_id,
+            'account_name' => $request->account_name,
+            'account_number' => $request->account_number,
+            'commission' => $request->commission ??  0.00
+        ]);
+
         $agent->roles()->sync(self::AGENT_ROLE);
 
         if (isset($inputs['amount'])) {
@@ -514,7 +521,7 @@ class AgentController extends Controller
 //             'reports.agent_id',
 //             'reports.agent_commission',  // Select without summing
 //             'users.name as agent_name',
-//             'users.commission as agent_comm', 
+//             'users.commission as agent_comm',
 //             DB::raw('COUNT(DISTINCT reports.id) as qty'),
 //             DB::raw('SUM(reports.bet_amount) as total_bet_amount'),
 //             DB::raw('SUM(reports.valid_bet_amount) as total_valid_bet_amount'),
