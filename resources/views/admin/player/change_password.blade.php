@@ -125,7 +125,7 @@
     showConfirmButton: false,
     showCloseButton: true,
     html: `
-  <table class="table table-bordered" style="background:#eee;">
+  <table class="table table-bordered" style="background:transparent;">
   <tbody>
     <tr>
     <td>Url</td>
