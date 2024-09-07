@@ -125,7 +125,7 @@
     showConfirmButton: false,
     showCloseButton: true,
     html: `
-  <table class="table table-bordered" style="background:transparent;">
+  <table class="table table-bordered" style="background:transparent; color: #fff;">
   <tbody>
   <tr>
     <td>username</td>
