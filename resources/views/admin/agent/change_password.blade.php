@@ -113,7 +113,7 @@
 <script>
   var errorMessage = @json(session('error'));
   var successMessage = @json(session('success'));
-  var url = 'https://maxwinagent.online/login';
+  var url = 'https://luckym.online/login';
   var name = @json(session('username'));
   var pw = @json(session('password'));
 
@@ -125,7 +125,7 @@
     showConfirmButton: false,
     showCloseButton: true,
     html: `
-  <table class="table table-bordered" style="background:#eee;">
+  <table class="table table-bordered" style="background:transparent;">
   <tbody>
   <tr>
     <td>username</td>
