@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
-use App\Models\User;
-use App\Models\Transaction;
-use Illuminate\Support\Str;
-use App\Settings\AppSetting;
-use Illuminate\Http\Request;
-use App\Models\Admin\UserLog;
 use App\Enums\TransactionName;
-use App\Services\WalletService;
-use Illuminate\Support\Facades\DB;
+use App\Models\Admin\UserLog;
 use App\Models\SeamlessTransaction;
-use Illuminate\Support\Facades\Log;
+use App\Models\Transaction;
+use App\Models\User;
+use App\Services\WalletService;
+use App\Settings\AppSetting;
+use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class HomeController extends Controller
@@ -29,6 +29,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('checkBanned');
     }
 
     /**
@@ -62,45 +63,45 @@ class HomeController extends Controller
     }
 
     public function balanceUp(Request $request)
-{
-    abort_if(
-        Gate::denies('admin_access'),
-        Response::HTTP_FORBIDDEN,
-        '403 Forbidden |You cannot Access this page because you do not have permission'
-    );
-    
-    $request->validate([
-        'balance' => 'required|numeric',
-    ]);
+    {
+        abort_if(
+            Gate::denies('admin_access'),
+            Response::HTTP_FORBIDDEN,
+            '403 Forbidden |You cannot Access this page because you do not have permission'
+        );
 
-    // Get the current user (admin)
-    $admin = Auth::user();
+        $request->validate([
+            'balance' => 'required|numeric',
+        ]);
 
-    // Get the current balance before the update
-    $openingBalance = $admin->wallet->balanceFloat;
+        // Get the current user (admin)
+        $admin = Auth::user();
 
-    // Update the balance using the WalletService
-    app(WalletService::class)->deposit($admin, $request->balance, TransactionName::CapitalDeposit);
+        // Get the current balance before the update
+        $openingBalance = $admin->wallet->balanceFloat;
 
-    // Record the transaction in the transactions table
-    Transaction::create([
-        'payable_type' => get_class($admin),
-        'payable_id' => $admin->id,
-        'wallet_id' => $admin->wallet->id,
-        'type' => 'deposit',
-        'amount' => $request->balance,
-        'confirmed' => true,
-        'meta' => json_encode([
-            'name' => TransactionName::CapitalDeposit,
-            'opening_balance' => $openingBalance,
-            'new_balance' => $admin->wallet->balanceFloat,
-            'target_user_id' => $admin->id,
-        ]),
-        'uuid' => Str::uuid()->toString(),
-    ]);
+        // Update the balance using the WalletService
+        app(WalletService::class)->deposit($admin, $request->balance, TransactionName::CapitalDeposit);
 
-    return back()->with('success', 'Add New Balance Successfully.');
-}
+        // Record the transaction in the transactions table
+        Transaction::create([
+            'payable_type' => get_class($admin),
+            'payable_id' => $admin->id,
+            'wallet_id' => $admin->wallet->id,
+            'type' => 'deposit',
+            'amount' => $request->balance,
+            'confirmed' => true,
+            'meta' => json_encode([
+                'name' => TransactionName::CapitalDeposit,
+                'opening_balance' => $openingBalance,
+                'new_balance' => $admin->wallet->balanceFloat,
+                'target_user_id' => $admin->id,
+            ]),
+            'uuid' => Str::uuid()->toString(),
+        ]);
+
+        return back()->with('success', 'Add New Balance Successfully.');
+    }
 
     // public function balanceUp(Request $request)
     // {
@@ -126,76 +127,74 @@ class HomeController extends Controller
     }
 
     private function getTodayWithdraw()
-{
-    // Fetch today's deposits with the 'credit_transfer' name and 'deposit' type
-    $withdraws = DB::table('transactions')
-        ->where('name', 'debit_transfer')
-        ->where('type', 'withdraw')
-        ->whereDate('created_at', now()->toDateString())
-        ->get();
+    {
+        // Fetch today's deposits with the 'credit_transfer' name and 'deposit' type
+        $withdraws = DB::table('transactions')
+            ->where('name', 'debit_transfer')
+            ->where('type', 'withdraw')
+            ->whereDate('created_at', now()->toDateString())
+            ->get();
 
-    Log::info('getTodayWithdraw:', ['withdraws' => $withdraws]);
+        Log::info('getTodayWithdraw:', ['withdraws' => $withdraws]);
 
-    // Summing up the 'amount' field
-    $sum = $withdraws->sum('amount');
-    Log::info('Today Withdraw Sum:', ['amount' => $sum]);
+        // Summing up the 'amount' field
+        $sum = $withdraws->sum('amount');
+        Log::info('Today Withdraw Sum:', ['amount' => $sum]);
 
-    return $sum;
-}
+        return $sum;
+    }
 
     private function getTodayDeposit()
-{
-    // Fetch today's deposits with the 'credit_transfer' name and 'deposit' type
-    $deposits = DB::table('transactions')
-        ->where('name', 'credit_transfer')
-        ->where('type', 'deposit')
-        ->whereDate('created_at', now()->toDateString())
-        ->get();
+    {
+        // Fetch today's deposits with the 'credit_transfer' name and 'deposit' type
+        $deposits = DB::table('transactions')
+            ->where('name', 'credit_transfer')
+            ->where('type', 'deposit')
+            ->whereDate('created_at', now()->toDateString())
+            ->get();
 
-    Log::info('Today Deposits:', ['deposits' => $deposits]);
+        Log::info('Today Deposits:', ['deposits' => $deposits]);
 
-    // Summing up the 'amount' field
-    $sum = $deposits->sum('amount');
-    Log::info('Today Deposit Sum:', ['amount' => $sum]);
+        // Summing up the 'amount' field
+        $sum = $deposits->sum('amount');
+        Log::info('Today Deposit Sum:', ['amount' => $sum]);
 
-    return $sum;
-}
-
+        return $sum;
+    }
 
     private function getTotalWithdraw()
-{
-    // Fetch all withdraw transactions with the 'debit_transfer' name and 'withdraw' type
-    $withdrawals = DB::table('transactions')
-        ->where('name', 'debit_transfer')
-        ->where('type', 'withdraw')
-        ->get();
+    {
+        // Fetch all withdraw transactions with the 'debit_transfer' name and 'withdraw' type
+        $withdrawals = DB::table('transactions')
+            ->where('name', 'debit_transfer')
+            ->where('type', 'withdraw')
+            ->get();
 
-    Log::info('Total Withdrawals:', ['withdrawals' => $withdrawals]);
+        Log::info('Total Withdrawals:', ['withdrawals' => $withdrawals]);
 
-    // Summing up the 'amount' field
-    $sum = $withdrawals->sum('amount');
-    Log::info('Total Withdrawal Sum:', ['amount' => $sum]);
+        // Summing up the 'amount' field
+        $sum = $withdrawals->sum('amount');
+        Log::info('Total Withdrawal Sum:', ['amount' => $sum]);
 
-    return $sum;
-}
- private function getTotalDeposit()
-{
-    // Fetch all deposit transactions with the 'credit_transfer' name and 'deposit' type
-    $deposits = DB::table('transactions')
-        ->where('name', 'credit_transfer')
-        ->where('type', 'deposit')
-        ->get();
+        return $sum;
+    }
 
-    Log::info('Total Deposits:', ['deposits' => $deposits]);
+    private function getTotalDeposit()
+    {
+        // Fetch all deposit transactions with the 'credit_transfer' name and 'deposit' type
+        $deposits = DB::table('transactions')
+            ->where('name', 'credit_transfer')
+            ->where('type', 'deposit')
+            ->get();
 
-    // Summing up the 'amount' field
-    $sum = $deposits->sum('amount');
-    Log::info('Total Deposit Sum:', ['amount' => $sum]);
+        Log::info('Total Deposits:', ['deposits' => $deposits]);
 
-    return $sum;
-}
+        // Summing up the 'amount' field
+        $sum = $deposits->sum('amount');
+        Log::info('Total Deposit Sum:', ['amount' => $sum]);
 
-
+        return $sum;
+    }
 
     // private function  getTodayWithdraw()
     // {
@@ -235,14 +234,14 @@ class HomeController extends Controller
     //             ->first();
     // }
 
-    private  function getUserCounts($isAdmin, $user)
+    private function getUserCounts($isAdmin, $user)
     {
         return function ($roleTitle) use ($isAdmin, $user) {
-                return User::whereHas('roles', function ($query) use ($roleTitle) {
-                    $query->where('title', '=', $roleTitle);
-                })->when(!$isAdmin, function ($query) use ($user) {
-                    $query->where('agent_id', $user->id);
-                })->count();
+            return User::whereHas('roles', function ($query) use ($roleTitle) {
+                $query->where('title', '=', $roleTitle);
+            })->when(! $isAdmin, function ($query) use ($user) {
+                $query->where('agent_id', $user->id);
+            })->count();
         };
     }
 }

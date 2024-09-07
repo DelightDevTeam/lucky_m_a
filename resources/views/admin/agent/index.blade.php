@@ -61,13 +61,13 @@
               <td>{{$user->referral_code}}</td>
               <td>{{ $user->phone }}</td>
               <td>
-              <small class="badge bg-gradient-{{ $user->status == 1 ? 'success' : ($user->status == 2 ? 'danger' : 'warning') }}">{{ $user->status == 1 ? "active" : ($user->status == 2 ? "inactive" : "pending") }}</small>
+              <small class="badge bg-gradient-{{ $user->status == 1 ? 'success' :  'danger' }}">{{ $user->status == 1 ? "active" : "inactive" }}</small>
 
               </td>
               <td>{{ number_format($user->balanceFloat,2) }}</td>
 
               <td>
-                @if ($user->status == 2)
+                @if ($user->status == 0)
                 <a onclick="event.preventDefault(); document.getElementById('banUser-{{ $user->id }}').submit();" class="me-2" href="#" data-bs-toggle="tooltip" data-bs-original-title="Ban Agent">
                   <i class="fas fa-user-slash text-danger" style="font-size: 20px;"></i>
                 </a>
@@ -75,11 +75,8 @@
                 <a onclick="event.preventDefault(); document.getElementById('banUser-{{ $user->id }}').submit();" class="me-2" href="#" data-bs-toggle="tooltip" data-bs-original-title="Active Agent">
                   <i class="fas fa-user-check text-success" style="font-size: 20px;"></i>
                 </a>
-                @else
-                <a href="" class="me-2" href="#" data-bs-toggle="tooltip" data-bs-original-title="Active Agent">
-                  <i class="fas fa-user-check text-warning" style="font-size: 20px;"></i>
-                </a>
-                @endif
+                  @endif
+
                 <form class="d-none" id="banUser-{{ $user->id }}" action="{{ route('admin.agent.ban', $user->id) }}" method="post">
                   @csrf
                   @method('PUT')

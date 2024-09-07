@@ -31,7 +31,6 @@ return new class extends Migration
             $table->string('account_name');
             $table->string('account_number');
             $table->string('line_id')->nullable();
-            //$table->string('commission')->nullable();
              $table->decimal('commission', 5, 2)->default(0.00)->comment('Commission rate as a percentage');
             $table->rememberToken();
             $table->timestamps();
