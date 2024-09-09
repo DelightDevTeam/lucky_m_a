@@ -47,10 +47,9 @@
             <div class="ms-auto my-auto">
             </div>
           </div>
-
         </div>
       </div>
-      <div class="container">
+      <div>
         <form action="" >
           <div class="row">
             <div class="col-md-3">
@@ -68,9 +67,7 @@
             <div class="col-md-3">
               <button class="btn btn-sm btn-primary" id="search">Search</button>
             </div>
-
         </form>
-      </div>
     </div>
 
 

@@ -48,35 +48,32 @@
               <button class="btn btn-outline-primary btn-sm export mb-0 mt-sm-0 mt-1" data-type="csv" type="button" name="button">Export</button>
             </div>
           </div>
-
         </div>
-      </div>
-      <div class="container">
-        <form>
-          <div class="row">
-            <div class="col-md-3">
-              <div class="input-group input-group-static my-3">
-                <label>From</label>
-                <input type="date" class="form-control" id="fromDate" name="fromDate">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="input-group input-group-static my-3">
-                <label>To</label>
-                <input type="date" class="form-control" id="toDate" name="toDate">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="input-group input-group-static my-3">
-                <label>Player</label>
-                <input type="text" class="form-control" id="player_name" name="player_name" value="{{Request::query('player_name')}}">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <button class="btn btn-sm btn-primary" id="search">Search</button>
-            </div>
-            
-        </form>
+          <form action="{{route('admin.report.index')}}" method="GET">
+              <div class="row">
+                  <div class="col-md-3">
+                      <div class="input-group input-group-static my-3">
+                          <label>From</label>
+                          <input type="date" class="form-control" id="fromDate" name="fromDate">
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                      <div class="input-group input-group-static my-3">
+                          <label>To</label>
+                          <input type="date" class="form-control" id="toDate" name="toDate">
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                      <div class="input-group input-group-static my-3">
+                          <label>Player</label>
+                          <input type="text" class="form-control" id="player_name" name="player_name" value="{{Request::query('player_name')}}">
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                      <button type="submit" class="btn btn-sm btn-primary">Search</button>
+                  </div>
+          </form>
+        </div>
       </div>
     </div>
     <div class="table-responsive">
@@ -120,7 +117,7 @@
             <td class="text-sm text-success font-weight-bold">{{$rep->commission_amount+ $result}}</td>
             @else
             <td class="text-sm text-danger font-weight-bold">{{$rep->commission_amount + $result}}</td>
-            @endif          
+            @endif
             <td class="text-sm font-weight-bold">{{$agentPercent}}</td>
             <td class="text-sm font-weight-bold">{{$agentPercent}}</td>
             <td><a href="{{route('admin.report.detail',$rep->user_id)}}" class="btn btn-sm btn-info">Detail</a></td>

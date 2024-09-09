@@ -36,7 +36,7 @@
 
                         <div class="card-header">
                             <h5 class="mb-0">Win/Lose Detail Report</h5>
-                            <form action="" method="GET">
+                            <form action="{{route('admin.report.detail', $player->id)}}" method="GET">
                                 <input type="hidden" name="user_id" value="{{$player->id}}">
                                 <div class="row">
 
@@ -76,7 +76,7 @@
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Result
                                             Product Type
                                         </th>
-                                        
+
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Result
                                             GameName
                                         </th>
