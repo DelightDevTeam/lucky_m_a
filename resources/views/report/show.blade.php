@@ -71,6 +71,7 @@
                   </div>
                   <div class="col-md-3">
                       <button type="submit" class="btn btn-sm btn-primary">Search</button>
+                      <a href="{{route('admin.report.index')}}" class="btn btn-success">Refresh</a>
                   </div>
           </form>
         </div>
@@ -120,7 +121,7 @@
             @endif
             <td class="text-sm font-weight-bold">{{$agentPercent}}</td>
             <td class="text-sm font-weight-bold">{{$agentPercent}}</td>
-            <td><a href="{{route('admin.report.detail',$rep->user_id)}}" class="btn btn-sm btn-info">Detail</a></td>
+            <td><a href="{{route('admin.report.detail',$rep->user_name)}}" class="btn btn-sm btn-info">Detail</a></td>
           </tr>
           @endforeach
         </tbody>
