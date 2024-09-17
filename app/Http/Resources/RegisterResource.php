@@ -19,7 +19,7 @@ class RegisterResource extends JsonResource
             'name' => $this->name,
             'phone' => $this->phone,
             'email' => $this->email,
-            'balance' => $this->balanceFloat,
+            'balance' => $this->balance,
             'status' => $this->status,
             'account_name' => $this->account_name,
             'account_number' => $this->account_number,

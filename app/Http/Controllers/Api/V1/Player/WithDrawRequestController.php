@@ -19,7 +19,7 @@ class WithDrawRequestController extends Controller
         try {
             $inputs = $request->validated();
             $player = Auth::user();
-            if ($request->amount < $player->balanceFloat) {
+            if ($request->amount < $player->balance) {
                 $withdraw = ModelsWithDrawRequest::create(array_merge(
                     $inputs,
                     ['user_id' => $player->id, 'agent_id' => $player->agent_id]

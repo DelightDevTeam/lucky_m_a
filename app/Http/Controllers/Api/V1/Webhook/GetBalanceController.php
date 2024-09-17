@@ -21,7 +21,7 @@ class GetBalanceController extends Controller
                 return $validator->getResponse();
             }
 
-            $balance = $request->getMember()->balanceFloat;
+            $balance = $request->getMember()->balance;
 
             DB::commit();
 
