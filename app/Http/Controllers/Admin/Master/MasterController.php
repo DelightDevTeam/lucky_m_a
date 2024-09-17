@@ -60,7 +60,7 @@ class MasterController extends Controller
         $user_name = session()->get('user_name');
 
         $inputs = $request->validated();
-        if (isset($inputs['amount']) && $inputs['amount'] > $admin->balanceFloat) {
+        if (isset($inputs['amount']) && $inputs['amount'] > $admin->balance) {
             throw ValidationException::withMessages([
                 'amount' => 'Insufficient balance for transfer.',
             ]);
@@ -191,7 +191,7 @@ class MasterController extends Controller
             $master = User::findOrFail($id);
             $admin = Auth::user();
             $cashIn = $inputs['amount'];
-            if ($cashIn > $admin->balanceFloat) {
+            if ($cashIn > $admin->balance) {
                 throw new \Exception('You do not have enough balance to transfer!');
             }
 
@@ -223,7 +223,7 @@ class MasterController extends Controller
             $admin = Auth::user();
             $cashOut = $inputs['amount'];
 
-            if ($cashOut > $master->balanceFloat) {
+            if ($cashOut > $master->balance) {
 
                 return redirect()->back()->with('error', 'You do not have enough balance to transfer!');
             }

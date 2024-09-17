@@ -39,25 +39,17 @@ class ReportController extends Controller
     // amk
     public function detail(Request $request, int $userId)
     {
-        $report = $this->makeJoinTable()
-            ->select(
-                'products.name as product_name',
-                'users.user_name',
-                'users.id as user_id',
-                'reports.wager_id',
-                'reports.valid_bet_amount',
-                'reports.bet_amount',
-                'reports.payout_amount',
-                'reports.settlement_date',
-                'game_lists.code as game_code',
-                'game_lists.name as game_list_name'
-            )
-            ->where('users.id', $userId)
-            ->when(isset($request->fromDate) && isset($request->toDate), function ($query) use ($request) {
-                $query->whereBetween('reports.created_at', [$request->fromDate. ' 00:00:00', $request->toDate. ' 23:59:59']);
-            })
+        $reports = $this->makeJoinTable()->select(
+            'users.user_name',
+            'users.id as user_id',
+            'products.name as product_name',
+            'products.code as product_code',
+            DB::raw('SUM(reports.bet_amount) as total_bet_amount'),
+            DB::raw('SUM(reports.valid_bet_amount) as total_valid_bet_amount'),
+            DB::raw('SUM(reports.payout_amount) as total_payout_amount'))
+            ->groupBy('users.user_name', 'product_name', 'product_code')
+            ->where('reports.member_name', $user_name)
             ->get();
-
         $player = User::find($userId);
 
         return view('report.detail', compact('report', 'player'));

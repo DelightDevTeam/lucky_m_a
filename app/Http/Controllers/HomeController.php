@@ -78,7 +78,7 @@ class HomeController extends Controller
         $admin = Auth::user();
 
         // Get the current balance before the update
-        $openingBalance = $admin->wallet->balanceFloat;
+        $openingBalance = $admin->wallet->balance;
 
         // Update the balance using the WalletService
         app(WalletService::class)->deposit($admin, $request->balance, TransactionName::CapitalDeposit);
@@ -94,7 +94,7 @@ class HomeController extends Controller
             'meta' => json_encode([
                 'name' => TransactionName::CapitalDeposit,
                 'opening_balance' => $openingBalance,
-                'new_balance' => $admin->wallet->balanceFloat,
+                'new_balance' => $admin->wallet->balance,
                 'target_user_id' => $admin->id,
             ]),
             'uuid' => Str::uuid()->toString(),
