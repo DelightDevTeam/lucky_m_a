@@ -29,7 +29,7 @@ class BonusController extends Controller
                 return $validator->getResponse();
             }
 
-            $before_balance = $request->getMember()->balance;
+            $before_balance = $request->getMember()->balanceFloat;
 
             $event = $this->createEvent($request);
 
@@ -53,7 +53,7 @@ class BonusController extends Controller
 
             $request->getMember()->wallet->refreshBalance();
 
-            $after_balance = $request->getMember()->balance;
+            $after_balance = $request->getMember()->balanceFloat;
 
             DB::commit();
 
