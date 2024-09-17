@@ -156,7 +156,7 @@ class GameTypeProductTableSeeder extends Seeder
                 'product_id' => 20,
                 'game_type_id' => 1,
                 'image' => 'j_d_b.png',
-                'rate' => '100.0000',
+                'rate' => '1.0000',
             ],
             [
                 'product_id' => 21,
@@ -211,7 +211,7 @@ class GameTypeProductTableSeeder extends Seeder
                 'product_id' => 28,
                 'game_type_id' => 2,
                 'image' => 'asia_gaming_casino.jpeg',
-                'rate' => '100.0000',
+                'rate' => '1.0000',
             ],
             [
                 'product_id' => 29,
@@ -223,13 +223,13 @@ class GameTypeProductTableSeeder extends Seeder
                 'product_id' => 30,
                 'game_type_id' => 1,
                 'image' => 'big_gaming.jpeg',
-                'rate' => '1000.0000',
+                'rate' => '1.0000',
             ],
             [
                 'product_id' => 30,
                 'game_type_id' => 2,
                 'image' => 'big_gaming_casino.jpeg',
-                'rate' => '1000.0000',
+                'rate' => '1.0000',
             ],
             [
                 'product_id' => 31,
@@ -295,7 +295,7 @@ class GameTypeProductTableSeeder extends Seeder
                 'product_id' => 40,
                 'game_type_id' => 1,
                 'image' => 'simple_play.jpeg',
-                'rate' => '1000.0000',
+                'rate' => '1.0000',
             ],
 
             [

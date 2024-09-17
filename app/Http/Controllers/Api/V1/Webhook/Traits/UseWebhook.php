@@ -82,7 +82,7 @@ trait UseWebhook
                 ->first();
 
             //$rate = $game_type_product->rate;
-            $rate = 0;
+            $rate = 1;
             $user = Auth::user(); // Get the authenticated user
 
 
