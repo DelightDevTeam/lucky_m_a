@@ -37,9 +37,10 @@ class ReportController extends Controller
     }
 
     // amk
-    public function detail(Request $request, $userId)
+    public function detail(Request $request, $userName)
     {
-        $userId = (string) $userId;
+
+        $userName = (string) $userName;
         $report = $this->makeJoinTable()->select(
             'users.user_name',
             'users.id as user_id',
@@ -49,9 +50,10 @@ class ReportController extends Controller
             DB::raw('SUM(reports.valid_bet_amount) as total_valid_bet_amount'),
             DB::raw('SUM(reports.payout_amount) as total_payout_amount'))
             ->groupBy('users.user_name', 'product_name', 'product_code')
-            ->where('reports.member_name', $userId)
+            ->where('reports.member_name', $userName)
             ->get();
-        $player = User::find($userId);
+        //$player = User::find($userId);
+         $player = User::where('user_name', $userName)->first();
 
         return view('report.detail', compact('report', 'player'));
     }
