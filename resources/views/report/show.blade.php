@@ -125,7 +125,7 @@
                             @endif
                             <td class="text-sm font-weight-bold">{{ $agentPercent }}</td>
                             <td class="text-sm font-weight-bold">{{ $agentPercent }}</td>
-                            <td><a href="{{ route('admin.report.detail', $rep->user_id) }}"
+                            <td><a href="{{ route('admin.report.detail', $rep->user_name) }}"
                                     class="btn btn-sm btn-info">Detail</a></td>
                         </tr>
                     @endforeach
