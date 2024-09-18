@@ -147,11 +147,9 @@
                                                 <td class="text-sm font-weight-normal">{{ $detail->product_name }}</td>
                                                 <td class="text-sm font-weight-normal">{{ $detail->game_list_name }}
                                                 </td>
-                                                <td class="text-sm font-weight-normal">{{ $detail->valid_bet_amount }}
-                                                </td>
-                                                <td class="text-sm font-weight-normal">{{ $detail->bet_amount }}</td>
-                                                <td class="text-sm font-weight-normal">{{ $detail->payout_amount }}
-                                                </td>
+                                                <td>{{ $detail->valid_bet_amount }}</td>
+                                                <td>{{ $detail->bet_amount }}</td>
+                                                <td>{{ $detail->payout_amount }}</td>
                                                 @php
                                                     $result = $detail->payout_amount - $detail->bet_amount;
                                                 @endphp
