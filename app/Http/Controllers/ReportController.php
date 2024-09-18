@@ -82,7 +82,7 @@ class ReportController extends Controller
     // Find the player by user_name
     $player = User::where('user_name', $userName)->first();
 
-    dd($report);
+    //dd($report);
 
     // Return the view with report and player data
     return view('report.detail', compact('report', 'player'));
