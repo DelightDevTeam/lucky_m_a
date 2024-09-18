@@ -39,6 +39,7 @@ class ReportController extends Controller
     // amk
     public function detail(Request $request, $userId)
     {
+         $userId = (int) $userId;
         $report = $this->makeJoinTable()->select(
             'users.user_name',
             'users.id as user_id',
