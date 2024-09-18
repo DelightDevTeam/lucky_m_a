@@ -137,9 +137,43 @@
                                             <tr>
                                                 <td class="text-sm font-weight-normal">{{ $detail->settlement_date }}
                                                 </td>
-                                                {{-- <td>
-                                        <a href="https://prodmd.9977997.com/Report/BetDetail?agentCode=E820&WagerID={{ $detail->wager_id }}" target="_blank" style="color: blueviolet">{{ $detail->wager_id }}</a>
-                                       </td> --}}
+                                                <td>
+                                                    <a href="https://prodmd.9977997.com/Report/BetDetail?agentCode=E829&WagerID={{ $detail->wager_id }}"
+                                                        target="_blank"
+                                                        style="color: blueviolet; text-decoration: underline;">
+                                                        {{ $detail->wager_id }}
+                                                    </a>
+                                                </td>
+                                                <td class="text-sm font-weight-normal">{{ $detail->product_name }}</td>
+                                                <td class="text-sm font-weight-normal">{{ $detail->game_list_name }}
+                                                </td>
+                                                <td class="text-sm font-weight-normal">{{ $detail->valid_bet_amount }}
+                                                </td>
+                                                <td class="text-sm font-weight-normal">{{ $detail->bet_amount }}</td>
+                                                <td class="text-sm font-weight-normal">{{ $detail->payout_amount }}
+                                                </td>
+                                                @php
+                                                    $result = $detail->payout_amount - $detail->bet_amount;
+                                                @endphp
+                                                <td
+                                                    class="text-sm {{ $result > 0 ? 'text-success' : 'text-danger' }} font-weight-bold">
+                                                    {{ $result }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="8">No details found for this player.</td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+
+                                {{-- <tbody>
+                                    @if (count($report) > 0)
+                                        @foreach ($report as $detail)
+                                            <tr>
+                                                <td class="text-sm font-weight-normal">{{ $detail->settlement_date }}
+                                                </td>
                                                 <td>
                                                     <a href="https://prodmd.9977997.com/Report/BetDetail?agentCode=E829&WagerID={{ $detail->wager_id }}"
                                                         target="_blank"
@@ -167,7 +201,7 @@
                                             </tr>
                                         @endforeach
                                     @endif
-                                </tbody>
+                                </tbody> --}}
                             </table>
                         </div>
                     </div>

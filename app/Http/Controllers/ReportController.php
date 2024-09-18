@@ -37,26 +37,55 @@ class ReportController extends Controller
     }
 
     // amk
+    // public function detail(Request $request, $userName)
+    // {
+
+    //     $userName = (string) $userName;
+    //     $report = $this->makeJoinTable()->select(
+    //         'users.user_name',
+    //         'users.id as user_id',
+    //         'products.name as product_name',
+    //         'products.code as product_code',
+    //         DB::raw('SUM(reports.bet_amount) as total_bet_amount'),
+    //         DB::raw('SUM(reports.valid_bet_amount) as total_valid_bet_amount'),
+    //         DB::raw('SUM(reports.payout_amount) as total_payout_amount'))
+    //         ->groupBy('users.user_name', 'product_name', 'product_code')
+    //         ->where('reports.member_name', $userName)
+    //         ->get();
+    //     //$player = User::find($userId);
+    //      $player = User::where('user_name', $userName)->first();
+
+    //     return view('report.detail', compact('report', 'player'));
+    // }
+
     public function detail(Request $request, $userName)
-    {
+{
+    // Ensure $userName is a string
+    $userName = (string) $userName;
 
-        $userName = (string) $userName;
-        $report = $this->makeJoinTable()->select(
-            'users.user_name',
-            'users.id as user_id',
-            'products.name as product_name',
-            'products.code as product_code',
-            DB::raw('SUM(reports.bet_amount) as total_bet_amount'),
-            DB::raw('SUM(reports.valid_bet_amount) as total_valid_bet_amount'),
-            DB::raw('SUM(reports.payout_amount) as total_payout_amount'))
-            ->groupBy('users.user_name', 'product_name', 'product_code')
-            ->where('reports.member_name', $userName)
-            ->get();
-        //$player = User::find($userId);
-         $player = User::where('user_name', $userName)->first();
+    // Query to get individual bet details for the player
+    $report = $this->makeJoinTable()->select(
+        'users.user_name',
+        'users.id as user_id',
+        'products.name as product_name',
+        'products.code as product_code',
+        'reports.wager_id',
+        'reports.settlement_date',
+        'reports.bet_amount',
+        'reports.valid_bet_amount',
+        'reports.payout_amount',
+        'reports.game_name as game_list_name'
+    )
+    ->where('reports.member_name', $userName) // Filter by player's user_name
+    ->get();
 
-        return view('report.detail', compact('report', 'player'));
-    }
+    // Find the player by user_name
+    $player = User::where('user_name', $userName)->first();
+
+    // Return the view with report and player data
+    return view('report.detail', compact('report', 'player'));
+}
+
 
 
     public function view($user_name)
