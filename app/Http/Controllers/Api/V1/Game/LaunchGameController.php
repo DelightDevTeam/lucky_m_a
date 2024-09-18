@@ -20,7 +20,7 @@ class LaunchGameController extends Controller
         //Log::info($request->all());
         // Validate the request data
         $validatedData = $request->validate([
-            'productId' => 'required|integer',
+            'productId' => 'required',
             'gameType' => 'required|integer',
             'gameId' => 'required',
         ]);
